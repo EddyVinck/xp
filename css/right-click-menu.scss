@@ -1,0 +1,25 @@
+.right-click-menu {
+  // these properties are edited with javascript
+  display: none;
+  top: 0;
+  left: 0;
+
+  position: absolute;
+  width: 200px;
+  height: auto;
+  border: 1px solid rgb(168, 167, 167);
+
+  background: #fff;
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  li {
+    &:hover {
+      background-color: rgb(19, 19, 204);
+      color: #fff;
+    }
+  }
+}

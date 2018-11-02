@@ -171,20 +171,57 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"normalize.css":[function(require,module,exports) {
+},{"./bundle-url":"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"css/normalize.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"style.scss":[function(require,module,exports) {
+},{"_css_loader":"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/style.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./normalize.css":"normalize.css","_css_loader":"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"index.js":[function(require,module,exports) {
+},{"./normalize.css":"css/normalize.css","_css_loader":"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"js/right-click.js":[function(require,module,exports) {
+var rightClickMenu = document.querySelector(".right-click-menu");
+document.addEventListener("contextmenu", function (e) {
+  e.preventDefault();
+  var x = e.pageX,
+      y = e.pageY;
+  handleRightClick(x, y);
+}, false);
+document.addEventListener("click", function (e) {
+  if (isClickingRightClickMenu(e.target, rightClickMenu)) {// handle any of the right click options if those are clicked
+  } else {
+    rightClickMenu.style.display = "none";
+  }
+});
+
+function isClickingRightClickMenu(child, parent) {
+  var node = child.parentNode;
+
+  while (node != null) {
+    if (node == parent) {
+      return true;
+    }
+
+    node = node.parentNode;
+  }
+
+  return false;
+}
+
+function handleRightClick(x, y) {
+  var rightClickMenu = document.querySelector(".right-click-menu");
+  rightClickMenu.style.top = "".concat(y, "px");
+  rightClickMenu.style.left = "".concat(x, "px");
+  rightClickMenu.style.display = "block";
+}
+},{}],"index.js":[function(require,module,exports) {
 "use strict";
 
-require("./style.scss");
+require("./css/style.scss");
+
+require("./js/right-click");
 
 if (module.hot) {
   module.hot.dispose(function () {// module is about to be replaced
@@ -194,7 +231,7 @@ if (module.hot) {
     console.log("HMR initialized!");
   });
 }
-},{"./style.scss":"style.scss"}],"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./css/style.scss":"css/style.scss","./js/right-click":"js/right-click.js"}],"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -221,7 +258,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36791" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46801" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

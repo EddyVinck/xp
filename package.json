@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "css": "^2.2.4",
     "sass": "^1.14.3"
   }
 }

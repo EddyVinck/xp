@@ -1,4 +1,6 @@
-import "./style.scss";
+import "./css/style.scss";
+
+import "./js/right-click";
 
 if (module.hot) {
   module.hot.dispose(function() {
