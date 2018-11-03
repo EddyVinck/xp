@@ -9,6 +9,11 @@ const folder = document.querySelector(".folder-opened");
 
 folder.addEventListener("mousedown", e => {
   const { pageX, pageY } = e;
+
+  // onmousedown
+  let shiftX = e.clientX - folder.getBoundingClientRect().left;
+  let shiftY = e.clientY - folder.getBoundingClientRect().top;
+
   folder.style.position = "absolute";
   folder.style.zIndex = 1000;
 
@@ -21,8 +26,8 @@ folder.addEventListener("mousedown", e => {
   }
 
   function moveAt(x, y) {
-    folder.style.left = x - folder.offsetWidth / 2 + "px";
-    folder.style.top = y - folder.offsetHeight / 2 + "px";
+    folder.style.left = x - shiftX + "px";
+    folder.style.top = y - shiftY + "px";
   }
 
   document.addEventListener("mousemove", onMouseMove);

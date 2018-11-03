@@ -234,7 +234,10 @@ var Folder = function Folder() {
 var folder = document.querySelector(".folder-opened");
 folder.addEventListener("mousedown", function (e) {
   var pageX = e.pageX,
-      pageY = e.pageY;
+      pageY = e.pageY; // onmousedown
+
+  var shiftX = e.clientX - folder.getBoundingClientRect().left;
+  var shiftY = e.clientY - folder.getBoundingClientRect().top;
   folder.style.position = "absolute";
   folder.style.zIndex = 1000;
   document.body.append(folder);
@@ -245,8 +248,8 @@ folder.addEventListener("mousedown", function (e) {
   }
 
   function moveAt(x, y) {
-    folder.style.left = x - folder.offsetWidth / 2 + "px";
-    folder.style.top = y - folder.offsetHeight / 2 + "px";
+    folder.style.left = x - shiftX + "px";
+    folder.style.top = y - shiftY + "px";
   }
 
   document.addEventListener("mousemove", onMouseMove);
