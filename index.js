@@ -1,6 +1,7 @@
 import "./css/style.scss";
 
 import "./js/right-click";
+import "./js/Folder";
 
 if (module.hot) {
   module.hot.dispose(function() {

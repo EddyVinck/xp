@@ -182,7 +182,7 @@ var reloadCSS = require('_css_loader');
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"./normalize.css":"css/normalize.css","_css_loader":"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"js/right-click.js":[function(require,module,exports) {
-var rightClickMenu = document.querySelector(".right-click-menu"); // maybe do a pub sub thing where you keep track of opened or active elements
+var rightClickMenu = document.querySelector(".right-click-menu"); // maybe do a pub sub or observable thing where you keep track of opened or active elements
 // instead of putting listeners on every individual element
 // that might get hard to maintain
 
@@ -221,12 +221,53 @@ function handleRightClick(x, y) {
   rightClickMenu.style.left = "".concat(x, "px");
   rightClickMenu.style.display = "block";
 }
+},{}],"js/Folder.js":[function(require,module,exports) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Folder = function Folder() {
+  _classCallCheck(this, Folder);
+
+  this.innerFolders = [];
+  this.innerFiles = [];
+};
+
+var folder = document.querySelector(".folder-opened");
+folder.addEventListener("mousedown", function (e) {
+  var pageX = e.pageX,
+      pageY = e.pageY;
+  folder.style.position = "absolute";
+  folder.style.zIndex = 1000;
+  document.body.append(folder);
+  moveAt(pageX, pageY);
+
+  function onMouseMove(event) {
+    moveAt(event.pageX, event.pageY);
+  }
+
+  function moveAt(x, y) {
+    folder.style.left = x - folder.offsetWidth / 2 + "px";
+    folder.style.top = y - folder.offsetHeight / 2 + "px";
+  }
+
+  document.addEventListener("mousemove", onMouseMove);
+
+  folder.onmouseup = function () {
+    document.removeEventListener("mousemove", onMouseMove);
+    folder.mouseup = null;
+  };
+
+  folder.ondragstart = function () {
+    return false;
+  };
+});
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("./css/style.scss");
 
 require("./js/right-click");
+
+require("./js/Folder");
 
 if (module.hot) {
   module.hot.dispose(function () {// module is about to be replaced
@@ -236,7 +277,7 @@ if (module.hot) {
     console.log("HMR initialized!");
   });
 }
-},{"./css/style.scss":"css/style.scss","./js/right-click":"js/right-click.js"}],"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./css/style.scss":"css/style.scss","./js/right-click":"js/right-click.js","./js/Folder":"js/Folder.js"}],"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -263,7 +304,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42959" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42893" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

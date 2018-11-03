@@ -188,6 +188,7 @@ template {
   display: none;
 } /*# sourceMappingURL=normalize.min.css.map */
 .file-grid {
+  padding-top: 5px;
   display: grid;
   grid-gap: 10px 5px;
   grid-auto-rows: 75px;
@@ -218,8 +219,8 @@ template {
 .wallpaper-grid {
   grid-gap: 10px 5px;
   grid-auto-rows: 72px;
-  grid-auto-columns: 120px;
-  grid-template-columns: repeat(auto-fill, 120px);
+  grid-auto-columns: 100px;
+  grid-template-columns: repeat(auto-fill, 100px);
 }
 .wallpaper-grid .cell-name {
   color: #fff;

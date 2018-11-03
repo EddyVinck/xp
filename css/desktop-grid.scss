@@ -1,12 +1,11 @@
 .file-grid {
+  padding-top: 5px;
   display: grid;
   grid-gap: 10px 5px;
   grid-auto-rows: 75px;
   grid-auto-columns: 80px;
   grid-template-columns: repeat(auto-fill, 80px);
   .cell {
-    // width: 140px;
-    // height: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,8 +31,8 @@
 .wallpaper-grid {
   grid-gap: 10px 5px;
   grid-auto-rows: 72px;
-  grid-auto-columns: 120px;
-  grid-template-columns: repeat(auto-fill, 120px);
+  grid-auto-columns: 100px;
+  grid-template-columns: repeat(auto-fill, 100px);
 
   .cell-name {
     color: #fff;

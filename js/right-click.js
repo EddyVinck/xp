@@ -1,6 +1,6 @@
 const rightClickMenu = document.querySelector(".right-click-menu");
 
-// maybe do a pub sub thing where you keep track of opened or active elements
+// maybe do a pub sub or observable thing where you keep track of opened or active elements
 // instead of putting listeners on every individual element
 // that might get hard to maintain
 const currentlyOpenedElements = [];
