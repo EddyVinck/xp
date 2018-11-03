@@ -181,25 +181,13 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./normalize.css":"css/normalize.css","_css_loader":"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"js/right-click.js":[function(require,module,exports) {
-var rightClickMenu = document.querySelector(".right-click-menu"); // maybe do a pub sub or observable thing where you keep track of opened or active elements
-// instead of putting listeners on every individual element
-// that might get hard to maintain
+},{"./normalize.css":"css/normalize.css","_css_loader":"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"js/utils/isChildElement.js":[function(require,module,exports) {
+"use strict";
 
-var currentlyOpenedElements = [];
-var currentlyActiveElements = [];
-document.addEventListener("contextmenu", function (e) {
-  e.preventDefault();
-  var x = e.pageX,
-      y = e.pageY;
-  handleRightClick(x, y);
-}, false);
-document.addEventListener("click", function (e) {
-  if (isChildElement(e.target, rightClickMenu)) {// handle any of the right click options if those are clicked
-  } else {
-    rightClickMenu.style.display = "none";
-  }
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+exports.default = void 0;
 
 function isChildElement(child, parent) {
   var node = child.parentNode;
@@ -215,13 +203,47 @@ function isChildElement(child, parent) {
   return false;
 }
 
+var _default = isChildElement;
+exports.default = _default;
+},{}],"js/right-click.js":[function(require,module,exports) {
+"use strict";
+
+var _isChildElement = _interopRequireDefault(require("./utils/isChildElement"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var rightClickMenu = document.querySelector(".right-click-menu"); // maybe do a pub sub or observable thing where you keep track of opened or active elements
+// instead of putting listeners on every individual element
+// that might get hard to maintain
+
+var currentlyOpenedElements = [];
+var currentlyActiveElements = [];
+document.addEventListener("contextmenu", function (e) {
+  e.preventDefault();
+  var x = e.pageX,
+      y = e.pageY;
+  handleRightClick(x, y);
+}, false);
+document.addEventListener("click", function (e) {
+  if ((0, _isChildElement.default)(e.target, rightClickMenu)) {// handle any of the right click options if those are clicked
+  } else {
+    rightClickMenu.style.display = "none";
+  }
+});
+
 function handleRightClick(x, y) {
   var rightClickMenu = document.querySelector(".right-click-menu");
   rightClickMenu.style.top = "".concat(y, "px");
   rightClickMenu.style.left = "".concat(x, "px");
   rightClickMenu.style.display = "block";
 }
-},{}],"js/Folder.js":[function(require,module,exports) {
+},{"./utils/isChildElement":"js/utils/isChildElement.js"}],"js/Folder.js":[function(require,module,exports) {
+"use strict";
+
+var _isChildElement = _interopRequireDefault(require("./utils/isChildElement"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Folder = function Folder() {
@@ -232,40 +254,41 @@ var Folder = function Folder() {
 };
 
 var folder = document.querySelector(".folder-opened");
+var topBar = folder.querySelector(".top-bar");
 folder.addEventListener("mousedown", function (e) {
-  var pageX = e.pageX,
-      pageY = e.pageY; // Get the current position of the cursor relative to the folder
+  var isClickingOnTopBar = (0, _isChildElement.default)(e.target, topBar) || e.target === topBar;
 
-  var shiftX = e.clientX - folder.getBoundingClientRect().left;
-  var shiftY = e.clientY - folder.getBoundingClientRect().top;
-  folder.style.position = "absolute";
-  folder.style.zIndex = 1000; // Append the folder to the body so the absolute positioning is relative to the body
+  if (isClickingOnTopBar) {
+    var moveAt = function moveAt(x, y) {
+      folder.style.left = x - shiftX + "px";
+      folder.style.top = y - shiftY + "px";
+    };
 
-  document.body.append(folder);
-  moveAt(pageX, pageY);
+    var onMouseMove = function onMouseMove(event) {
+      moveAt(event.pageX, event.pageY);
+    }; // Get the current position of the cursor relative to the folder
 
-  function onMouseMove(event) {
-    moveAt(event.pageX, event.pageY);
-  }
 
-  function moveAt(x, y) {
-    folder.style.left = x - shiftX + "px";
-    folder.style.top = y - shiftY + "px";
-  }
+    var shiftX = e.clientX - folder.getBoundingClientRect().left;
+    var shiftY = e.clientY - folder.getBoundingClientRect().top;
+    folder.style.position = "absolute";
+    folder.style.zIndex = 1000; // Append the folder to the body so the absolute positioning is relative to the body
 
-  document.addEventListener("mousemove", onMouseMove); // Clear event listeners when the element is released
+    document.body.append(folder);
+    document.addEventListener("mousemove", onMouseMove); // Clear event listeners when the element is released
 
-  folder.onmouseup = function () {
-    document.removeEventListener("mousemove", onMouseMove);
-    folder.mouseup = null;
-  }; // The browser has its own drag and drop API, this resolves conflicts with that api
+    folder.onmouseup = function () {
+      document.removeEventListener("mousemove", onMouseMove);
+      folder.mouseup = null;
+    };
+  } // The browser has its own drag and drop API, this resolves conflicts with that api
 
 
   folder.ondragstart = function () {
     return false;
   };
 });
-},{}],"index.js":[function(require,module,exports) {
+},{"./utils/isChildElement":"js/utils/isChildElement.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("./css/style.scss");

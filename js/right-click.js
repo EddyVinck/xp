@@ -1,3 +1,5 @@
+import isChildElement from "./utils/isChildElement";
+
 const rightClickMenu = document.querySelector(".right-click-menu");
 
 // maybe do a pub sub or observable thing where you keep track of opened or active elements
@@ -23,17 +25,6 @@ document.addEventListener("click", e => {
     rightClickMenu.style.display = "none";
   }
 });
-
-function isChildElement(child, parent) {
-  let node = child.parentNode;
-  while (node != null) {
-    if (node == parent) {
-      return true;
-    }
-    node = node.parentNode;
-  }
-  return false;
-}
 
 function handleRightClick(x, y) {
   const rightClickMenu = document.querySelector(".right-click-menu");

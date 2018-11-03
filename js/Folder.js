@@ -1,3 +1,5 @@
+import isChildElement from "./utils/isChildElement";
+
 class Folder {
   constructor() {
     this.innerFolders = [];
@@ -6,38 +8,38 @@ class Folder {
 }
 
 const folder = document.querySelector(".folder-opened");
+const topBar = folder.querySelector(".top-bar");
 
 folder.addEventListener("mousedown", e => {
-  const { pageX, pageY } = e;
+  const isClickingOnTopBar = isChildElement(e.target, topBar) || e.target === topBar;
 
-  // Get the current position of the cursor relative to the folder
-  let shiftX = e.clientX - folder.getBoundingClientRect().left;
-  let shiftY = e.clientY - folder.getBoundingClientRect().top;
+  if (isClickingOnTopBar) {
+    function moveAt(x, y) {
+      folder.style.left = x - shiftX + "px";
+      folder.style.top = y - shiftY + "px";
+    }
 
-  folder.style.position = "absolute";
-  folder.style.zIndex = 1000;
+    function onMouseMove(event) {
+      moveAt(event.pageX, event.pageY);
+    }
 
-  // Append the folder to the body so the absolute positioning is relative to the body
-  document.body.append(folder);
+    // Get the current position of the cursor relative to the folder
+    let shiftX = e.clientX - folder.getBoundingClientRect().left;
+    let shiftY = e.clientY - folder.getBoundingClientRect().top;
 
-  moveAt(pageX, pageY);
+    folder.style.position = "absolute";
+    folder.style.zIndex = 1000;
 
-  function onMouseMove(event) {
-    moveAt(event.pageX, event.pageY);
+    // Append the folder to the body so the absolute positioning is relative to the body
+    document.body.append(folder);
+    document.addEventListener("mousemove", onMouseMove);
+
+    // Clear event listeners when the element is released
+    folder.onmouseup = () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      folder.mouseup = null;
+    };
   }
-
-  function moveAt(x, y) {
-    folder.style.left = x - shiftX + "px";
-    folder.style.top = y - shiftY + "px";
-  }
-
-  document.addEventListener("mousemove", onMouseMove);
-
-  // Clear event listeners when the element is released
-  folder.onmouseup = () => {
-    document.removeEventListener("mousemove", onMouseMove);
-    folder.mouseup = null;
-  };
 
   // The browser has its own drag and drop API, this resolves conflicts with that api
   folder.ondragstart = function() {
