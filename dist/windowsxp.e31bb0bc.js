@@ -234,12 +234,13 @@ var Folder = function Folder() {
 var folder = document.querySelector(".folder-opened");
 folder.addEventListener("mousedown", function (e) {
   var pageX = e.pageX,
-      pageY = e.pageY; // onmousedown
+      pageY = e.pageY; // Get the current position of the cursor relative to the folder
 
   var shiftX = e.clientX - folder.getBoundingClientRect().left;
   var shiftY = e.clientY - folder.getBoundingClientRect().top;
   folder.style.position = "absolute";
-  folder.style.zIndex = 1000;
+  folder.style.zIndex = 1000; // Append the folder to the body so the absolute positioning is relative to the body
+
   document.body.append(folder);
   moveAt(pageX, pageY);
 
@@ -252,12 +253,13 @@ folder.addEventListener("mousedown", function (e) {
     folder.style.top = y - shiftY + "px";
   }
 
-  document.addEventListener("mousemove", onMouseMove);
+  document.addEventListener("mousemove", onMouseMove); // Clear event listeners when the element is released
 
   folder.onmouseup = function () {
     document.removeEventListener("mousemove", onMouseMove);
     folder.mouseup = null;
-  };
+  }; // The browser has its own drag and drop API, this resolves conflicts with that api
+
 
   folder.ondragstart = function () {
     return false;
