@@ -1,11 +1,10 @@
-.desktop-grid {
+.file-grid {
   display: grid;
-  grid-gap: 5px;
-  grid-auto-rows: 72px;
-  grid-auto-columns: 120px;
-  grid-template-columns: repeat(auto-fill, 140px);
+  grid-gap: 10px 5px;
+  grid-auto-rows: 75px;
+  grid-auto-columns: 80px;
+  grid-template-columns: repeat(auto-fill, 80px);
   .cell {
-    border: 1px dashed lightgray;
     // width: 140px;
     // height: 80px;
     display: flex;
@@ -23,12 +22,21 @@
     .cell-name {
       text-align: center;
       display: block;
-      color: #fff;
-      text-shadow: 1px 1px #000;
       font-size: 15px;
       font-family: Georgia, "Times New Roman", Times, serif;
       max-width: 86%;
       text-overflow: ellipsis;
     }
+  }
+}
+.wallpaper-grid {
+  grid-gap: 10px 5px;
+  grid-auto-rows: 72px;
+  grid-auto-columns: 120px;
+  grid-template-columns: repeat(auto-fill, 120px);
+
+  .cell-name {
+    color: #fff;
+    text-shadow: 1px 1px #000;
   }
 }

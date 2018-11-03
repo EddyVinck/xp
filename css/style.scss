@@ -1,6 +1,9 @@
+$menuHoverBlue: rgb(19, 19, 204);
+
 @import "./normalize.css";
 @import "./desktop-grid.scss";
 @import "./right-click-menu.scss";
+@import "./folder-opened.scss";
 
 * {
   box-sizing: border-box;

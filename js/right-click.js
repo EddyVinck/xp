@@ -1,5 +1,11 @@
 const rightClickMenu = document.querySelector(".right-click-menu");
 
+// maybe do a pub sub thing where you keep track of opened or active elements
+// instead of putting listeners on every individual element
+// that might get hard to maintain
+const currentlyOpenedElements = [];
+const currentlyActiveElements = [];
+
 document.addEventListener(
   "contextmenu",
   e => {
@@ -11,15 +17,15 @@ document.addEventListener(
 );
 
 document.addEventListener("click", e => {
-  if (isClickingRightClickMenu(e.target, rightClickMenu)) {
+  if (isChildElement(e.target, rightClickMenu)) {
     // handle any of the right click options if those are clicked
   } else {
     rightClickMenu.style.display = "none";
   }
 });
 
-function isClickingRightClickMenu(child, parent) {
-  var node = child.parentNode;
+function isChildElement(child, parent) {
+  let node = child.parentNode;
   while (node != null) {
     if (node == parent) {
       return true;

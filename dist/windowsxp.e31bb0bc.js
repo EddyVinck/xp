@@ -182,7 +182,12 @@ var reloadCSS = require('_css_loader');
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"./normalize.css":"css/normalize.css","_css_loader":"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"js/right-click.js":[function(require,module,exports) {
-var rightClickMenu = document.querySelector(".right-click-menu");
+var rightClickMenu = document.querySelector(".right-click-menu"); // maybe do a pub sub thing where you keep track of opened or active elements
+// instead of putting listeners on every individual element
+// that might get hard to maintain
+
+var currentlyOpenedElements = [];
+var currentlyActiveElements = [];
 document.addEventListener("contextmenu", function (e) {
   e.preventDefault();
   var x = e.pageX,
@@ -190,13 +195,13 @@ document.addEventListener("contextmenu", function (e) {
   handleRightClick(x, y);
 }, false);
 document.addEventListener("click", function (e) {
-  if (isClickingRightClickMenu(e.target, rightClickMenu)) {// handle any of the right click options if those are clicked
+  if (isChildElement(e.target, rightClickMenu)) {// handle any of the right click options if those are clicked
   } else {
     rightClickMenu.style.display = "none";
   }
 });
 
-function isClickingRightClickMenu(child, parent) {
+function isChildElement(child, parent) {
   var node = child.parentNode;
 
   while (node != null) {
@@ -258,7 +263,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46801" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42959" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

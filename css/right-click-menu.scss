@@ -18,7 +18,7 @@
   }
   li {
     &:hover {
-      background-color: rgb(19, 19, 204);
+      background-color: $menuHoverBlue;
       color: #fff;
     }
   }
