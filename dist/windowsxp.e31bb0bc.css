@@ -254,6 +254,8 @@ template {
   position: absolute;
   top: 50px;
   left: 50px;
+  display: flex;
+  flex-direction: column;
 }
 .folder-opened .menu-bar {
   background-color: #f5f5e7;
@@ -264,6 +266,7 @@ template {
   background-color: #fff;
   border: 5px solid blue;
   border-top: 0;
+  flex-grow: 1;
 }
 .folder-opened .top-bar {
   background-color: blue;

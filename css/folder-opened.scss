@@ -9,6 +9,8 @@ $menuTextGray: rgb(179, 179, 148);
   position: absolute;
   top: 50px;
   left: 50px;
+  display: flex;
+  flex-direction: column;
 
   .folder-header {
   }
@@ -21,6 +23,7 @@ $menuTextGray: rgb(179, 179, 148);
     background-color: #fff;
     border: 5px solid blue;
     border-top: 0;
+    flex-grow: 1;
   }
 
   .top-bar {

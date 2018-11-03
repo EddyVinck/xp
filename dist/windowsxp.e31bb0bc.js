@@ -255,10 +255,13 @@ var Folder = function Folder() {
 
 var folder = document.querySelector(".folder-opened");
 var topBar = folder.querySelector(".top-bar");
+var isFullScreen = false;
+var originalOffsetLeft;
+var originalOffsetTop;
 folder.addEventListener("mousedown", function (e) {
   var isClickingOnTopBar = (0, _isChildElement.default)(e.target, topBar) || e.target === topBar;
 
-  if (isClickingOnTopBar) {
+  if (isClickingOnTopBar && !isFullScreen) {
     var moveAt = function moveAt(x, y) {
       folder.style.left = x - shiftX + "px";
       folder.style.top = y - shiftY + "px";
@@ -281,6 +284,29 @@ folder.addEventListener("mousedown", function (e) {
       document.removeEventListener("mousemove", onMouseMove);
       folder.mouseup = null;
     };
+  }
+
+  var toggleFullScreenButton = document.querySelector(".top-bar-button.fullscreen");
+
+  if (e.target == toggleFullScreenButton) {
+    if (isFullScreen) {
+      // go small screen
+      folder.style.width = "";
+      folder.style.height = "";
+      folder.style.left = originalOffsetLeft + "px";
+      folder.style.top = originalOffsetTop + "px";
+      isFullScreen = false;
+    } else {
+      // save the original position
+      originalOffsetLeft = folder.offsetLeft;
+      originalOffsetTop = folder.offsetTop; // go full screen
+
+      folder.style.left = "0px";
+      folder.style.top = "0px";
+      folder.style.width = "100%";
+      folder.style.height = "calc(100vh - 40px)";
+      isFullScreen = true;
+    }
   } // The browser has its own drag and drop API, this resolves conflicts with that api
 
 
