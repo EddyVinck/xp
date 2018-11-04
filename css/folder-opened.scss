@@ -63,6 +63,65 @@ $menuTextGray: rgb(179, 179, 148);
         height: 26px;
         width: 26px;
         margin-left: 4px;
+        background-image: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(70, 161, 252, 0) 80%);
+        background-size: 10px 10px;
+        background-repeat: no-repeat;
+        -webkit-box-shadow: inset -12px -16px 56px 0px rgba(0, 0, 0, 0.05);
+        -moz-box-shadow: inset -12px -16px 56px 0px rgba(0, 0, 0, 0.05);
+        box-shadow: inset -12px -16px 56px 0px rgba(0, 0, 0, 0.05);
+        position: relative;
+
+        &:before,
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          z-index: 1001;
+        }
+        &.minimize {
+          &:before {
+            bottom: 5px;
+            left: 5px;
+            width: 10px;
+            height: 3px;
+            background-color: #fff;
+          }
+        }
+        &.maximize {
+          &:before {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #fff;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+          }
+          &:after {
+            width: 12px;
+            height: 3px;
+            background-color: #fff;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 5px;
+          }
+        }
+        &.close {
+          background-color: #da5a2c;
+          &:before,
+          &:after {
+            background-color: #fff;
+            width: 15px;
+            height: 3px;
+            top: 50%;
+            left: 50%;
+          }
+          &:before {
+            transform: translate(-50%, -50%) rotate(45deg);
+          }
+          &:after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+          }
+        }
       }
     }
   }

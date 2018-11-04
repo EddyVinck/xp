@@ -9,14 +9,14 @@ class Folder {
 
 const folder = document.querySelector(".folder-opened");
 const topBar = folder.querySelector(".top-bar");
-let isFullScreen = false;
+let isMaximize = false;
 let originalOffsetLeft;
 let originalOffsetTop;
 
 folder.addEventListener("mousedown", e => {
   const isClickingOnTopBar = isChildElement(e.target, topBar) || e.target === topBar;
 
-  if (isClickingOnTopBar && !isFullScreen) {
+  if (isClickingOnTopBar && !isMaximize) {
     function moveAt(x, y) {
       folder.style.left = x - shiftX + "px";
       folder.style.top = y - shiftY + "px";
@@ -44,15 +44,15 @@ folder.addEventListener("mousedown", e => {
     };
   }
 
-  const toggleFullScreenButton = document.querySelector(".top-bar-button.fullscreen");
-  if (e.target == toggleFullScreenButton) {
-    if (isFullScreen) {
+  const toggleMaximizeButton = document.querySelector(".top-bar-button.maximize");
+  if (e.target == toggleMaximizeButton) {
+    if (isMaximize) {
       // go small screen
       folder.style.width = "";
       folder.style.height = "";
       folder.style.left = originalOffsetLeft + "px";
       folder.style.top = originalOffsetTop + "px";
-      isFullScreen = false;
+      isMaximize = false;
     } else {
       // save the original position
       originalOffsetLeft = folder.offsetLeft;
@@ -64,7 +64,7 @@ folder.addEventListener("mousedown", e => {
       folder.style.width = "100%";
       folder.style.height = "calc(100vh - 40px)";
 
-      isFullScreen = true;
+      isMaximize = true;
     }
   }
 

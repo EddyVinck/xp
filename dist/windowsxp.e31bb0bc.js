@@ -255,13 +255,13 @@ var Folder = function Folder() {
 
 var folder = document.querySelector(".folder-opened");
 var topBar = folder.querySelector(".top-bar");
-var isFullScreen = false;
+var isMaximize = false;
 var originalOffsetLeft;
 var originalOffsetTop;
 folder.addEventListener("mousedown", function (e) {
   var isClickingOnTopBar = (0, _isChildElement.default)(e.target, topBar) || e.target === topBar;
 
-  if (isClickingOnTopBar && !isFullScreen) {
+  if (isClickingOnTopBar && !isMaximize) {
     var moveAt = function moveAt(x, y) {
       folder.style.left = x - shiftX + "px";
       folder.style.top = y - shiftY + "px";
@@ -286,16 +286,16 @@ folder.addEventListener("mousedown", function (e) {
     };
   }
 
-  var toggleFullScreenButton = document.querySelector(".top-bar-button.fullscreen");
+  var toggleMaximizeButton = document.querySelector(".top-bar-button.maximize");
 
-  if (e.target == toggleFullScreenButton) {
-    if (isFullScreen) {
+  if (e.target == toggleMaximizeButton) {
+    if (isMaximize) {
       // go small screen
       folder.style.width = "";
       folder.style.height = "";
       folder.style.left = originalOffsetLeft + "px";
       folder.style.top = originalOffsetTop + "px";
-      isFullScreen = false;
+      isMaximize = false;
     } else {
       // save the original position
       originalOffsetLeft = folder.offsetLeft;
@@ -305,7 +305,7 @@ folder.addEventListener("mousedown", function (e) {
       folder.style.top = "0px";
       folder.style.width = "100%";
       folder.style.height = "calc(100vh - 40px)";
-      isFullScreen = true;
+      isMaximize = true;
     }
   } // The browser has its own drag and drop API, this resolves conflicts with that api
 
@@ -358,7 +358,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42893" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41291" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
