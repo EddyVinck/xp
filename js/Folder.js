@@ -73,3 +73,10 @@ folder.addEventListener("mousedown", e => {
     return false;
   };
 });
+
+/*
+ when a folder should be minimized it can be added as a flex item in the bottom bar
+ so use appendchild without cloning an item
+ 
+ Add overruling styles that get rid of the absolute positioning for folders 
+*/

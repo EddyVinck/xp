@@ -314,6 +314,12 @@ folder.addEventListener("mousedown", function (e) {
     return false;
   };
 });
+/*
+ when a folder should be minimized it can be added as a flex item in the bottom bar
+ so use appendchild without cloning an item
+ 
+ Add overruling styles that get rid of the absolute positioning for folders 
+*/
 },{"./utils/isChildElement":"js/utils/isChildElement.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -358,7 +364,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41291" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37193" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

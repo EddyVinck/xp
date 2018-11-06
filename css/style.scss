@@ -1,9 +1,11 @@
 $menuHoverBlue: rgb(19, 19, 204);
+$barBlue: #0075e1;
 
 @import "./normalize.css";
 @import "./desktop-grid.scss";
 @import "./right-click-menu.scss";
 @import "./folder-opened.scss";
+@import "./taskbar.scss";
 
 * {
   box-sizing: border-box;
@@ -27,8 +29,11 @@ body {
 .bar {
   height: 40px;
   width: 100%;
-  background-color: #2960de;
+  background-color: $barBlue;
   z-index: 2;
+  display: flex;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(148, 187, 233, 0) 18%);
+  box-shadow: inset 0px -2px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
 .slide-open {
@@ -43,7 +48,7 @@ body {
   // display: none;
   .top,
   .bottom {
-    background-color: #186ad5;
+    background-color: $barBlue;
   }
   .top {
     display: flex;
@@ -140,7 +145,7 @@ ul.start {
   margin: 0;
   padding-left: 0;
   > li {
-    background-color: #2d8536;
+    background-color: #518e3a;
     background-image: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 0%,
