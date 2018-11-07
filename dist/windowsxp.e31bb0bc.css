@@ -187,6 +187,11 @@ summary {
 template {
   display: none;
 } /*# sourceMappingURL=normalize.min.css.map */
+.cell-name {
+  user-select: none;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
 .file-grid {
   padding-top: 5px;
   display: grid;
@@ -210,9 +215,8 @@ template {
 .file-grid .cell .cell-name {
   text-align: center;
   display: block;
-  font-size: 15px;
-  font-family: Georgia, "Times New Roman", Times, serif;
   max-width: 86%;
+  font-size: 15px;
   text-overflow: ellipsis;
 }
 
@@ -252,7 +256,7 @@ template {
   min-height: 200px;
   max-height: 100%;
   position: absolute;
-  top: 50px;
+  top: 250px;
   left: 50px;
   display: flex;
   flex-direction: column;
@@ -502,7 +506,7 @@ ul.taskbar .cell img {
   max-height: 100%;
   margin-right: 4px;
 }
-ul.taskbar .cell span {
+ul.taskbar .cell .cell-name {
   display: block;
   white-space: nowrap;
   overflow: hidden;

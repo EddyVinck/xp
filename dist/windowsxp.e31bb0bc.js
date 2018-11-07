@@ -237,21 +237,276 @@ function handleRightClick(x, y) {
   rightClickMenu.style.left = "".concat(x, "px");
   rightClickMenu.style.display = "block";
 }
-},{"./utils/isChildElement":"js/utils/isChildElement.js"}],"js/Folder.js":[function(require,module,exports) {
+},{"./utils/isChildElement":"js/utils/isChildElement.js"}],"img/computer.png":[function(require,module,exports) {
+module.exports = "/computer.ebf1c983.png";
+},{}],"img/control-panel.png":[function(require,module,exports) {
+module.exports = "/control-panel.5c513348.png";
+},{}],"img/documents.png":[function(require,module,exports) {
+module.exports = "/documents.66f0ba29.png";
+},{}],"img/favorite.png":[function(require,module,exports) {
+module.exports = "/favorite.cc71aca9.png";
+},{}],"img/folder-empty.png":[function(require,module,exports) {
+module.exports = "/folder-empty.e2daa8fc.png";
+},{}],"img/ie.png":[function(require,module,exports) {
+module.exports = "/ie.2da5219c.png";
+},{}],"img/info-balloon.png":[function(require,module,exports) {
+module.exports = "/info-balloon.0da3fa03.png";
+},{}],"img/internet-explorer.png":[function(require,module,exports) {
+module.exports = "/internet-explorer.3d204db0.png";
+},{}],"img/log-off.png":[function(require,module,exports) {
+module.exports = "/log-off.bb64b56c.png";
+},{}],"img/media-player.png":[function(require,module,exports) {
+module.exports = "/media-player.75f6f113.png";
+},{}],"img/messenger.png":[function(require,module,exports) {
+module.exports = "/messenger.d0fdd4ff.png";
+},{}],"img/movies.png":[function(require,module,exports) {
+module.exports = "/movies.3ce2d8bc.png";
+},{}],"img/music.png":[function(require,module,exports) {
+module.exports = "/music.b8c1f2aa.png";
+},{}],"img/outlook-express.jpg":[function(require,module,exports) {
+module.exports = "/outlook-express.b49f763b.jpg";
+},{}],"img/paint.png":[function(require,module,exports) {
+module.exports = "/paint.64345e01.png";
+},{}],"img/pictures.png":[function(require,module,exports) {
+module.exports = "/pictures.b22d1037.png";
+},{}],"img/run.png":[function(require,module,exports) {
+module.exports = "/run.e5d41ff2.png";
+},{}],"img/search.png":[function(require,module,exports) {
+module.exports = "/search.42b7d05d.png";
+},{}],"img/song.png":[function(require,module,exports) {
+module.exports = "/song.431a2232.png";
+},{}],"img/support-help.png":[function(require,module,exports) {
+module.exports = "/support-help.6ebaac0d.png";
+},{}],"img/trash-filled.png":[function(require,module,exports) {
+module.exports = "/trash-filled.6ba3b823.png";
+},{}],"img/trash.png":[function(require,module,exports) {
+module.exports = "/trash.be1686b2.png";
+},{}],"img/video.png":[function(require,module,exports) {
+module.exports = "/video.187f678d.png";
+},{}],"img/windows.png":[function(require,module,exports) {
+module.exports = "/windows.5fab38d1.png";
+},{}],"img/windows_xp_icons_by_gothago229-d3iz9h1.zip":[function(require,module,exports) {
+module.exports = "/windows_xp_icons_by_gothago229-d3iz9h1.5d7b50d0.zip";
+},{}],"img/xp-arrow-icon-next.png":[function(require,module,exports) {
+module.exports = "/xp-arrow-icon-next.771dd4f2.png";
+},{}],"img/xp-arrow-icon-previous.png":[function(require,module,exports) {
+module.exports = "/xp-arrow-icon-previous.e49c7a71.png";
+},{}],"img/*.*":[function(require,module,exports) {
+module.exports = {
+  "computer": {
+    "png": require("./computer.png")
+  },
+  "control-panel": {
+    "png": require("./control-panel.png")
+  },
+  "documents": {
+    "png": require("./documents.png")
+  },
+  "favorite": {
+    "png": require("./favorite.png")
+  },
+  "folder-empty": {
+    "png": require("./folder-empty.png")
+  },
+  "ie": {
+    "png": require("./ie.png")
+  },
+  "info-balloon": {
+    "png": require("./info-balloon.png")
+  },
+  "internet-explorer": {
+    "png": require("./internet-explorer.png")
+  },
+  "log-off": {
+    "png": require("./log-off.png")
+  },
+  "media-player": {
+    "png": require("./media-player.png")
+  },
+  "messenger": {
+    "png": require("./messenger.png")
+  },
+  "movies": {
+    "png": require("./movies.png")
+  },
+  "music": {
+    "png": require("./music.png")
+  },
+  "outlook-express": {
+    "jpg": require("./outlook-express.jpg")
+  },
+  "paint": {
+    "png": require("./paint.png")
+  },
+  "pictures": {
+    "png": require("./pictures.png")
+  },
+  "run": {
+    "png": require("./run.png")
+  },
+  "search": {
+    "png": require("./search.png")
+  },
+  "song": {
+    "png": require("./song.png")
+  },
+  "support-help": {
+    "png": require("./support-help.png")
+  },
+  "trash-filled": {
+    "png": require("./trash-filled.png")
+  },
+  "trash": {
+    "png": require("./trash.png")
+  },
+  "video": {
+    "png": require("./video.png")
+  },
+  "windows": {
+    "png": require("./windows.png")
+  },
+  "windows_xp_icons_by_gothago229-d3iz9h1": {
+    "zip": require("./windows_xp_icons_by_gothago229-d3iz9h1.zip")
+  },
+  "xp-arrow-icon-next": {
+    "png": require("./xp-arrow-icon-next.png")
+  },
+  "xp-arrow-icon-previous": {
+    "png": require("./xp-arrow-icon-previous.png")
+  }
+};
+},{"./computer.png":"img/computer.png","./control-panel.png":"img/control-panel.png","./documents.png":"img/documents.png","./favorite.png":"img/favorite.png","./folder-empty.png":"img/folder-empty.png","./ie.png":"img/ie.png","./info-balloon.png":"img/info-balloon.png","./internet-explorer.png":"img/internet-explorer.png","./log-off.png":"img/log-off.png","./media-player.png":"img/media-player.png","./messenger.png":"img/messenger.png","./movies.png":"img/movies.png","./music.png":"img/music.png","./outlook-express.jpg":"img/outlook-express.jpg","./paint.png":"img/paint.png","./pictures.png":"img/pictures.png","./run.png":"img/run.png","./search.png":"img/search.png","./song.png":"img/song.png","./support-help.png":"img/support-help.png","./trash-filled.png":"img/trash-filled.png","./trash.png":"img/trash.png","./video.png":"img/video.png","./windows.png":"img/windows.png","./windows_xp_icons_by_gothago229-d3iz9h1.zip":"img/windows_xp_icons_by_gothago229-d3iz9h1.zip","./xp-arrow-icon-next.png":"img/xp-arrow-icon-next.png","./xp-arrow-icon-previous.png":"img/xp-arrow-icon-previous.png"}],"js/File.js":[function(require,module,exports) {
 "use strict";
 
-var _isChildElement = _interopRequireDefault(require("./utils/isChildElement"));
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require("../img/*.*"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Folder = function Folder() {
-  _classCallCheck(this, Folder);
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  this.innerFolders = [];
-  this.innerFiles = [];
-};
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var wallpaperGrid = document.querySelector(".wallpaper-grid");
+
+var File =
+/*#__PURE__*/
+function () {
+  function File() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        _ref$name = _ref.name,
+        name = _ref$name === void 0 ? "Unnamed" : _ref$name,
+        _ref$type = _ref.type,
+        type = _ref$type === void 0 ? "folder" : _ref$type,
+        _ref$parentFolder = _ref.parentFolder,
+        parentFolder = _ref$parentFolder === void 0 ? wallpaperGrid : _ref$parentFolder,
+        _ref$innerFolders = _ref.innerFolders,
+        innerFolders = _ref$innerFolders === void 0 ? [] : _ref$innerFolders,
+        _ref$innerFiles = _ref.innerFiles,
+        innerFiles = _ref$innerFiles === void 0 ? [] : _ref$innerFiles;
+
+    _classCallCheck(this, File);
+
+    this.name = name;
+    this.type = type;
+    this.parentFolder = parentFolder;
+    this.innerFolders = innerFolders;
+    this.innerFiles = innerFiles;
+    this.associatedDesktopElement = null;
+    this.createNecessaryElements();
+    this.remove = this.remove.bind(this);
+  }
+
+  _createClass(File, [{
+    key: "createNecessaryElements",
+    value: function createNecessaryElements() {
+      // create the file on the desktop or folder
+      this.associatedDesktopElement = createDesktopElement(this.name, this.type);
+      this.parentFolder.appendChild(this.associatedDesktopElement); // create the taskbar element
+      // create the opened window
+    }
+  }, {
+    key: "remove",
+    value: function remove() {
+      this.parentFolder.removeChild(this.associatedDesktopElement);
+    }
+  }]);
+
+  return File;
+}(); // Returns a desktop cell
+
+/*
+  <div class="cell">
+    <img src="img/folder_empty-3.png" alt="">
+    <span class="cell-name">
+      Projects
+    </span>
+  </div>
+*/
+
+
+function createDesktopElement(fileName, fileType) {
+  var desktopElement = document.createElement("div");
+  desktopElement.classList.add("cell");
+  var img = document.createElement("img");
+  img.src = getFileIconUrl(fileType);
+  img.alt = fileType;
+  var cellName = document.createElement("span");
+  cellName.classList.add("cell-name");
+  cellName.innerText = fileName;
+  desktopElement.appendChild(img);
+  desktopElement.appendChild(cellName);
+  return desktopElement;
+}
+
+function getFileIconUrl(fileIconName) {
+  var fileIconUrl = "";
+
+  switch (fileIconName) {
+    case "folder":
+      fileIconUrl += Object.values(_.default["folder-empty"])[0];
+      break;
+
+    default:
+      fileIconUrl += Object.values(_.default["folder-empty"])[0];
+      break;
+  }
+
+  return fileIconUrl;
+}
+
+var _default = File;
+exports.default = _default;
+},{"../img/*.*":"img/*.*"}],"js/folder.js":[function(require,module,exports) {
+"use strict";
+
+var _isChildElement = _interopRequireDefault(require("./utils/isChildElement"));
+
+var _File = _interopRequireDefault(require("./File"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Programatically add a few folders
+if (Array.from(document.querySelectorAll(".wallpaper-grid > .cell")).length === 0) {
+  var testFile = new _File.default({
+    name: "My test file",
+    type: "folder"
+  });
+  var arr = [];
+
+  for (var index = 0; index <= 20; index++) {
+    arr.push(new _File.default({
+      name: "My test file".concat(index),
+      type: "folder"
+    }));
+  }
+}
 
 var folder = document.querySelector(".folder-opened");
 var topBar = folder.querySelector(".top-bar");
@@ -284,7 +539,8 @@ folder.addEventListener("mousedown", function (e) {
       document.removeEventListener("mousemove", onMouseMove);
       folder.mouseup = null;
     };
-  }
+  } // Maximize
+
 
   var toggleMaximizeButton = document.querySelector(".top-bar-button.maximize");
 
@@ -307,6 +563,15 @@ folder.addEventListener("mousedown", function (e) {
       folder.style.height = "calc(100vh - 40px)";
       isMaximize = true;
     }
+  } // Add to taskbar
+
+
+  var taskbar = document.querySelector("ul.taskbar"); // Minimize
+
+  var minimizeButton = document.querySelector(".top-bar-button.minimize");
+
+  if (e.target == minimizeButton) {
+    console.log("minimize!");
   } // The browser has its own drag and drop API, this resolves conflicts with that api
 
 
@@ -314,20 +579,26 @@ folder.addEventListener("mousedown", function (e) {
     return false;
   };
 });
+
+function makeListItem(child) {
+  var li = document.createElement("li");
+  li.appendChild(child);
+  return li;
+}
 /*
- when a folder should be minimized it can be added as a flex item in the bottom bar
- so use appendchild without cloning an item
+ When a folder should be minimized it can be added as a flex item in the bottom bar
+ so use appendchild so the element isn't cloned
  
  Add overruling styles that get rid of the absolute positioning for folders 
 */
-},{"./utils/isChildElement":"js/utils/isChildElement.js"}],"index.js":[function(require,module,exports) {
+},{"./utils/isChildElement":"js/utils/isChildElement.js","./File":"js/File.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("./css/style.scss");
 
 require("./js/right-click");
 
-require("./js/Folder");
+require("./js/folder");
 
 if (module.hot) {
   module.hot.dispose(function () {// module is about to be replaced
@@ -337,7 +608,7 @@ if (module.hot) {
     console.log("HMR initialized!");
   });
 }
-},{"./css/style.scss":"css/style.scss","./js/right-click":"js/right-click.js","./js/Folder":"js/Folder.js"}],"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./css/style.scss":"css/style.scss","./js/right-click":"js/right-click.js","./js/folder":"js/folder.js"}],"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -364,7 +635,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37193" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45331" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

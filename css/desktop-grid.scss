@@ -1,3 +1,8 @@
+.cell-name {
+  user-select: none;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
 .file-grid {
   padding-top: 5px;
   display: grid;
@@ -5,6 +10,7 @@
   grid-auto-rows: 75px;
   grid-auto-columns: 80px;
   grid-template-columns: repeat(auto-fill, 80px);
+
   .cell {
     display: flex;
     flex-direction: column;
@@ -21,13 +27,14 @@
     .cell-name {
       text-align: center;
       display: block;
-      font-size: 15px;
-      font-family: Georgia, "Times New Roman", Times, serif;
       max-width: 86%;
+      font-size: 15px;
       text-overflow: ellipsis;
     }
   }
 }
+
+// extends file-grid
 .wallpaper-grid {
   grid-gap: 10px 5px;
   grid-auto-rows: 72px;

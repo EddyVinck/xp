@@ -1,9 +1,12 @@
 import isChildElement from "./utils/isChildElement";
+import File from "./File";
 
-class Folder {
-  constructor() {
-    this.innerFolders = [];
-    this.innerFiles = [];
+// Programatically add a few folders
+if (Array.from(document.querySelectorAll(".wallpaper-grid > .cell")).length === 0) {
+  const testFile = new File({ name: "My test file", type: "folder" });
+  const arr = [];
+  for (let index = 0; index <= 20; index++) {
+    arr.push(new File({ name: `My test file${index}`, type: "folder" }));
   }
 }
 
@@ -44,6 +47,7 @@ folder.addEventListener("mousedown", e => {
     };
   }
 
+  // Maximize
   const toggleMaximizeButton = document.querySelector(".top-bar-button.maximize");
   if (e.target == toggleMaximizeButton) {
     if (isMaximize) {
@@ -68,15 +72,30 @@ folder.addEventListener("mousedown", e => {
     }
   }
 
+  // Add to taskbar
+  const taskbar = document.querySelector("ul.taskbar");
+
+  // Minimize
+  const minimizeButton = document.querySelector(".top-bar-button.minimize");
+  if (e.target == minimizeButton) {
+    console.log("minimize!");
+  }
+
   // The browser has its own drag and drop API, this resolves conflicts with that api
   folder.ondragstart = function() {
     return false;
   };
 });
 
+function makeListItem(child) {
+  const li = document.createElement("li");
+  li.appendChild(child);
+  return li;
+}
+
 /*
- when a folder should be minimized it can be added as a flex item in the bottom bar
- so use appendchild without cloning an item
+ When a folder should be minimized it can be added as a flex item in the bottom bar
+ so use appendchild so the element isn't cloned
  
  Add overruling styles that get rid of the absolute positioning for folders 
 */
