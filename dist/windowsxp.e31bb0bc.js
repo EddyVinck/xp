@@ -394,6 +394,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var wallpaperGrid = document.querySelector(".wallpaper-grid");
+var taskbar = document.querySelector("ul.taskbar");
 
 var File =
 /*#__PURE__*/
@@ -417,29 +418,102 @@ function () {
     this.type = type;
     this.parentFolder = parentFolder;
     this.innerFolders = innerFolders;
-    this.innerFiles = innerFiles;
-    this.associatedDesktopElement = null;
-    this.createNecessaryElements();
+    this.innerFiles = innerFiles; // A lovely collection of boolean flags (for now)
+    // Maybe look into implementing a finite state machine
+
+    this.state = {
+      isOpen: false
+    }; // Associated DOM elements
+
+    this.desktopElement = null;
+    this.taskbarElement = null;
+    this.windowElement = null; // Function binding
+
     this.remove = this.remove.bind(this);
-  }
+    this.createNecessaryElements = this.createNecessaryElements.bind(this);
+    this.handleDesktopSingleClick = this.handleDesktopSingleClick.bind(this);
+    this.handleDesktopDoubleClick = this.handleDesktopDoubleClick.bind(this);
+    this.handleTaskbarClick = this.handleTaskbarClick.bind(this); // Setup functions
+
+    this.createNecessaryElements();
+  } // Creates desktop file, taskbar item
+  // Adds necessary event listeners
+
 
   _createClass(File, [{
     key: "createNecessaryElements",
     value: function createNecessaryElements() {
-      // create the file on the desktop or folder
-      this.associatedDesktopElement = createDesktopElement(this.name, this.type);
-      this.parentFolder.appendChild(this.associatedDesktopElement); // create the taskbar element
-      // create the opened window
+      // Create the file on the desktop or folder
+      this.desktopElement = createDesktopElement(this.name, this.type);
+      this.parentFolder.appendChild(this.desktopElement);
+      this.desktopElement.addEventListener("click", this.handleDesktopSingleClick);
+      this.desktopElement.addEventListener("dblclick", this.handleDesktopDoubleClick); // create the opened window
     }
   }, {
     key: "remove",
     value: function remove() {
-      this.parentFolder.removeChild(this.associatedDesktopElement);
+      this.taskbarElement.removeEventListener(this.handleTaskbarClick);
+      this.desktopElement.removeEventListener(this.handleDesktopSingleClick);
+      this.parentFolder.removeChild(this.desktopElement);
+    }
+  }, {
+    key: "handleTaskbarClick",
+    value: function handleTaskbarClick(e) {
+      console.log("taskbar click", this);
+      var isOpen = this.state.isOpen;
+
+      if (isOpen) {// minify it
+      } else {
+        // open the window
+        this.openWindow();
+      }
+
+      this.state.isOpen = !isOpen;
+    }
+  }, {
+    key: "handleDesktopSingleClick",
+    value: function handleDesktopSingleClick(e) {}
+  }, {
+    key: "handleDesktopDoubleClick",
+    value: function handleDesktopDoubleClick(e) {
+      if (this.taskbarElement instanceof HTMLElement) {// taskbarElement already created
+        // no need to do that again
+      } else {
+        this.openInital();
+      }
+
+      this.openWindow();
+    } // Opens a file that is currently not opened
+    // create the taskbar element
+    // and open the window
+
+  }, {
+    key: "openInital",
+    value: function openInital() {
+      // Create taskbarElement
+      var taskbarElement = createTaskbarElement(this.desktopElement.cloneNode(true));
+      this.taskbarElement = taskbarElement;
+      taskbar.appendChild(taskbarElement);
+      this.taskbarElement.addEventListener("click", this.handleTaskbarClick);
+    } // Open the file's window
+
+  }, {
+    key: "openWindow",
+    value: function openWindow() {
+      console.log("opening window element...");
+      var windowElement = createWindowElement();
+      this.windowElement = windowElement;
     }
   }]);
 
   return File;
-}(); // Returns a desktop cell
+}();
+
+function createTaskbarElement(desktopElement) {
+  var li = document.createElement("li");
+  li.appendChild(desktopElement);
+  return li;
+} // Returns a desktop cell
 
 /*
   <div class="cell">
@@ -479,6 +553,128 @@ function getFileIconUrl(fileIconName) {
   }
 
   return fileIconUrl;
+} // Creates and returns the window HTML element
+
+/*
+.folder-window
+  .folder-header
+    .top-bar
+      .folder-label
+        img(src="img/folder-empty.png")
+        span{folder-name}
+      .top-bar-controls
+        .top-bar-button.minimize
+        .top-bar-button.maximize
+        .top-bar-button.close
+    .menu-bar
+      .menu-top
+        ul
+          li
+            {Optionname}
+            ul > li{sub-option}
+      .menu-bottom
+        ul
+          li
+            img(src="img/xp-arrow-icon-previous.png")
+            span{back}
+          li
+            img(src="img/xp-arrow-icon-next.png")
+        ul
+          li{Search}
+      .address-bar
+        span{Address}
+        .address-input-wrapper
+          .address-input-icon
+            img(src="img/folder-empty.png")
+          input.address-input(type="text" value="C:\Desktop\Folder Name" placeholder="C:\Desktop\Folder Name")  
+  .folder-content
+    .file-grid
+      .cell
+*/
+
+
+function createWindowElement(fileName, fileType) {
+  // Root
+  var fileWindow = document.createElement("div");
+  fileWindow.classList.add("folder-window"); // Window -> Header
+
+  var header = document.createElement("div");
+  header.classList.add("folder-header");
+  fileWindow.appendChild(header); // Header -> Top Bar
+
+  var topBar = document.createElement("div");
+  topBar.classList.add("top-bar");
+  header.appendChild(topBar); // Top Bar -> Folder Label
+
+  var folderLabel = document.createElement("div");
+  folderLabel.classList.add("folder-label");
+  topBar.appendChild(folderLabel); // Folder Label -> img
+
+  var folderLabelImage = document.createElement("img");
+  folderLabelImage.src = getFileIconUrl(fileType);
+  folderLabelImage.alt = fileType;
+  folderLabel.appendChild(folderLabelImage); // Folder Label -> span
+
+  var folderLabelSpan = document.createElement("img");
+  folderLabelSpan.innerText = fileName;
+  folderLabel.appendChild(folderLabelSpan); // Top Bar -> Top Bar Controls
+
+  var topBarControls = document.createElement("div");
+  topBarControls.classList.add("top-bar-controls");
+  topBar.appendChild(topBarControls); // Top Bar Controls -> Minimize
+
+  var minimizeButton = document.createElement("div");
+  minimizeButton.classList.add("top-bar-button", "minimize");
+  topBarControls.appendChild(minimizeButton); // Top Bar Controls -> Maximize
+
+  var maximizeButton = document.createElement("div");
+  maximizeButton.classList.add("top-bar-button", "maximize");
+  topBarControls.appendChild(maximizeButton); // Top Bar Controls -> Close
+
+  var closeButton = document.createElement("div");
+  closeButton.classList.add("top-bar-button", "close");
+  topBarControls.appendChild(closeButton); // Header -> Menu Bar
+
+  var menuBar = document.createElement("div");
+  menuBar.classList.add("menu-bar");
+  header.appendChild(menuBar); // Menu Bar -> Menu Top
+
+  var menuTop = document.createElement("div");
+  menuTop.classList.add("menu-top");
+  menuBar.appendChild(menuTop); // ul
+  //   li
+  //     {Optionname}
+  //     ul > li{sub-option}
+  // Menu Bar -> Menu Bottom
+
+  var menuBottom = document.createElement("div");
+  menuBottom.classList.add("menu-bottom");
+  menuBar.appendChild(menuBottom); // ul
+  //   li
+  //     img(src="img/xp-arrow-icon-previous.png")
+  //     span{back}
+  //   li
+  //     img(src="img/xp-arrow-icon-next.png")
+  // ul
+  //   li{Search}
+  // Menu Bar -> Address Bar
+
+  var addressBar = document.createElement("div");
+  addressBar.classList.add("address-bar");
+  menuBar.appendChild(addressBar); // span{Address}
+  //   .address-input-wrapper
+  //     .address-input-icon
+  //       img(src="img/folder-empty.png")
+  //     input.address-input(type="text" value="C:\Desktop\Folder Name" placeholder="C:\Desktop\Folder Name")
+  // Window -> Content
+
+  var content = document.createElement("div");
+  content.classList.add("folder-content");
+  fileWindow.appendChild(content);
+  var fileGrid = document.createElement("div");
+  fileGrid.classList.add("file-grid");
+  content.appendChild(fileGrid);
+  return fileWindow;
 }
 
 var _default = File;
@@ -498,23 +694,22 @@ if (Array.from(document.querySelectorAll(".wallpaper-grid > .cell")).length === 
     name: "My test file",
     type: "folder"
   });
-  var arr = [];
 
-  for (var index = 0; index <= 20; index++) {
-    arr.push(new _File.default({
-      name: "My test file".concat(index),
+  for (var index = 0; index <= 3; index++) {
+    new _File.default({
+      name: "My test file (".concat(index, ")"),
       type: "folder"
-    }));
+    });
   }
 }
 
-var folder = document.querySelector(".folder-opened");
+var folder = document.querySelector(".folder-window");
 var topBar = folder.querySelector(".top-bar");
 var isMaximize = false;
 var originalOffsetLeft;
 var originalOffsetTop;
 folder.addEventListener("mousedown", function (e) {
-  var isClickingOnTopBar = (0, _isChildElement.default)(e.target, topBar) || e.target === topBar;
+  var isClickingOnTopBar = (0, _isChildElement.default)(e.target, topBar) || e.target === topBar; // Drag and drop
 
   if (isClickingOnTopBar && !isMaximize) {
     var moveAt = function moveAt(x, y) {
@@ -635,7 +830,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45331" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44985" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

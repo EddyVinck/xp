@@ -4,13 +4,12 @@ import File from "./File";
 // Programatically add a few folders
 if (Array.from(document.querySelectorAll(".wallpaper-grid > .cell")).length === 0) {
   const testFile = new File({ name: "My test file", type: "folder" });
-  const arr = [];
-  for (let index = 0; index <= 20; index++) {
-    arr.push(new File({ name: `My test file${index}`, type: "folder" }));
+  for (let index = 0; index <= 3; index++) {
+    new File({ name: `My test file (${index})`, type: "folder" });
   }
 }
 
-const folder = document.querySelector(".folder-opened");
+const folder = document.querySelector(".folder-window");
 const topBar = folder.querySelector(".top-bar");
 let isMaximize = false;
 let originalOffsetLeft;
@@ -19,6 +18,7 @@ let originalOffsetTop;
 folder.addEventListener("mousedown", e => {
   const isClickingOnTopBar = isChildElement(e.target, topBar) || e.target === topBar;
 
+  // Drag and drop
   if (isClickingOnTopBar && !isMaximize) {
     function moveAt(x, y) {
       folder.style.left = x - shiftX + "px";
