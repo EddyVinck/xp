@@ -30,6 +30,8 @@ class File {
 
     // Function binding
     this.remove = this.remove.bind(this);
+    this.openWindow = this.openWindow.bind(this);
+    this.closeWindow = this.closeWindow.bind(this);
     this.createNecessaryElements = this.createNecessaryElements.bind(this);
     this.handleDesktopSingleClick = this.handleDesktopSingleClick.bind(this);
     this.handleDesktopDoubleClick = this.handleDesktopDoubleClick.bind(this);
@@ -97,8 +99,23 @@ class File {
   // Open the file's window
   openWindow() {
     console.log("opening window element...");
-    const windowElement = createWindowElement();
-    this.windowElement = windowElement;
+    let windowElement = null;
+
+    if (this.windowElement instanceof HTMLElement) {
+      // windowElement was already created
+      windowElement = this.windowElement;
+    } else {
+      // windowElement did not exist yet
+      windowElement = createWindowElement(this.fileName, this.fileType);
+      this.windowElement = windowElement;
+    }
+    document.body.appendChild(windowElement);
+
+    setTimeout(this.closeWindow, 2000);
+  }
+
+  closeWindow() {
+    this.windowElement.parentNode.removeChild(this.windowElement);
   }
 }
 
@@ -268,11 +285,34 @@ function createWindowElement(fileName, fileType) {
   const addressBar = document.createElement("div");
   addressBar.classList.add("address-bar");
   menuBar.appendChild(addressBar);
-  // span{Address}
-  //   .address-input-wrapper
-  //     .address-input-icon
-  //       img(src="img/folder-empty.png")
-  //     input.address-input(type="text" value="C:\Desktop\Folder Name" placeholder="C:\Desktop\Folder Name")
+
+  // Address Bar -> span
+  const addressBarSpan = document.createElement("span");
+  addressBarSpan.innerText = "Address";
+  addressBar.appendChild(addressBarSpan);
+
+  // Address Bar -> .address-input-wrapper
+  const addressInputWrapper = document.createElement("div");
+  addressInputWrapper.classList.add("address-input-wrapper");
+  addressBar.appendChild(addressInputWrapper);
+
+  // .address-input-wrapper -> .address-input-icon
+  const addressInputIcon = document.createElement("div");
+  addressInputIcon.classList.add("address-input-icon");
+  addressInputWrapper.appendChild(addressInputIcon);
+
+  // .address-input-wrapper -> img
+  const addressInputIconImage = document.createElement("img");
+  addressInputIconImage.src = getFileIconUrl(fileType);
+  addressInputIcon.appendChild(addressInputIconImage);
+
+  // .address-input-wrapper -> input.address-input
+  const addressInput = document.createElement("input");
+  addressInput.classList.add("address-input");
+  addressInput.type = "text";
+  addressInput.value = "C:DesktopFolder Name";
+  addressInput.placeholder = "C:DesktopFolder Name";
+  addressInputWrapper.appendChild(addressInput);
 
   // Window -> Content
   const content = document.createElement("div");

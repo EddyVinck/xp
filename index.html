@@ -1,234 +1,191 @@
-<!-- reference: 
-https://msdn.microsoft.com/en-us/library/ms997636.aspx
+<!--
+  reference:
+  https://msdn.microsoft.com/en-us/library/ms997636.aspx
 -->
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Windows XP</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Windows XP</title>
-</head>
-
-<body>
-  <div class="right-click-menu">
-    <ul>
-      <li>Right</li>
-      <li>Click</li>
-      <li>Options</li>
-      <li>New</li>
-      <li>Properties</li>
-    </ul>
-  </div>
-  <div class="container">
-    <div class="wallpaper">
-
-      <div class="folder-window">
-        <div class="folder-header">
-          <div class="top-bar">
-            <div class="folder-label">
-              <img src="img/folder-empty.png" alt="">
-              <span>Folder name</span>
+  <body>
+    <div class="right-click-menu">
+      <ul>
+        <li>Right</li>
+        <li>Click</li>
+        <li>Options</li>
+        <li>New</li>
+        <li>Properties</li>
+      </ul>
+    </div>
+    <div class="container">
+      <div class="wallpaper">
+        <div class="folder-window">
+          <div class="folder-header">
+            <div class="top-bar">
+              <div class="folder-label"><img src="img/folder-empty.png" alt="" /> <span>Folder name</span></div>
+              <div class="top-bar-controls">
+                <div class="top-bar-button minimize"></div>
+                <div class="top-bar-button maximize"></div>
+                <div class="top-bar-button close"></div>
+              </div>
             </div>
-            <div class="top-bar-controls">
-              <div class="top-bar-button minimize"></div>
-              <div class="top-bar-button maximize"></div>
-              <div class="top-bar-button close"></div>
-            </div>
-          </div>
-          <div class="menu-bar">
-            <div class="menu-top">
-              <ul>
-                <li>
-                  File
-                  <ul>
-                    <li>option</li>
-                    <li>option</li>
-                    <li>option</li>
-                  </ul>
-                </li>
-                <li>
-                  Edit
-                  <ul>
-                    <li>option</li>
-                    <li>option</li>
-                    <li>option</li>
-                  </ul>
-                </li>
-                <li>
-                  View
-                  <ul>
-                    <li>option</li>
-                    <li>option</li>
-                    <li>option</li>
-                  </ul>
-                </li>
-                <li>
-                  Help
-                  <ul>
-                    <li>option</li>
-                    <li>option</li>
-                    <li>option</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-            <div class="menu-bottom">
-              <ul>
-                <li>
-                  <img src="img/xp-arrow-icon-previous.png" alt="">
-                  <span>Back</span>
-                </li>
-                <li>
-                  <img src="img/xp-arrow-icon-next.png" alt="">
-                </li>
-              </ul>
-              <ul>
-                <li>Search</li>
-              </ul>
-            </div>
-            <div class="address-bar">
-              <span>Address</span>
-              <div class="address-input-wrapper">
-                <div class="address-input-icon">
-                  <img src="img/folder-empty.png" alt="">
+            <div class="menu-bar">
+              <div class="menu-top">
+                <ul>
+                  <li>
+                    File
+                    <ul>
+                      <li>option</li>
+                      <li>option</li>
+                      <li>option</li>
+                    </ul>
+                  </li>
+                  <li>
+                    Edit
+                    <ul>
+                      <li>option</li>
+                      <li>option</li>
+                      <li>option</li>
+                    </ul>
+                  </li>
+                  <li>
+                    View
+                    <ul>
+                      <li>option</li>
+                      <li>option</li>
+                      <li>option</li>
+                    </ul>
+                  </li>
+                  <li>
+                    Help
+                    <ul>
+                      <li>option</li>
+                      <li>option</li>
+                      <li>option</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="menu-bottom">
+                <ul>
+                  <li><img src="img/xp-arrow-icon-previous.png" alt="" /> <span>Back</span></li>
+                  <li><img src="img/xp-arrow-icon-next.png" alt="" /></li>
+                </ul>
+                <ul>
+                  <li>Search</li>
+                </ul>
+              </div>
+              <div class="address-bar">
+                <span>Address</span>
+                <div class="address-input-wrapper">
+                  <div class="address-input-icon"><img src="img/folder-empty.png" alt="" /></div>
+                  <input
+                    type="text"
+                    value="C:\Desktop\Folder Name"
+                    placeholder="C:\Desktop\Folder Name"
+                    class="address-input"
+                  />
                 </div>
-                <input type="text" value="C:\Desktop\Folder Name" placeholder="C:\Desktop\Folder Name" class="address-input">
               </div>
             </div>
           </div>
-
+          <div class="folder-content">
+            <div class="file-grid">
+              <div class="cell">
+                <img src="img/folder-empty.png" alt="" /> <span class="cell-name"> Projects </span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="folder-content">
-          <div class="file-grid">
 
+        <div class="file-grid wallpaper-grid">
+          <!--
             <div class="cell">
               <img src="img/folder-empty.png" alt="">
               <span class="cell-name">
                 Projects
               </span>
             </div>
-
-          </div>
+          -->
         </div>
       </div>
-
-      <div class="file-grid wallpaper-grid">
-
-        <!-- <div class="cell">
-          <img src="img/folder-empty.png" alt="">
-          <span class="cell-name">
-            Projects
-          </span>
-        </div> -->
-
+      <div class="bar">
+        <ul class="start">
+          <li class="xopen" tabindex="-1">
+            <a href="#" class="program-image" href="#"> <img src="img/windows.png" alt="" /> </a>
+            <a href="#"> start </a>
+            <div class="slide-open">
+              <div class="top"><h1>Eddy Vinck</h1></div>
+              <div class="menu">
+                <div class="programs">
+                  <ul>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/ie.png" alt="" /> </a>
+                      <a href="#">Internet Explorer</a>
+                    </li>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/paint.png" alt="" /> </a>
+                      <a href="#">Paint</a>
+                    </li>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/media-player.png" alt="" /> </a>
+                      <a href="#">Windows Media Player</a>
+                    </li>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/outlook-express.jpg" alt="" /> </a>
+                      <a href="#">E-mail</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="system">
+                  <ul>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/documents.png" alt="" /> </a>
+                      <a href="#">My Documents</a>
+                    </li>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/pictures.png" alt="" /> </a>
+                      <a href="#">My Pictures</a>
+                    </li>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/music.png" alt="" /> </a>
+                      <a href="#">My Music</a>
+                    </li>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/computer.png" alt="" /> </a>
+                      <a href="#">My Computer</a>
+                    </li>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/control-panel.png" alt="" /> </a>
+                      <a href="#">Control Panel</a>
+                    </li>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/support-help.png" alt="" /> </a>
+                      <a href="#">Help and Support</a>
+                    </li>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/search.png" alt="" /> </a>
+                      <a href="#">Search</a>
+                    </li>
+                    <li tabindex="-1">
+                      <a href="#" class="program-image" href="#"> <img src="img/run.png" alt="" /> </a>
+                      <a href="#">Run...</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="bottom"></div>
+            </div>
+          </li>
+        </ul>
+        <ul class="taskbar"></ul>
       </div>
     </div>
-    <div class="bar">
-      <ul class="start">
-        <li class="xopen" tabindex="-1">
-          <a href="#" class="program-image" href="#">
-            <img src="img/windows.png" alt="">
-          </a>
-          <a href="#">
-            start
-          </a>
-          <div class="slide-open">
-            <div class="top">
-              <h1>Eddy Vinck</h1>
-            </div>
-            <div class="menu">
-              <div class="programs">
-                <ul>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/ie.png" alt="">
-                    </a>
-                    <a href="#">Internet Explorer</a>
-                  </li>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/paint.png" alt="">
-                    </a>
-                    <a href="#">Paint</a>
-                  </li>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/media-player.png" alt="">
-                    </a>
-                    <a href="#">Windows Media Player</a>
-                  </li>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/outlook-express.jpg" alt="">
-                    </a>
-                    <a href="#">E-mail</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="system">
-                <ul>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/documents.png" alt="">
-                    </a>
-                    <a href="#">My Documents</a>
-                  </li>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/pictures.png" alt="">
-                    </a>
-                    <a href="#">My Pictures</a>
-                  </li>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/music.png" alt="">
-                    </a>
-                    <a href="#">My Music</a>
-                  </li>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/computer.png" alt="">
-                    </a>
-                    <a href="#">My Computer</a>
-                  </li>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/control-panel.png" alt="">
-                    </a>
-                    <a href="#">Control Panel</a>
-                  </li>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/support-help.png" alt="">
-                    </a>
-                    <a href="#">Help and Support</a>
-                  </li>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/search.png" alt="">
-                    </a>
-                    <a href="#">Search</a>
-                  </li>
-                  <li tabindex="-1">
-                    <a href="#" class="program-image" href="#">
-                      <img src="img/run.png" alt="">
-                    </a>
-                    <a href="#">Run...</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="bottom"></div>
-          </div>
-        </li>
-      </ul>
-      <ul class="taskbar"></ul>
-    </div>
-  </div>
 
-  <script src="./index.js"></script>
-</body>
-
+    <script src="./index.js"></script>
+  </body>
 </html>
