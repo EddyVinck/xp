@@ -106,12 +106,12 @@ class File {
       windowElement = this.windowElement;
     } else {
       // windowElement did not exist yet
-      windowElement = createWindowElement(this.fileName, this.fileType);
+      windowElement = createWindowElement(this.name, this.type);
       this.windowElement = windowElement;
+      console.log(this.windowElement);
+      this.windowElement.querySelector(".close").addEventListener("click", this.closeWindow);
     }
     document.body.appendChild(windowElement);
-
-    setTimeout(this.closeWindow, 2000);
   }
 
   closeWindow() {
@@ -157,6 +157,9 @@ function getFileIconUrl(fileIconName) {
   switch (fileIconName) {
     case "folder":
       fileIconUrl += Object.values(imageUrls["folder-empty"])[0];
+      break;
+    case "control-panel":
+      fileIconUrl += Object.values(imageUrls["control-panel"])[0];
       break;
     default:
       fileIconUrl += Object.values(imageUrls["folder-empty"])[0];
@@ -230,7 +233,7 @@ function createWindowElement(fileName, fileType) {
   folderLabel.appendChild(folderLabelImage);
 
   // Folder Label -> span
-  const folderLabelSpan = document.createElement("img");
+  const folderLabelSpan = document.createElement("span");
   folderLabelSpan.innerText = fileName;
   folderLabel.appendChild(folderLabelSpan);
 
