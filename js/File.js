@@ -1,4 +1,5 @@
 import imageUrls from "../img/*.*";
+import { el, mount } from "redom";
 
 const wallpaperGrid = document.querySelector(".wallpaper-grid");
 const taskbar = document.querySelector("ul.taskbar");
@@ -207,126 +208,46 @@ function getFileIconUrl(fileIconName) {
       .cell
 */
 function createWindowElement(fileName, fileType) {
-  // Root
-  const fileWindow = document.createElement("div");
-  fileWindow.classList.add("folder-window");
+  const windowElement = el(
+    ".folder-window",
+    el(
+      ".folder-header",
+      el(
+        ".top-bar",
+        el(".folder-label", el("img", { src: getFileIconUrl(fileType), alt: fileName }), el("span", fileName)),
+        el(
+          ".top-bar-controls",
+          el(".top-bar-button.minimze"),
+          el(".top-bar-button.maximize"),
+          el(".top-bar-button.close")
+        )
+      ),
+      el(
+        ".menu-bar",
+        el(".menu-top"),
+        el(".menu-bottom"),
+        el(
+          ".address-bar",
+          el("span", "Address"),
+          el(
+            ".address-input-wrapper",
+            el(
+              ".address-input-icon",
+              el("img", { src: getFileIconUrl(fileType), alt: fileType }),
+              el("input.address-input", {
+                type: "text",
+                value: "C:\\Desktop\\Folder Name",
+                placeholder: "C:\\Desktop\\Folder Name"
+              })
+            )
+          )
+        )
+      )
+    ),
+    el(".folder-content", el(".file-grid"))
+  );
 
-  // Window -> Header
-  const header = document.createElement("div");
-  header.classList.add("folder-header");
-  fileWindow.appendChild(header);
-
-  // Header -> Top Bar
-  const topBar = document.createElement("div");
-  topBar.classList.add("top-bar");
-  header.appendChild(topBar);
-
-  // Top Bar -> Folder Label
-  const folderLabel = document.createElement("div");
-  folderLabel.classList.add("folder-label");
-  topBar.appendChild(folderLabel);
-
-  // Folder Label -> img
-  const folderLabelImage = document.createElement("img");
-  folderLabelImage.src = getFileIconUrl(fileType);
-  folderLabelImage.alt = fileType;
-  folderLabel.appendChild(folderLabelImage);
-
-  // Folder Label -> span
-  const folderLabelSpan = document.createElement("span");
-  folderLabelSpan.innerText = fileName;
-  folderLabel.appendChild(folderLabelSpan);
-
-  // Top Bar -> Top Bar Controls
-  const topBarControls = document.createElement("div");
-  topBarControls.classList.add("top-bar-controls");
-  topBar.appendChild(topBarControls);
-
-  // Top Bar Controls -> Minimize
-  const minimizeButton = document.createElement("div");
-  minimizeButton.classList.add("top-bar-button", "minimize");
-  topBarControls.appendChild(minimizeButton);
-
-  // Top Bar Controls -> Maximize
-  const maximizeButton = document.createElement("div");
-  maximizeButton.classList.add("top-bar-button", "maximize");
-  topBarControls.appendChild(maximizeButton);
-
-  // Top Bar Controls -> Close
-  const closeButton = document.createElement("div");
-  closeButton.classList.add("top-bar-button", "close");
-  topBarControls.appendChild(closeButton);
-
-  // Header -> Menu Bar
-  const menuBar = document.createElement("div");
-  menuBar.classList.add("menu-bar");
-  header.appendChild(menuBar);
-
-  // Menu Bar -> Menu Top
-  const menuTop = document.createElement("div");
-  menuTop.classList.add("menu-top");
-  menuBar.appendChild(menuTop);
-  // ul
-  //   li
-  //     {Optionname}
-  //     ul > li{sub-option}
-
-  // Menu Bar -> Menu Bottom
-  const menuBottom = document.createElement("div");
-  menuBottom.classList.add("menu-bottom");
-  menuBar.appendChild(menuBottom);
-  // ul
-  //   li
-  //     img(src="img/xp-arrow-icon-previous.png")
-  //     span{back}
-  //   li
-  //     img(src="img/xp-arrow-icon-next.png")
-  // ul
-  //   li{Search}
-
-  // Menu Bar -> Address Bar
-  const addressBar = document.createElement("div");
-  addressBar.classList.add("address-bar");
-  menuBar.appendChild(addressBar);
-
-  // Address Bar -> span
-  const addressBarSpan = document.createElement("span");
-  addressBarSpan.innerText = "Address";
-  addressBar.appendChild(addressBarSpan);
-
-  // Address Bar -> .address-input-wrapper
-  const addressInputWrapper = document.createElement("div");
-  addressInputWrapper.classList.add("address-input-wrapper");
-  addressBar.appendChild(addressInputWrapper);
-
-  // .address-input-wrapper -> .address-input-icon
-  const addressInputIcon = document.createElement("div");
-  addressInputIcon.classList.add("address-input-icon");
-  addressInputWrapper.appendChild(addressInputIcon);
-
-  // .address-input-wrapper -> img
-  const addressInputIconImage = document.createElement("img");
-  addressInputIconImage.src = getFileIconUrl(fileType);
-  addressInputIcon.appendChild(addressInputIconImage);
-
-  // .address-input-wrapper -> input.address-input
-  const addressInput = document.createElement("input");
-  addressInput.classList.add("address-input");
-  addressInput.type = "text";
-  addressInput.value = "C:DesktopFolder Name";
-  addressInput.placeholder = "C:DesktopFolder Name";
-  addressInputWrapper.appendChild(addressInput);
-
-  // Window -> Content
-  const content = document.createElement("div");
-  content.classList.add("folder-content");
-  fileWindow.appendChild(content);
-
-  const fileGrid = document.createElement("div");
-  fileGrid.classList.add("file-grid");
-  content.appendChild(fileGrid);
-
-  return fileWindow;
+  return windowElement;
 }
 
 export default File;
