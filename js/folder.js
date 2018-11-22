@@ -1,7 +1,7 @@
 import isChildElement from "./utils/isChildElement";
 import File from "./File";
 
-// Programatically add a few folders
+// Add a few folders or files
 if (Array.from(document.querySelectorAll(".wallpaper-grid > .cell")).length === 0) {
   const testFile = new File({ name: "My test file", type: "folder" });
   for (let index = 0; index <= 3; index++) {
@@ -86,16 +86,3 @@ folder.addEventListener("mousedown", e => {
     return false;
   };
 });
-
-function makeListItem(child) {
-  const li = document.createElement("li");
-  li.appendChild(child);
-  return li;
-}
-
-/*
- When a folder should be minimized it can be added as a flex item in the bottom bar
- so use appendchild so the element isn't cloned
- 
- Add overruling styles that get rid of the absolute positioning for folders 
-*/

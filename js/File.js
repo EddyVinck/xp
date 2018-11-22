@@ -3,6 +3,7 @@ import { el, mount } from "redom";
 
 const wallpaperGrid = document.querySelector(".wallpaper-grid");
 const taskbar = document.querySelector("ul.taskbar");
+const taskbarHeight = `${taskbar.clientHeight}px`;
 
 class File {
   constructor({
@@ -19,7 +20,12 @@ class File {
     // A lovely collection of boolean flags (for now)
     // Maybe look into implementing a finite state machine
     this.state = {
-      isOpen: false
+      isOpen: false,
+      isMaximized: false,
+      position: {
+        x: 0,
+        y: 0
+      }
     };
 
     // Associated DOM elements
@@ -32,6 +38,7 @@ class File {
     this.showWindow = this.showWindow.bind(this);
     this.showTaskbarCell = this.showTaskbarCell.bind(this);
     this.closeWindow = this.closeWindow.bind(this);
+    this.toggleMaximize = this.toggleMaximize.bind(this);
     this.addFileToParentElement = this.addFileToParentElement.bind(this);
     this.handleDesktopSingleClick = this.handleDesktopSingleClick.bind(this);
     this.handleDesktopDoubleClick = this.handleDesktopDoubleClick.bind(this);
@@ -57,7 +64,7 @@ class File {
   }
 
   handleTaskbarClick(e) {
-    console.log("taskbar click", this);
+    console.log("taskbar click");
     const { isOpen } = this.state;
     console.log(`was this item already opened? ${isOpen}`);
 
@@ -96,6 +103,7 @@ class File {
       windowElement = createWindowElement(this.name, this.type);
       this.windowElement = windowElement;
       this.windowElement.querySelector(".close").addEventListener("click", this.closeWindow);
+      this.windowElement.querySelector(".maximize").addEventListener("click", this.toggleMaximize);
     }
     document.body.appendChild(windowElement);
   }
@@ -120,6 +128,32 @@ class File {
 
     this.windowElement.parentNode.removeChild(this.windowElement);
     this.taskbarElement.parentNode.removeChild(this.taskbarElement);
+  }
+
+  toggleMaximize() {
+    const { isMaximized, position } = this.state;
+
+    if (isMaximized) {
+      // unmaximize
+      this.windowElement.style.width = "";
+      this.windowElement.style.height = "";
+      this.windowElement.style.left = position.x + "px";
+      this.windowElement.style.top = position.y + "px";
+    } else {
+      // save the old position
+      this.state.position = {
+        x: this.windowElement.offsetLeft,
+        y: this.windowElement.offsetTop
+      };
+
+      // Maximize the window element
+      this.windowElement.style.left = "0px";
+      this.windowElement.style.top = "0px";
+      this.windowElement.style.width = "100%";
+      this.windowElement.style.height = `calc(100vh - ${taskbarHeight})`;
+    }
+
+    this.state.isMaximized = !isMaximized;
   }
 }
 
