@@ -34,11 +34,12 @@ class File {
     this.windowElement = null;
 
     // Function binding
-    this.remove = this.remove.bind(this);
+    this.delete = this.delete.bind(this);
     this.showWindow = this.showWindow.bind(this);
     this.showTaskbarCell = this.showTaskbarCell.bind(this);
     this.closeWindow = this.closeWindow.bind(this);
     this.toggleMaximize = this.toggleMaximize.bind(this);
+    this.toggleMinimize = this.toggleMinimize.bind(this);
     this.addFileToParentElement = this.addFileToParentElement.bind(this);
     this.handleDesktopSingleClick = this.handleDesktopSingleClick.bind(this);
     this.handleDesktopDoubleClick = this.handleDesktopDoubleClick.bind(this);
@@ -57,28 +58,13 @@ class File {
     this.desktopElement.addEventListener("dblclick", this.handleDesktopDoubleClick);
   }
 
-  remove() {
-    this.taskbarElement.removeEventListener(this.handleTaskbarClick);
-    this.desktopElement.removeEventListener(this.handleDesktopSingleClick);
-    this.parentElement.removeChild(this.desktopElement);
+  // When a user deletes a file or folder
+  delete() {
+    // remove all eventlisteners and elements
   }
 
   handleTaskbarClick(e) {
-    console.log("taskbar click");
-    const { isOpen } = this.state;
-    console.log(`was this item already opened? ${isOpen}`);
-
-    if (isOpen) {
-      // minimize it
-      console.log("minimizing...");
-    } else {
-      console.log("opening...");
-
-      // open the window
-      this.showWindow();
-    }
-
-    this.state.isOpen = !isOpen;
+    this.toggleMinimize();
   }
 
   handleDesktopSingleClick(e) {}
@@ -104,6 +90,7 @@ class File {
       this.windowElement = windowElement;
       this.windowElement.querySelector(".close").addEventListener("click", this.closeWindow);
       this.windowElement.querySelector(".maximize").addEventListener("click", this.toggleMaximize);
+      this.windowElement.querySelector(".minimize").addEventListener("click", this.toggleMinimize);
     }
     document.body.appendChild(windowElement);
   }
@@ -155,6 +142,18 @@ class File {
 
     this.state.isMaximized = !isMaximized;
   }
+
+  toggleMinimize() {
+    const isCurrentlyMinimized = !document.body.contains(this.windowElement);
+
+    if (isCurrentlyMinimized) {
+      // unminimize
+      this.parentElement.appendChild(this.windowElement);
+    } else {
+      // minimize it
+      this.windowElement.parentNode.removeChild(this.windowElement);
+    }
+  }
 }
 
 function createTaskbarElement(desktopElement) {
@@ -191,42 +190,6 @@ function createDesktopElement(fileName, fileType) {
 }
 
 // Creates and returns the window HTML element
-/*
-.folder-window
-  .folder-header
-    .top-bar
-      .folder-label
-        img(src="img/folder-empty.png")
-        span{folder-name}
-      .top-bar-controls
-        .top-bar-button.minimize
-        .top-bar-button.maximize
-        .top-bar-button.close
-    .menu-bar
-      .menu-top
-        ul
-          li
-            {Optionname}
-            ul > li{sub-option}
-      .menu-bottom
-        ul
-          li
-            img(src="img/xp-arrow-icon-previous.png")
-            span{back}
-          li
-            img(src="img/xp-arrow-icon-next.png")
-        ul
-          li{Search}
-      .address-bar
-        span{Address}
-        .address-input-wrapper
-          .address-input-icon
-            img(src="img/folder-empty.png")
-          input.address-input(type="text" value="C:\Desktop\Folder Name" placeholder="C:\Desktop\Folder Name")  
-  .folder-content
-    .file-grid
-      .cell
-*/
 function createWindowElement(fileName, fileType) {
   const windowElement = el(
     ".folder-window",
