@@ -17,8 +17,6 @@ class File {
     this.parentElement = parentElement;
     this.innerFiles = innerFiles;
 
-    // A lovely collection of boolean flags (for now)
-    // Maybe look into implementing a finite state machine
     this.state = {
       isOpen: false,
       isMaximized: false,
@@ -48,18 +46,16 @@ class File {
     this.addFileToParentElement();
   }
 
-  // Creates desktop file, taskbar item
-  // Adds necessary event listeners
+  // Creates desktop file or folder
   addFileToParentElement() {
-    // Create the file on the desktop or folder
     this.desktopElement = createDesktopElement(this.name, this.type);
     this.parentElement.appendChild(this.desktopElement);
     this.desktopElement.addEventListener("click", this.handleDesktopSingleClick);
     this.desktopElement.addEventListener("dblclick", this.handleDesktopDoubleClick);
   }
 
-  // When a user deletes a file or folder
   delete() {
+    // When a user deletes a file or folder
     // remove all eventlisteners and elements
   }
 
@@ -162,7 +158,7 @@ function createTaskbarElement(desktopElement) {
   return li;
 }
 
-// Returns a desktop cell
+// Returns a desktop cell element
 /*
   <div class="cell">
     <img src="img/folder_empty-3.png" alt="">
@@ -193,6 +189,7 @@ function createDesktopElement(fileName, fileType) {
 function createWindowElement(fileName, fileType) {
   const windowElement = el(
     ".folder-window",
+    { draggable: true },
     el(
       ".folder-header",
       el(

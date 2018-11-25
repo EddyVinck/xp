@@ -1,3 +1,4 @@
+import "./right-click";
 import isChildElement from "./utils/isChildElement";
 import File from "./File";
 
