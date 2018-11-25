@@ -99,8 +99,26 @@ class File {
   }
 
   handleDrag(event) {
-    this.windowElement.style.top = event.pageY + "px";
-    this.windowElement.style.left = event.pageX + "px";
+    // Only drag when the window is not maximized because this can cause
+    // the window to move outside of the viewport completely.
+    if (this.state.isMaximized === false) {
+      // keep the dragged position in state
+      const x = (this.state.position.x || 0) + event.dx;
+      const y = (this.state.position.y || 0) + event.dy;
+
+      // translate the element
+      this.moveWindow(x, y);
+
+      // update the posiion state
+      this.state.position = {
+        x,
+        y
+      };
+    }
+  }
+
+  moveWindow(x, y) {
+    this.windowElement.style.transform = `translate(${x}px, ${y}px)`;
   }
 
   // Put the file in the taskbar
@@ -130,20 +148,18 @@ class File {
 
     if (isMaximized) {
       // unmaximize
+      this.windowElement.style.top = "";
+      this.windowElement.style.left = "";
       this.windowElement.style.width = "";
       this.windowElement.style.height = "";
-      this.windowElement.style.left = position.x + "px";
-      this.windowElement.style.top = position.y + "px";
+      this.moveWindow(position.x, position.y);
     } else {
-      // save the old position
-      this.state.position = {
-        x: this.windowElement.offsetLeft,
-        y: this.windowElement.offsetTop
-      };
+      // Remove the positioning
+      this.windowElement.style.transform = "";
+      this.windowElement.style.top = "0px";
+      this.windowElement.style.left = "0px";
 
       // Maximize the window element
-      this.windowElement.style.left = "0px";
-      this.windowElement.style.top = "0px";
       this.windowElement.style.width = "100%";
       this.windowElement.style.height = `calc(100vh - ${taskbarHeight})`;
     }
