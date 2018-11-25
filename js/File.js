@@ -1,5 +1,6 @@
 import getIconUrl from "./utils/getIconUrl.js";
 import { el, mount } from "redom";
+import interact from "interactjs";
 
 const wallpaperGrid = document.querySelector(".wallpaper-grid");
 const taskbar = document.querySelector("ul.taskbar");
@@ -42,6 +43,7 @@ class File {
     this.handleDesktopSingleClick = this.handleDesktopSingleClick.bind(this);
     this.handleDesktopDoubleClick = this.handleDesktopDoubleClick.bind(this);
     this.handleTaskbarClick = this.handleTaskbarClick.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
 
     this.addFileToParentElement();
   }
@@ -87,8 +89,18 @@ class File {
       this.windowElement.querySelector(".close").addEventListener("click", this.closeWindow);
       this.windowElement.querySelector(".maximize").addEventListener("click", this.toggleMaximize);
       this.windowElement.querySelector(".minimize").addEventListener("click", this.toggleMinimize);
+      const topBar = this.windowElement.querySelector(".top-bar");
+      interact(topBar).draggable({
+        ignoreFrom: ".minimize, .maximize, .close",
+        onmove: this.handleDrag
+      });
     }
     document.body.appendChild(windowElement);
+  }
+
+  handleDrag(event) {
+    this.windowElement.style.top = event.pageY + "px";
+    this.windowElement.style.left = event.pageX + "px";
   }
 
   // Put the file in the taskbar
@@ -189,7 +201,6 @@ function createDesktopElement(fileName, fileType) {
 function createWindowElement(fileName, fileType) {
   const windowElement = el(
     ".folder-window",
-    { draggable: true },
     el(
       ".folder-header",
       el(
