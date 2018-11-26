@@ -137,25 +137,27 @@ class File {
   }
 
   handleResize(event) {
-    const target = event.target;
-    let x = this.state.position.x || 0;
-    let y = this.state.position.y || 0;
+    if (this.state.isMaximized === false) {
+      const target = event.target;
+      let x = this.state.position.x || 0;
+      let y = this.state.position.y || 0;
 
-    // update the element's style
-    target.style.width = event.rect.width + "px";
-    target.style.height = event.rect.height + "px";
+      // update the element's style
+      target.style.width = event.rect.width + "px";
+      target.style.height = event.rect.height + "px";
 
-    // translate when resizing from top or left edges
-    x += event.deltaRect.left;
-    y += event.deltaRect.top;
+      // translate when resizing from top or left edges
+      x += event.deltaRect.left;
+      y += event.deltaRect.top;
 
-    this.moveWindow(x, y);
+      this.moveWindow(x, y);
 
-    // update the posiion state
-    this.state.position = {
-      x,
-      y
-    };
+      // update the posiion state
+      this.state.position = {
+        x,
+        y
+      };
+    }
   }
 
   moveWindow(x, y) {
