@@ -16,6 +16,7 @@ $activeBlue: blue;
   flex-direction: column;
 
   &.active {
+    z-index: 1;
     .menu-bar,
     .folder-content {
       border-color: $activeBlue;
