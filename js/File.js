@@ -237,7 +237,6 @@ class File {
     const { isActive } = this.state;
 
     if ((isActive && isCurrentlyMinimized === false) || forceMinimize) {
-      console.log("forced minimize!");
       // minimize it
       this.setActive(false);
       this.windowElement.parentNode.removeChild(this.windowElement);
@@ -260,7 +259,6 @@ class File {
   }
 
   setActive(isActive = false) {
-    console.log(isActive);
     this.state.isActive = isActive;
     this.changeActiveAppearance(isActive);
   }
@@ -270,7 +268,6 @@ class File {
     // otherwise this will error
     if (this.windowElement) {
       if (isActive) {
-        console.log("making active");
         this.windowElement.classList.add("active");
         this.taskbarElement.classList.add("active");
       } else {
