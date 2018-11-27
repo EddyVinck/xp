@@ -121,15 +121,9 @@ class File {
           // resize from all edges and corners
           edges: { left: true, right: true, bottom: true, top: true },
 
-          // keep the edges inside the parent
-          restrictEdges: {
-            outer: "parent",
-            endOnly: true
-          },
-
           // minimum size
           restrictSize: {
-            min: { width: 100, height: 50 }
+            min: { width: 300, height: 200 }
           }
         })
         .on("resizemove", this.handleResize);
