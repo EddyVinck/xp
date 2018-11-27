@@ -2,6 +2,9 @@ $menuBackgroundGray: rgb(245, 245, 231);
 $menuBorderColor: rgb(216, 216, 180);
 $menuTextGray: rgb(179, 179, 148);
 
+$inactiveBlue: #0099ff;
+$activeBlue: blue;
+
 .folder-window {
   min-width: 500px;
   min-height: 200px;
@@ -12,22 +15,32 @@ $menuTextGray: rgb(179, 179, 148);
   display: flex;
   flex-direction: column;
 
+  &.active {
+    .menu-bar,
+    .folder-content {
+      border-color: $activeBlue;
+    }
+    .top-bar {
+      background-color: $activeBlue;
+    }
+  }
+
   .folder-header {
   }
   .menu-bar {
     background-color: $menuBackgroundGray;
-    border-left: 5px solid blue;
-    border-right: 5px solid blue;
+    border-left: 5px solid $inactiveBlue;
+    border-right: 5px solid $inactiveBlue;
   }
   .folder-content {
     background-color: #fff;
-    border: 5px solid blue;
+    border: 5px solid $inactiveBlue;
     border-top: 0;
     flex-grow: 1;
   }
 
   .top-bar {
-    background-color: blue;
+    background-color: $inactiveBlue;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     display: flex;

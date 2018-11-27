@@ -21,6 +21,7 @@ class File {
     this.state = {
       isOpen: false,
       isMaximized: false,
+      isActive: false,
       position: {
         x: 0,
         y: 0
@@ -35,6 +36,9 @@ class File {
     // Function binding
     this.delete = this.delete.bind(this);
     this.showWindow = this.showWindow.bind(this);
+    this.setActive = this.setActive.bind(this);
+    this.dispatchActiveWindowChange = this.dispatchActiveWindowChange.bind(this);
+    this.changeActiveAppearance = this.changeActiveAppearance.bind(this);
     this.showTaskbarCell = this.showTaskbarCell.bind(this);
     this.closeWindow = this.closeWindow.bind(this);
     this.toggleMaximize = this.toggleMaximize.bind(this);
@@ -42,6 +46,7 @@ class File {
     this.addFileToParentElement = this.addFileToParentElement.bind(this);
     this.handleDesktopSingleClick = this.handleDesktopSingleClick.bind(this);
     this.handleDesktopDoubleClick = this.handleDesktopDoubleClick.bind(this);
+    this.handleWindowSingleClick = this.handleWindowSingleClick.bind(this);
     this.handleTaskbarClick = this.handleTaskbarClick.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     this.handleResize = this.handleResize.bind(this);
@@ -66,6 +71,17 @@ class File {
     this.toggleMinimize();
   }
 
+  handleWindowSingleClick(e) {
+    const didClickMinimizeOrClose =
+      event.target.classList.contains("minimize") || event.target.classList.contains("close");
+    const { isActive } = this.state;
+
+    if (isActive === false && didClickMinimizeOrClose === false) {
+      this.dispatchActiveWindowChange(true);
+      this.setActive(true);
+    }
+  }
+
   handleDesktopSingleClick(e) {}
 
   handleDesktopDoubleClick(e) {
@@ -87,9 +103,13 @@ class File {
       // windowElement did not exist yet
       windowElement = createWindowElement(this.name, this.type);
       this.windowElement = windowElement;
+      this.windowElement.addEventListener("click", this.handleWindowSingleClick);
       this.windowElement.querySelector(".close").addEventListener("click", this.closeWindow);
       this.windowElement.querySelector(".maximize").addEventListener("click", this.toggleMaximize);
-      this.windowElement.querySelector(".minimize").addEventListener("click", this.toggleMinimize);
+      this.windowElement
+        .querySelector(".minimize")
+        .addEventListener("click", () => this.toggleMinimize(true));
+
       const topBar = this.windowElement.querySelector(".top-bar");
       interact(topBar).draggable({
         ignoreFrom: ".minimize, .maximize, .close",
@@ -115,6 +135,8 @@ class File {
         .on("resizemove", this.handleResize);
     }
     document.body.appendChild(windowElement);
+    this.dispatchActiveWindowChange(true);
+    this.setActive(true);
   }
 
   handleDrag(event) {
@@ -210,15 +232,51 @@ class File {
     this.state.isMaximized = !isMaximized;
   }
 
-  toggleMinimize() {
+  toggleMinimize(forceMinimize) {
     const isCurrentlyMinimized = !document.body.contains(this.windowElement);
+    const { isActive } = this.state;
 
-    if (isCurrentlyMinimized) {
+    if ((isActive && isCurrentlyMinimized === false) || forceMinimize) {
+      console.log("forced minimize!");
+      // minimize it
+      this.setActive(false);
+      this.windowElement.parentNode.removeChild(this.windowElement);
+    } else {
       // unminimize
       this.parentElement.appendChild(this.windowElement);
-    } else {
-      // minimize it
-      this.windowElement.parentNode.removeChild(this.windowElement);
+      this.dispatchActiveWindowChange(true);
+      this.setActive(true);
+    }
+  }
+
+  // http://javascript.info/dispatch-events#custom-events
+  dispatchActiveWindowChange(isActive = false) {
+    this.windowElement.dispatchEvent(
+      new CustomEvent("change-active-window", {
+        bubbles: true,
+        detail: { newActive: isActive ? this : null }
+      })
+    );
+  }
+
+  setActive(isActive = false) {
+    console.log(isActive);
+    this.state.isActive = isActive;
+    this.changeActiveAppearance(isActive);
+  }
+
+  changeActiveAppearance(isActive = false) {
+    // check if the windowElement has been created
+    // otherwise this will error
+    if (this.windowElement) {
+      if (isActive) {
+        console.log("making active");
+        this.windowElement.classList.add("active");
+        this.taskbarElement.classList.add("active");
+      } else {
+        this.windowElement.classList.remove("active");
+        this.taskbarElement.classList.remove("active");
+      }
     }
   }
 }
