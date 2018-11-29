@@ -1,4 +1,5 @@
 import "./right-click";
+import "./clock";
 import File from "./File";
 
 const allFiles = [];

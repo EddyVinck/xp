@@ -27,16 +27,6 @@ body {
   background-color: #aeccf7;
 }
 
-.bar {
-  height: 40px;
-  width: 100%;
-  background-color: $barBlue;
-  z-index: 2;
-  display: flex;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(148, 187, 233, 0) 18%);
-  box-shadow: inset 0px -2px 5px 0px rgba(0, 0, 0, 0.3);
-}
-
 .wallpaper {
   flex-grow: 1;
   max-height: calc(100vh - 40px);
