@@ -2,11 +2,13 @@ $menuHoverBlue: rgb(19, 19, 204);
 $barBlue: #0075e1;
 
 @import "./normalize.css";
-@import "./desktop-grid.scss";
-@import "./right-click-menu.scss";
-@import "./folder-window.scss";
-@import "./taskbar.scss";
-@import "./start-menu.scss";
+@import "./desktop-grid";
+@import "./right-click-menu";
+@import "./folder-window";
+@import "./taskbar";
+@import "./start-menu";
+@import "./startup-screen";
+@import "./login-screen";
 
 * {
   box-sizing: border-box;
@@ -17,6 +19,10 @@ body {
   height: 100%;
   width: 100%;
   overflow: hidden;
+}
+
+img {
+  max-width: 100%;
 }
 
 .container {

@@ -1,0 +1,83 @@
+// <div class="login-screen">
+//   <div class="login-screen__top"></div>
+//   <div class="login-screen__center">
+//     <div class="login-screen__instructions"></div>
+//     <div class="login-screens__accounts"></div>
+//   </div>
+//   <div class="login-screen__bottom">
+//     <div class="login-screen__turn-off"></div>
+//     <div class="login-screen__login-info"></div>
+//   </div>
+// </div>
+
+.login-screen {
+  width: 100vw;
+  height: 100vh;
+  background-color: #508fd9;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  &__top,
+  &__bottom {
+    background-color: #00489a;
+    flex-basis: 12.5%;
+  }
+  &__center {
+    flex: 1;
+    display: flex;
+    background-image: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.6) -21%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 700px 700px;
+    background-position: -240px -210px;
+    background-repeat: no-repeat;
+  }
+  &__instructions,
+  &__accounts {
+    flex-basis: 50%;
+  }
+  &__instructions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 30px;
+    align-items: flex-end;
+    border-right-width: 1px;
+    border-image-source: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 5%,
+      rgba(255, 255, 255, 0.5) 15%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.5) 85%,
+      rgba(255, 255, 255, 0) 95%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-image-slice: 0 1 0 0;
+    border-right-style: solid;
+
+    img,
+    span {
+      display: block;
+    }
+    img {
+      width: 250px;
+      margin-bottom: 40px;
+    }
+    span {
+      text-align: right;
+      font-size: 24px;
+    }
+  }
+  &__accounts {
+  }
+  &__bottom {
+  }
+  &__turn-off {
+  }
+  &__login-info {
+  }
+}
