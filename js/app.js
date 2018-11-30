@@ -1,6 +1,7 @@
 import "./right-click";
 import "./clock";
 import "./startup";
+import "./login-screen";
 import File from "./File";
 
 const allFiles = [];

@@ -10,6 +10,8 @@
 //   </div>
 // </div>
 
+// https://www.youtube.com/watch?v=7e3DBP0Nig0
+
 .login-screen {
   width: 100vw;
   height: 100vh;
@@ -34,6 +36,7 @@
     background-size: 700px 700px;
     background-position: -240px -210px;
     background-repeat: no-repeat;
+    z-index: 0;
   }
   &__instructions,
   &__accounts {
@@ -73,10 +76,129 @@
     }
   }
   &__accounts {
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  &__account {
+    display: flex;
+    min-width: 400px;
+    max-width: 100%;
+    opacity: 0.6;
+    padding: 12px;
+    border-radius: 8px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid transparent;
+    border-right: 0;
+    position: relative;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+
+    &-icon {
+      width: 80px;
+      height: 80px;
+      margin-right: 20px;
+      border: 3px solid #fff;
+      border-radius: 5px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &-details {
+      position: relative;
+    }
+    &-name {
+      font-size: 24px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    &.active {
+      opacity: 1;
+      cursor: pointer;
+      background: linear-gradient(90deg, rgb(0, 72, 154) 60%, rgba(255, 255, 255, 0) 100%);
+      background-clip: padding-box;
+
+      &::after {
+        content: "";
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.6) 40%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        border-radius: 8px;
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        bottom: -1px;
+        left: -1px;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .login-screen__password {
+        display: block;
+      }
+      .login-screen__account-icon {
+        border-color: #ffcc36;
+      }
+    }
+  }
+  &__password {
+    display: none;
+    position: absolute;
+    bottom: -20px;
+
+    span {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    input {
+      padding: 5px;
+      border: 0;
+      border-radius: 5px;
+      width: 160px;
+      height: 36px;
+      font-size: 30px;
+      box-shadow: #00489a 2px 2px 0px 0px;
+    }
+    button {
+      margin-left: 8px;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      width: 32px;
+      height: 32px;
+      background-image: linear-gradient(
+        150deg,
+        rgba(255, 255, 255, 0.7) 0%,
+        rgba(70, 161, 252, 0) 50%
+      );
+      background-repeat: no-repeat;
+      box-shadow: 2px 2px 0px 0px #00489a, inset -1px -2px 4px 0 rgba(0, 0, 0, 0.7);
+
+      &.login-screen__submit {
+        background-color: #327d3c;
+      }
+      &.login-screen__question {
+        background-color: #0573f3;
+      }
+    }
+    > form {
+      display: flex;
+    }
   }
   &__bottom {
   }
   &__turn-off {
+    span {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
   &__login-info {
   }
