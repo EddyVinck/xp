@@ -1,5 +1,5 @@
 import getIconUrl from "./utils/getIconUrl.js";
-import { el, mount } from "redom";
+import { el } from "redom";
 import interact from "interactjs";
 
 const wallpaperGrid = document.querySelector(".wallpaper-grid");

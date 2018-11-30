@@ -1,16 +1,6 @@
-// <div class="login-screen">
-//   <div class="login-screen__top"></div>
-//   <div class="login-screen__center">
-//     <div class="login-screen__instructions"></div>
-//     <div class="login-screens__accounts"></div>
-//   </div>
-//   <div class="login-screen__bottom">
-//     <div class="login-screen__turn-off"></div>
-//     <div class="login-screen__login-info"></div>
-//   </div>
-// </div>
-
+// Reference
 // https://www.youtube.com/watch?v=7e3DBP0Nig0
+// https://www.youtube.com/watch?v=JaoFgeguyQ8
 
 .login-screen {
   width: 100vw;
@@ -76,13 +66,15 @@
     }
   }
   &__accounts {
-    padding-left: 30px;
+    padding-left: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
   }
   &__account {
+    outline: none;
+    cursor: pointer;
     display: flex;
     min-width: 400px;
     max-width: 100%;
@@ -116,9 +108,18 @@
       margin-bottom: 20px;
       display: block;
     }
-
-    &.active {
+    &:hover,
+    &.active,
+    &.logging-in {
       opacity: 1;
+      .login-screen__account-icon {
+        border-color: #ffcc36;
+      }
+      .login-screen__account-name {
+        margin-bottom: 2px;
+      }
+    }
+    &.active {
       cursor: pointer;
       background: linear-gradient(90deg, rgb(0, 72, 154) 60%, rgba(255, 255, 255, 0) 100%);
       background-clip: padding-box;
@@ -142,9 +143,6 @@
       .login-screen__password {
         display: block;
       }
-      .login-screen__account-icon {
-        border-color: #ffcc36;
-      }
     }
   }
   &__password {
@@ -165,8 +163,10 @@
       height: 36px;
       font-size: 30px;
       box-shadow: #00489a 2px 2px 0px 0px;
+      outline: none;
     }
     button {
+      cursor: pointer;
       margin-left: 8px;
       border: 1px solid #fff;
       border-radius: 5px;
@@ -201,5 +201,19 @@
     }
   }
   &__login-info {
+  }
+}
+
+.welcome-text {
+  font-style: italic;
+  font-size: 76px;
+  font-weight: 900;
+  text-shadow: 3px 4px #00489a;
+}
+.logging-in {
+  .loading-settings {
+    color: #00489a;
+    font-size: 14px;
+    font-weight: bold;
   }
 }

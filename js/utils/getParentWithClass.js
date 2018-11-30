@@ -1,12 +1,12 @@
-function parentHasClass(child, className) {
+function getParentWithClass(child, className) {
   let node = child;
   while (node != null) {
     if (node.classList && node.classList.contains(className)) {
-      return true;
+      return node;
     }
     node = node.parentNode;
   }
-  return false;
+  return null;
 }
 
-export default parentHasClass;
+export default getParentWithClass;
