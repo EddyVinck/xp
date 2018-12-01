@@ -11,8 +11,35 @@
   flex-direction: column;
   &__top,
   &__bottom {
-    background-color: #00489a;
+    background-color: #004da3;
     flex-basis: 12.5%;
+    border-style: solid;
+    border-image-slice: 1;
+  }
+  &__top {
+    border-image-source: linear-gradient(
+      90deg,
+      rgba(0, 77, 163, 1) 0%,
+      rgba(255, 255, 255, 0.8) 30%,
+      rgba(255, 255, 255, 0.9) 40%,
+      rgba(255, 255, 255, 0.9) 50%,
+      rgba(0, 77, 163, 1) 100%
+    );
+    border-width: 0 0 4px 0;
+  }
+  &__bottom {
+    padding: 40px 80px 40px 40px;
+    display: flex;
+    justify-content: space-between;
+    border-image-source: linear-gradient(
+      90deg,
+      rgba(0, 77, 163, 1) 0%,
+      rgba(240, 150, 68, 1) 30%,
+      rgba(240, 150, 68, 1) 40%,
+      rgba(240, 150, 68, 1) 50%,
+      rgba(0, 77, 163, 1) 100%
+    );
+    border-width: 4px 0 0 0;
   }
   &__center {
     flex: 1;
@@ -95,6 +122,7 @@
       margin-right: 20px;
       border: 3px solid #fff;
       border-radius: 5px;
+      box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, 0.3);
       img {
         width: 100%;
         height: 100%;
@@ -150,7 +178,7 @@
     position: absolute;
     bottom: -20px;
 
-    span {
+    > span {
       display: block;
       font-size: 14px;
       margin-bottom: 6px;
@@ -179,24 +207,103 @@
       );
       background-repeat: no-repeat;
       box-shadow: 2px 2px 0px 0px #00489a, inset -1px -2px 4px 0 rgba(0, 0, 0, 0.7);
+      position: relative;
 
       &.login-screen__submit {
-        background-color: #327d3c;
+        background-color: #3eb34d;
+
+        &::before,
+        &::after {
+          content: "";
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 12px 0 12px 12px;
+          border-color: transparent transparent transparent #ffffff;
+          position: absolute;
+          top: 50%;
+          right: 4px;
+          transform: translateY(-50%);
+        }
+        &::after {
+          border-width: 7px 0 7px 7px;
+          border-color: #3eb34d;
+          border-color: transparent transparent transparent #3eb34d;
+          right: 9px;
+        }
+        span {
+          background-color: #fff;
+          position: absolute;
+          height: 4px;
+          width: 17px;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 9px;
+          z-index: 1;
+        }
       }
       &.login-screen__question {
         background-color: #0573f3;
+        font-size: 30px;
+        font-weight: 900;
+        color: #fff;
+
+        span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          line-height: 0;
+        }
       }
     }
     > form {
       display: flex;
     }
   }
-  &__bottom {
-  }
+
   &__turn-off {
+    display: flex;
+    align-items: center;
+    flex-grow: 0;
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
     span {
-      &:hover {
-        text-decoration: underline;
+      margin-left: 10px;
+      font-size: 24px;
+    }
+    &-icon {
+      position: relative;
+      background-color: #da5020;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      width: 32px;
+      height: 32px;
+      background-image: linear-gradient(
+        150deg,
+        rgba(255, 255, 255, 0.7) 0%,
+        rgba(70, 161, 252, 0) 50%
+      );
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      &::before {
+        border: 3px solid #fff;
+        border-radius: 50px;
+        width: 14px;
+        height: 14px;
+      }
+      &::after {
+        background-color: #fff;
+        width: 3px;
+        height: 8px;
       }
     }
   }
