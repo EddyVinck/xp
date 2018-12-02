@@ -4,7 +4,7 @@ function getParentWithClass(child: HTMLElement, className: string) {
     if (node.classList && node.classList.contains(className)) {
       return node;
     }
-    node = node.parentNode;
+    node = <HTMLElement>node.parentNode;
   }
   return null;
 }

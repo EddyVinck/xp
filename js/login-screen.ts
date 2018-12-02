@@ -1,8 +1,8 @@
 import getParentWithClass from "./utils/getParentWithClass";
 import { el } from "redom";
 
-const accounts = Array.from(document.querySelectorAll(".login-screen__account"));
-const loginScreen = document.querySelector(".login-screen");
+const accounts: HTMLElement[] = Array.from(document.querySelectorAll(".login-screen__account"));
+const loginScreen: HTMLElement = document.querySelector(".login-screen");
 
 function removeActive(element) {
   element.classList.remove("active");
@@ -20,7 +20,10 @@ function checkActive() {
 }
 
 loginScreen.addEventListener("click", ({ target }) => {
-  const loginScreenAccountElement = getParentWithClass(target, "login-screen__account");
+  const loginScreenAccountElement: HTMLElement = getParentWithClass(
+    <HTMLElement>target,
+    "login-screen__account"
+  );
   if (loginScreenAccountElement === null) {
     accounts.forEach(removeActive);
   } else {
@@ -35,14 +38,14 @@ loginScreen.addEventListener("click", ({ target }) => {
 });
 
 Array.from(loginScreen.querySelectorAll("form")).forEach(form => {
-  form.addEventListener("submit", e => {
+  form.addEventListener("submit", (e: Event) => {
     e.preventDefault();
 
-    const pw = e.srcElement.querySelector("input[type=password]");
+    const pw: HTMLInputElement = e.srcElement.querySelector("input[type=password]");
 
     // advanced security system
     if (pw.value.toLowerCase() === "1234") {
-      logIn(getParentWithClass(e.srcElement, "login-screen__account"));
+      logIn(getParentWithClass(<HTMLElement>e.srcElement, "login-screen__account"));
     } else if (pw.value === "") {
       // pw field was empty
       console.log("access denied");
@@ -54,10 +57,10 @@ Array.from(loginScreen.querySelectorAll("form")).forEach(form => {
   });
 });
 
-function logIn(loginScreenAccountElement) {
-  const instructions = document.querySelector(".login-screen__instructions");
-  const welcomeText = el(".welcome-text", "welcome");
-  const otherAccounts = accounts.filter(acc => acc !== loginScreenAccountElement);
+function logIn(loginScreenAccountElement): void {
+  const instructions: HTMLElement = document.querySelector(".login-screen__instructions");
+  const welcomeText: HTMLElement = el(".welcome-text", "welcome");
+  const otherAccounts: HTMLElement[] = accounts.filter(acc => acc !== loginScreenAccountElement);
 
   otherAccounts.forEach(acc => acc.remove());
 

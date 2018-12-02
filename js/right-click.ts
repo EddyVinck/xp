@@ -13,7 +13,7 @@ document.addEventListener(
 );
 
 document.addEventListener("click", (e: MouseEvent) => {
-  if (isChildElement(e.target, rightClickMenu)) {
+  if (isChildElement(<HTMLElement>e.target, rightClickMenu)) {
     // handle any of the right click options if those are clicked
   } else {
     rightClickMenu.style.display = "none";

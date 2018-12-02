@@ -1,33 +1,22 @@
 import getIconUrl from "./utils/getIconUrl";
 import { el } from "redom";
-import interact from "interactjs";
+import { FileState } from "./types";
+import * as interact from "interactjs";
 
 const wallpaperGrid: HTMLElement = document.querySelector(".wallpaper-grid");
 const taskbar: HTMLElement = document.querySelector("ul.taskbar");
 const taskbarHeight: string = `${taskbar.clientHeight}px`;
 
-interface File {
-  name: string;
-  type: string;
-  parentElement: HTMLElement;
-  innerFiles: File[];
-  desktopElement: HTMLElement;
-  taskbarElement: HTMLElement;
-  windowElement: HTMLElement;
-  state: FileState;
-}
-
-interface FileState {
-  isActive: boolean;
-  isMaximized: boolean;
-  isOpen: boolean;
-  position: {
-    x: number;
-    y: number;
-  };
-}
-
 class File {
+  private name: string;
+  private type: string;
+  private parentElement: HTMLElement;
+  private innerFiles?: File[];
+  private desktopElement: HTMLElement;
+  private taskbarElement: HTMLElement;
+  private windowElement: HTMLElement;
+  private state: FileState;
+
   constructor({
     name = "Unnamed",
     type = "folder",
@@ -93,9 +82,10 @@ class File {
   }
 
   handleWindowSingleClick(e: Event) {
-    const didClickMinimizeOrClose =
-      event.target.classList.contains("minimize") || event.target.classList.contains("close");
     const { isActive } = this.state;
+    const didClickMinimizeOrClose =
+      (<HTMLElement>event.target).classList.contains("minimize") ||
+      (<HTMLElement>event.target).classList.contains("close");
 
     if (isActive === false && didClickMinimizeOrClose === false) {
       this.dispatchActiveWindowChange(true);

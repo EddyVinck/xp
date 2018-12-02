@@ -1,4 +1,4 @@
-function isChildElement(child: HTMLElement, parent: HTMLElement) {
+function isChildElement(child: HTMLElement, parent: HTMLElement): boolean {
   let node = child.parentNode;
   while (node != null) {
     if (node == parent) {
