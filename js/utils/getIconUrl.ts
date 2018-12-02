@@ -1,7 +1,7 @@
 import imageUrls from "../../img/*.*";
 
 // A more convenient way to fetch the url of an icon
-const getIconUrl = (iconName = "") => {
+const getIconUrl = (iconName: string = "") => {
   let iconUrl = "";
   switch (iconName.toLowerCase()) {
     case "computer":

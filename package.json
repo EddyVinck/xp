@@ -2,7 +2,7 @@
   "name": "windowsxp",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "p": "parcel index.html"
@@ -15,5 +15,8 @@
     "interactjs": "^1.3.4",
     "redom": "^3.16.1",
     "sass": "^1.14.3"
+  },
+  "devDependencies": {
+    "typescript": "^3.2.1"
   }
 }

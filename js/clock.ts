@@ -4,13 +4,13 @@ if (clock instanceof HTMLElement) {
   startClock();
 }
 
-function startClock() {
+function startClock(): void {
   setInterval(() => {
     insertTime(getCurrentTime());
   }, 1000);
 }
 
-function getCurrentTime() {
+function getCurrentTime(): string {
   const currentDate = new Date();
   const currentTime = currentDate.toLocaleTimeString("en-US", {
     hour12: true,
@@ -21,7 +21,7 @@ function getCurrentTime() {
   return currentTime;
 }
 
-function insertTime(currentTime) {
+function insertTime(currentTime: string) {
   const timeLabel = clock.querySelector("span");
   if (timeLabel.innerText !== currentTime) {
     timeLabel.innerText = currentTime;

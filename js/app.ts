@@ -14,6 +14,7 @@ if (Array.from(document.querySelectorAll(".wallpaper-grid > .cell")).length === 
   }
 }
 
+// Listener that sets all windows inactive
 document.addEventListener("change-active-window", function(event) {
   allFiles.forEach(file => {
     file.setActive(false);

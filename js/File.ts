@@ -1,10 +1,31 @@
-import getIconUrl from "./utils/getIconUrl.js";
+import getIconUrl from "./utils/getIconUrl";
 import { el } from "redom";
 import interact from "interactjs";
 
-const wallpaperGrid = document.querySelector(".wallpaper-grid");
-const taskbar = document.querySelector("ul.taskbar");
-const taskbarHeight = `${taskbar.clientHeight}px`;
+const wallpaperGrid: HTMLElement = document.querySelector(".wallpaper-grid");
+const taskbar: HTMLElement = document.querySelector("ul.taskbar");
+const taskbarHeight: string = `${taskbar.clientHeight}px`;
+
+interface File {
+  name: string;
+  type: string;
+  parentElement: HTMLElement;
+  innerFiles: File[];
+  desktopElement: HTMLElement;
+  taskbarElement: HTMLElement;
+  windowElement: HTMLElement;
+  state: FileState;
+}
+
+interface FileState {
+  isActive: boolean;
+  isMaximized: boolean;
+  isOpen: boolean;
+  position: {
+    x: number;
+    y: number;
+  };
+}
 
 class File {
   constructor({
@@ -71,7 +92,7 @@ class File {
     this.toggleMinimize();
   }
 
-  handleWindowSingleClick(e) {
+  handleWindowSingleClick(e: Event) {
     const didClickMinimizeOrClose =
       event.target.classList.contains("minimize") || event.target.classList.contains("close");
     const { isActive } = this.state;
@@ -226,7 +247,7 @@ class File {
     this.state.isMaximized = !isMaximized;
   }
 
-  toggleMinimize(forceMinimize) {
+  toggleMinimize(forceMinimize?: boolean): void {
     const isCurrentlyMinimized = !document.body.contains(this.windowElement);
     const { isActive } = this.state;
 
@@ -306,8 +327,8 @@ function createDesktopElement(fileName, fileType) {
 }
 
 // Creates and returns the window HTML element
-function createWindowElement(fileName, fileType) {
-  const windowElement = el(
+function createWindowElement(fileName, fileType): HTMLElement {
+  const windowElement: HTMLElement = el(
     ".folder-window",
     el(
       ".folder-header",
