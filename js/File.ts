@@ -1,7 +1,7 @@
 import getIconUrl from "./utils/getIconUrl";
 import { el } from "redom";
 import { FileState } from "./types";
-import * as interact from "interactjs";
+import interact from "interactjs";
 
 const wallpaperGrid: HTMLElement = document.querySelector(".wallpaper-grid");
 const taskbar: HTMLElement = document.querySelector("ul.taskbar");

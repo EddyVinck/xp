@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["es2017", "dom"]
+    "lib": ["es2017", "dom"],
+    "allowSyntheticDefaultImports": true
   },
   "include": ["js"],
   "exclude": ["node_modules"]
