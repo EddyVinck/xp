@@ -3,6 +3,7 @@
     "lib": ["es2017", "dom"],
     "allowSyntheticDefaultImports": true
   },
+  "typeRoots": ["./node_modules/@types", "./js/types"],
   "include": ["js"],
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,8 @@
 import getIconUrl from "./utils/getIconUrl";
 import { el } from "redom";
-import { FileState } from "./types";
 import interact from "interactjs";
+
+import { FileState } from "./types/app";
 
 const wallpaperGrid: HTMLElement = document.querySelector(".wallpaper-grid");
 const taskbar: HTMLElement = document.querySelector("ul.taskbar");
@@ -122,13 +123,13 @@ class File {
         .addEventListener("click", () => this.toggleMinimize(true));
 
       const topBar = this.windowElement.querySelector(".top-bar");
-      interact(topBar).draggable({
+      interact(topBar).draggable(<any>{
         ignoreFrom: ".minimize, .maximize, .close",
         onmove: this.handleDrag
       });
 
       interact(this.windowElement)
-        .resizable({
+        .resizable(<any>{
           // resize from all edges and corners
           edges: { left: true, right: true, bottom: true, top: true },
 
