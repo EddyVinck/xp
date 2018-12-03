@@ -1,4 +1,4 @@
-import imageUrls from "../../img/*.*";
+const imageUrls = require("../../img/*.*");
 
 // A more convenient way to fetch the url of an icon
 const getIconUrl = (iconName: string = "") => {
