@@ -1,3 +1,5 @@
+import File from "../File";
+
 export interface FileState {
   isActive: boolean;
   isMaximized: boolean;
@@ -6,4 +8,9 @@ export interface FileState {
     x: number;
     y: number;
   };
+}
+
+/** HTMLElement with an optional file: File property */
+export interface FileElement extends HTMLElement {
+  file?: File;
 }

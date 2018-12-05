@@ -1,7 +1,7 @@
-import "./right-click";
-import "./clock";
 import "./startup";
 import "./login-screen";
+import "./right-click";
+import "./clock";
 import File from "./File";
 
 const allFiles = [];

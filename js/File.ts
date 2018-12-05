@@ -1,8 +1,9 @@
-import getIconUrl from "./utils/getIconUrl";
 import { el } from "redom";
 import interact from "interactjs";
 
-import { FileState } from "./types/app";
+import { FileState, FileElement } from "./types/app";
+import getIconUrl from "./utils/getIconUrl";
+import cloneCustomNode from "./utils/cloneCustomNode";
 
 const wallpaperGrid: HTMLElement = document.querySelector(".wallpaper-grid");
 const taskbar: HTMLElement = document.querySelector("ul.taskbar");
@@ -13,8 +14,8 @@ class File {
   private type: string;
   private parentElement: HTMLElement;
   private innerFiles?: File[];
-  private desktopElement: HTMLElement;
-  private taskbarElement: HTMLElement;
+  private desktopElement: FileElement;
+  private taskbarElement: FileElement;
   private windowElement: HTMLElement;
   private state: FileState;
 
@@ -70,6 +71,7 @@ class File {
     this.desktopElement = createDesktopElement(this.name, this.type);
     this.parentElement.appendChild(this.desktopElement);
     this.desktopElement.addEventListener("click", this.handleDesktopSingleClick);
+    this.desktopElement.file = this;
     this.desktopElement.addEventListener("dblclick", this.handleDesktopDoubleClick);
   }
 
@@ -194,13 +196,14 @@ class File {
 
   // Put the file in the taskbar
   showTaskbarCell() {
-    let taskbarElement = null;
+    let taskbarElement: FileElement = null;
 
     if (this.taskbarElement instanceof HTMLElement) {
       taskbarElement = this.taskbarElement;
     } else {
       // Create the taskbar element because it didnt exist
-      taskbarElement = createTaskbarElement(this.desktopElement.cloneNode(true));
+      const desktopElement: FileElement = cloneCustomNode(this.desktopElement);
+      taskbarElement = createTaskbarElement(desktopElement);
       this.taskbarElement = taskbarElement;
       this.taskbarElement.addEventListener("click", this.handleTaskbarClick);
     }
@@ -284,23 +287,25 @@ class File {
   }
 }
 
-function createTaskbarElement(desktopElement) {
-  const li = document.createElement("li");
+function createTaskbarElement(desktopElement): FileElement {
+  const li: FileElement = document.createElement("li");
   li.appendChild(desktopElement);
   return li;
 }
 
-// Returns a desktop cell element
-/*
+/** Returns a desktop cell element
   <div class="cell">
+
     <img src="img/folder_empty-3.png" alt="">
+
     <span class="cell-name">
       Projects
     </span>
+    
   </div>
 */
-function createDesktopElement(fileName, fileType) {
-  const desktopElement = document.createElement("div");
+function createDesktopElement(fileName: string, fileType: string): FileElement {
+  const desktopElement: FileElement = document.createElement("div");
   desktopElement.classList.add("cell");
 
   const img = document.createElement("img");
@@ -318,7 +323,7 @@ function createDesktopElement(fileName, fileType) {
 }
 
 // Creates and returns the window HTML element
-function createWindowElement(fileName, fileType): HTMLElement {
+function createWindowElement(fileName: string, fileType: string): HTMLElement {
   const windowElement: HTMLElement = el(
     ".folder-window",
     el(
