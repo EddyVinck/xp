@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "lib": ["es2017", "dom"],
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "strict": true,
+    "noUnusedLocals": true
   },
   "typeRoots": ["./node_modules/@types", "./js/types"],
   "include": ["js"],

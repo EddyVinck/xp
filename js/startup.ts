@@ -1,5 +1,5 @@
-const startupScreen: HTMLElement = document.querySelector(".startup-screen");
+const startupScreen = document.querySelector(".startup-screen");
 
 setTimeout(() => {
-  startupScreen.parentNode.removeChild(startupScreen);
+  if (startupScreen) startupScreen.remove();
 }, 7000);

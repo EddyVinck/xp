@@ -1,6 +1,6 @@
 import File from "../File";
 
-export interface FileState {
+export interface IFileState {
   isActive: boolean;
   isMaximized: boolean;
   isOpen: boolean;
@@ -11,6 +11,6 @@ export interface FileState {
 }
 
 /** HTMLElement with an optional file: File property */
-export interface FileElement extends HTMLElement {
+export interface IFileElement extends HTMLElement {
   file?: File;
 }

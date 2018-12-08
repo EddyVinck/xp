@@ -1,6 +1,6 @@
-const clock: HTMLElement = document.querySelector(".taskbar__clock");
+const clock: HTMLElement | null = document.querySelector(".taskbar__clock");
 
-if (clock instanceof HTMLElement) {
+if (clock && clock instanceof HTMLElement) {
   startClock();
 }
 
@@ -22,8 +22,8 @@ function getCurrentTime(): string {
 }
 
 function insertTime(currentTime: string) {
-  const timeLabel = clock.querySelector("span");
-  if (timeLabel.innerText !== currentTime) {
+  const timeLabel = clock && clock.querySelector("span");
+  if (timeLabel && timeLabel.innerText !== currentTime) {
     timeLabel.innerText = currentTime;
   }
 }

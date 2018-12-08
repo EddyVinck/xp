@@ -4,7 +4,7 @@ import "./right-click";
 import "./clock";
 import File from "./File";
 
-const allFiles = [];
+const allFiles: File[] = [];
 
 // Add a few folders or files
 if (Array.from(document.querySelectorAll(".wallpaper-grid > .cell")).length === 0) {

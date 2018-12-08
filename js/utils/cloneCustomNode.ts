@@ -1,22 +1,22 @@
-import { FileElement } from "../types/app";
+import { IFileElement } from "../types/app";
 
 /** Diffs all custom properties on element and puts them on the returned clone */
-function cloneCustomNode(element: HTMLElement | FileElement): HTMLElement | FileElement {
+function cloneCustomNode(element: HTMLElement | IFileElement): HTMLElement | IFileElement {
   const clone = element.cloneNode(true);
 
   // compare the objects properties
-  const originalKeys = Object.keys(element);
-  const differentKeys = originalKeys.map(key => {
-    if (clone.hasOwnProperty(key) === false) {
-      return key;
-    }
+  const originalKeys: string[] = Object.keys(element);
+  const differentKeys = originalKeys.filter(key => {
+    return clone.hasOwnProperty(key) === false;
   });
 
   differentKeys.forEach(key => {
-    clone[key] = element[key];
+    if (key === "file") {
+      clone[key] = element[key];
+    }
   });
 
-  return <HTMLElement>clone;
+  return <IFileElement>clone;
 }
 
 export default cloneCustomNode;

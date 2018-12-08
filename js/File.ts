@@ -1,23 +1,27 @@
 import { el } from "redom";
 import interact from "interactjs";
 
-import { FileState, FileElement } from "./types/app";
+import { IFileState, IFileElement } from "./types/app";
 import getIconUrl from "./utils/getIconUrl";
 import cloneCustomNode from "./utils/cloneCustomNode";
 
-const wallpaperGrid: HTMLElement = document.querySelector(".wallpaper-grid");
-const taskbar: HTMLElement = document.querySelector("ul.taskbar");
-const taskbarHeight: string = `${taskbar.clientHeight}px`;
+const wallpaperGrid = document.querySelector(".wallpaper-grid");
+const taskbar = document.querySelector("ul.taskbar");
+
+let taskbarHeight: string = "";
+if (taskbar instanceof HTMLElement) {
+  taskbarHeight = `${taskbar.clientHeight}px`;
+}
 
 class File {
   private name: string;
   private type: string;
-  private parentElement: HTMLElement;
+  private parentElement?: HTMLElement;
+  private desktopElement: IFileElement;
+  private taskbarElement?: IFileElement;
+  private windowElement?: HTMLElement;
+  private state: IFileState;
   private innerFiles?: File[];
-  private desktopElement: FileElement;
-  private taskbarElement: FileElement;
-  private windowElement: HTMLElement;
-  private state: FileState;
 
   constructor({
     name = "Unnamed",
@@ -27,8 +31,11 @@ class File {
   } = {}) {
     this.name = name;
     this.type = type;
-    this.parentElement = parentElement;
     this.innerFiles = innerFiles;
+
+    if (parentElement instanceof HTMLElement) {
+      this.parentElement = parentElement;
+    }
 
     this.state = {
       isOpen: false,
@@ -40,11 +47,6 @@ class File {
       }
     };
 
-    // Associated DOM elements
-    this.desktopElement = null;
-    this.taskbarElement = null;
-    this.windowElement = null;
-
     // Function binding
     this.delete = this.delete.bind(this);
     this.showWindow = this.showWindow.bind(this);
@@ -55,7 +57,6 @@ class File {
     this.closeWindow = this.closeWindow.bind(this);
     this.toggleMaximize = this.toggleMaximize.bind(this);
     this.toggleMinimize = this.toggleMinimize.bind(this);
-    this.addFileToParentElement = this.addFileToParentElement.bind(this);
     this.handleDesktopSingleClick = this.handleDesktopSingleClick.bind(this);
     this.handleDesktopDoubleClick = this.handleDesktopDoubleClick.bind(this);
     this.handleWindowSingleClick = this.handleWindowSingleClick.bind(this);
@@ -63,16 +64,14 @@ class File {
     this.handleDrag = this.handleDrag.bind(this);
     this.handleResize = this.handleResize.bind(this);
 
-    this.addFileToParentElement();
-  }
-
-  // Creates desktop file or folder
-  addFileToParentElement() {
+    // Add the File to the ParentElement in the DOM
     this.desktopElement = createDesktopElement(this.name, this.type);
-    this.parentElement.appendChild(this.desktopElement);
     this.desktopElement.addEventListener("click", this.handleDesktopSingleClick);
     this.desktopElement.file = this;
     this.desktopElement.addEventListener("dblclick", this.handleDesktopDoubleClick);
+    if (this.parentElement instanceof HTMLElement) {
+      this.parentElement.appendChild(this.desktopElement);
+    }
   }
 
   delete() {
@@ -80,15 +79,16 @@ class File {
     // remove all eventlisteners and elements
   }
 
-  handleTaskbarClick(e) {
+  handleTaskbarClick() {
     this.toggleMinimize();
   }
 
   handleWindowSingleClick(e: Event) {
     const { isActive } = this.state;
+
     const didClickMinimizeOrClose =
-      (<HTMLElement>event.target).classList.contains("minimize") ||
-      (<HTMLElement>event.target).classList.contains("close");
+      (<HTMLElement>e.target).classList.contains("minimize") ||
+      (<HTMLElement>e.target).classList.contains("close");
 
     if (isActive === false && didClickMinimizeOrClose === false) {
       this.dispatchActiveWindowChange(true);
@@ -96,9 +96,9 @@ class File {
     }
   }
 
-  handleDesktopSingleClick(e) {}
+  handleDesktopSingleClick() {}
 
-  handleDesktopDoubleClick(e) {
+  handleDesktopDoubleClick() {
     const { isOpen } = this.state;
     this.state.isOpen = !isOpen;
 
@@ -118,11 +118,15 @@ class File {
       windowElement = createWindowElement(this.name, this.type);
       this.windowElement = windowElement;
       this.windowElement.addEventListener("click", this.handleWindowSingleClick);
-      this.windowElement.querySelector(".close").addEventListener("click", this.closeWindow);
-      this.windowElement.querySelector(".maximize").addEventListener("click", this.toggleMaximize);
-      this.windowElement
-        .querySelector(".minimize")
-        .addEventListener("click", () => this.toggleMinimize(true));
+
+      const close = this.windowElement.querySelector(".close");
+      close && close.addEventListener("click", this.closeWindow);
+
+      const maximize = this.windowElement.querySelector(".maximize");
+      maximize && maximize.addEventListener("click", this.toggleMaximize);
+
+      const minimize = this.windowElement.querySelector(".minimize");
+      minimize && minimize.addEventListener("click", () => this.toggleMinimize(true));
 
       const topBar = this.windowElement.querySelector(".top-bar");
       interact(topBar).draggable(<any>{
@@ -147,7 +151,7 @@ class File {
     this.setActive(true);
   }
 
-  handleDrag(event) {
+  handleDrag(event: IInteractPointerEvent) {
     // Only drag when the window is not maximized because this can cause
     // the window to move outside of the viewport completely.
     if (this.state.isMaximized === false) {
@@ -166,15 +170,17 @@ class File {
     }
   }
 
-  handleResize(event) {
+  handleResize(event: IInteractPointerEvent) {
     if (this.state.isMaximized === false) {
       const target = event.target;
       let x = this.state.position.x || 0;
       let y = this.state.position.y || 0;
 
       // update the element's style
-      target.style.width = event.rect.width + "px";
-      target.style.height = event.rect.height + "px";
+      if (target) {
+        target.style.width = event.rect.width + "px";
+        target.style.height = event.rect.height + "px";
+      }
 
       // translate when resizing from top or left edges
       x += event.deltaRect.left;
@@ -190,81 +196,94 @@ class File {
     }
   }
 
-  moveWindow(x, y) {
-    this.windowElement.style.transform = `translate(${x}px, ${y}px)`;
+  moveWindow(x: number, y: number) {
+    if (this.windowElement) {
+      this.windowElement.style.transform = `translate(${x}px, ${y}px)`;
+    }
   }
 
   // Put the file in the taskbar
   showTaskbarCell() {
-    let taskbarElement: FileElement = null;
+    let taskbarElement: IFileElement;
 
     if (this.taskbarElement instanceof HTMLElement) {
       taskbarElement = this.taskbarElement;
     } else {
       // Create the taskbar element because it didnt exist
-      const desktopElement: FileElement = cloneCustomNode(this.desktopElement);
+      const desktopElement: IFileElement = cloneCustomNode(this.desktopElement);
       taskbarElement = createTaskbarElement(desktopElement);
       this.taskbarElement = taskbarElement;
       this.taskbarElement.addEventListener("click", this.handleTaskbarClick);
     }
-    taskbar.appendChild(taskbarElement);
+
+    if (taskbar instanceof HTMLElement) {
+      taskbar.appendChild(taskbarElement);
+    }
   }
 
   closeWindow() {
     this.state.isOpen = false;
 
-    this.windowElement.parentNode.removeChild(this.windowElement);
-    this.taskbarElement.parentNode.removeChild(this.taskbarElement);
+    if (this.windowElement && this.taskbarElement) {
+      this.windowElement.remove();
+      this.taskbarElement.remove();
+    }
   }
 
   toggleMaximize() {
     const { isMaximized, position } = this.state;
 
-    if (isMaximized) {
-      // unmaximize
-      this.windowElement.style.top = "";
-      this.windowElement.style.left = "";
-      this.windowElement.style.width = "";
-      this.windowElement.style.height = "";
-      this.moveWindow(position.x, position.y);
-    } else {
-      // Remove the positioning
-      this.windowElement.style.transform = "";
-      this.windowElement.style.top = "0px";
-      this.windowElement.style.left = "0px";
+    if (this.windowElement) {
+      if (isMaximized) {
+        // unmaximize
+        this.windowElement.style.top = "";
+        this.windowElement.style.left = "";
+        this.windowElement.style.width = "";
+        this.windowElement.style.height = "";
+        this.moveWindow(position.x, position.y);
+      } else {
+        // Remove the positioning
+        this.windowElement.style.transform = "";
+        this.windowElement.style.top = "0px";
+        this.windowElement.style.left = "0px";
 
-      // Maximize the window element
-      this.windowElement.style.width = "100%";
-      this.windowElement.style.height = `calc(100vh - ${taskbarHeight})`;
+        // Maximize the window element
+        this.windowElement.style.width = "100%";
+        this.windowElement.style.height = `calc(100vh - ${taskbarHeight})`;
+      }
     }
 
     this.state.isMaximized = !isMaximized;
   }
 
   toggleMinimize(forceMinimize?: boolean): void {
-    const isCurrentlyMinimized = !document.body.contains(this.windowElement);
-    const { isActive } = this.state;
+    if (this.windowElement && this.parentElement) {
+      const isCurrentlyMinimized = !document.body.contains(this.windowElement);
+      const { isActive } = this.state;
 
-    if ((isActive && isCurrentlyMinimized === false) || forceMinimize) {
-      // minimize it
-      this.setActive(false);
-      this.windowElement.parentNode.removeChild(this.windowElement);
-    } else {
-      // unminimize
-      this.parentElement.appendChild(this.windowElement);
-      this.dispatchActiveWindowChange(true);
-      this.setActive(true);
+      if ((isActive && isCurrentlyMinimized === false) || forceMinimize) {
+        // minimize it
+        this.setActive(false);
+        this.windowElement.remove();
+      } else {
+        // unminimize
+        this.parentElement.appendChild(this.windowElement);
+        this.dispatchActiveWindowChange(true);
+        this.setActive(true);
+      }
     }
   }
 
   // http://javascript.info/dispatch-events#custom-events
   dispatchActiveWindowChange(isActive = false) {
-    this.windowElement.dispatchEvent(
-      new CustomEvent("change-active-window", {
-        bubbles: true,
-        detail: { newActive: isActive ? this : null }
-      })
-    );
+    if (this.windowElement) {
+      this.windowElement.dispatchEvent(
+        new CustomEvent("change-active-window", {
+          bubbles: true,
+          detail: { newActive: isActive ? this : null }
+        })
+      );
+    }
   }
 
   setActive(isActive = false) {
@@ -275,7 +294,7 @@ class File {
   changeActiveAppearance(isActive = false) {
     // check if the windowElement has been created
     // otherwise this will error
-    if (this.windowElement) {
+    if (this.windowElement && this.taskbarElement) {
       if (isActive) {
         this.windowElement.classList.add("active");
         this.taskbarElement.classList.add("active");
@@ -287,8 +306,8 @@ class File {
   }
 }
 
-function createTaskbarElement(desktopElement): FileElement {
-  const li: FileElement = document.createElement("li");
+function createTaskbarElement(desktopElement: IFileElement) {
+  const li: IFileElement = document.createElement("li");
   li.appendChild(desktopElement);
   return li;
 }
@@ -304,8 +323,8 @@ function createTaskbarElement(desktopElement): FileElement {
     
   </div>
 */
-function createDesktopElement(fileName: string, fileType: string): FileElement {
-  const desktopElement: FileElement = document.createElement("div");
+function createDesktopElement(fileName: string, fileType: string): IFileElement {
+  const desktopElement: IFileElement = document.createElement("div");
   desktopElement.classList.add("cell");
 
   const img = document.createElement("img");
