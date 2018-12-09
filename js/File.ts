@@ -1,9 +1,10 @@
 import { el } from "redom";
-import interact from "interactjs";
+import interact, { InteractEvent, Listener } from "interactjs";
 
 import { IFileState, IFileElement } from "./types/app";
 import getIconUrl from "./utils/getIconUrl";
 import cloneCustomNode from "./utils/cloneCustomNode";
+import { IInteractEvent } from "./types/interactjs";
 
 const wallpaperGrid = document.querySelector(".wallpaper-grid");
 const taskbar = document.querySelector("ul.taskbar");
@@ -144,14 +145,14 @@ class File {
             min: { width: 300, height: 200 }
           }
         })
-        .on("resizemove", this.handleResize);
+        .on("resizemove", <Listener>this.handleResize);
     }
     document.body.appendChild(windowElement);
     this.dispatchActiveWindowChange(true);
     this.setActive(true);
   }
 
-  handleDrag(event: IInteractPointerEvent) {
+  handleDrag(event: InteractEvent) {
     // Only drag when the window is not maximized because this can cause
     // the window to move outside of the viewport completely.
     if (this.state.isMaximized === false) {
@@ -170,7 +171,7 @@ class File {
     }
   }
 
-  handleResize(event: IInteractPointerEvent) {
+  handleResize(event: IInteractEvent) {
     if (this.state.isMaximized === false) {
       const target = event.target;
       let x = this.state.position.x || 0;

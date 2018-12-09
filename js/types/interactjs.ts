@@ -1,4 +1,6 @@
-interface IInteractPointerEvent extends PointerEvent {
+import { InteractEvent } from "interactjs";
+
+export interface IInteractEvent extends InteractEvent {
   dx: number;
   dy: number;
   target: HTMLElement;
