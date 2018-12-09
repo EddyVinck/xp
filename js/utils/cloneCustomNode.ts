@@ -1,8 +1,12 @@
-import { IFileElement } from "../types/app";
+/** Fixes the no index signature error caused by clone[key] = element[key] 
+ and the no implicit any rule */
+interface IHTMLElement extends HTMLElement {
+  [key: string]: any;
+}
 
 /** Diffs all custom properties on element and puts them on the returned clone */
-function cloneCustomNode(element: HTMLElement | IFileElement): HTMLElement | IFileElement {
-  const clone = element.cloneNode(true);
+function cloneCustomNode(element: IHTMLElement): IHTMLElement {
+  const clone = <IHTMLElement>element.cloneNode(true);
 
   // compare the objects properties
   const originalKeys: string[] = Object.keys(element);
@@ -16,7 +20,7 @@ function cloneCustomNode(element: HTMLElement | IFileElement): HTMLElement | IFi
     }
   });
 
-  return <IFileElement>clone;
+  return clone;
 }
 
 export default cloneCustomNode;
