@@ -12,7 +12,8 @@ accounts.forEach(account => {
   account.addEventListener("click", checkActive);
 });
 
-function checkActive() {
+// you can provide an explicit this parameter. this parameters are fake parameters that come first in the parameter list of a function:
+function checkActive(this: HTMLElement) {
   if (this.classList.contains("active") === false) {
     accounts.forEach(removeActive);
     this.classList.add("active");

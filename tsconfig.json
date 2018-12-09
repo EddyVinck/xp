@@ -8,6 +8,6 @@
     "noUnusedLocals": true
   },
   "typeRoots": ["./node_modules/@types", "./js/types"],
-  "include": ["js"],
-  "exclude": ["node_modules"]
+  "include": ["./js"],
+  "exclude": ["./node_modules"]
 }
