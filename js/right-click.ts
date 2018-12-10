@@ -19,16 +19,28 @@ document.addEventListener("click", (e: MouseEvent) => {
   if (rightClickMenu) {
     if (isChildElement(<HTMLElement>e.target, rightClickMenu)) {
       // handle any of the right click options if those are clicked
-      console.log(e.target);
 
-      // get the file from the parent
-      if (e.target instanceof HTMLElement && e.target.parentNode) {
-        const file = (<IFileElement>e.target.parentNode).file;
+      if (e.target instanceof HTMLElement) {
+        // get the file from the parent
+        const file = rightClickMenu.file;
+
+        if (file) {
+          switch (e.target.innerText.toLowerCase().replace(" ", "-")) {
+            case "delete":
+              file.delete();
+              break;
+            case "rename":
+              file.rename();
+              break;
+            default:
+              break;
+          }
+        }
       }
-    } else {
-      // close the right click menu if the user clicked anywhere else
-      rightClickMenu.style.display = "none";
     }
+
+    // close the right click menu
+    rightClickMenu.style.display = "none";
   }
 });
 
@@ -47,7 +59,6 @@ function handleRightClick(e: MouseEvent) {
     );
     // Check if elementType has an associated file
     if (elementType !== null && elementType.file) {
-      console.log(elementType.file);
       // Bind the file to the right-click options
       rightClickMenu.file = elementType.file;
     } else {

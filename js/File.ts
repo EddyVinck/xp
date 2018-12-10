@@ -75,16 +75,68 @@ class File {
     }
   }
 
-  delete() {
+  public delete() {
     // When a user deletes a file or folder
     // remove all eventlisteners and elements
+    this.closeWindow();
+    this.desktopElement.remove();
+
+    // TODO: Move to recycle bin
   }
 
-  handleTaskbarClick() {
+  public rename() {
+    const cellNameElement = <HTMLElement>this.desktopElement.querySelector(".cell-name");
+    const previousName = cellNameElement.textContent;
+    // turn the cell-name span in an input
+
+    cellNameElement.remove();
+    const nameInput = el("input.cell-name", {
+      value: previousName
+    });
+    this.desktopElement.appendChild(nameInput);
+    nameInput.focus();
+
+    // on submit change the name
+    nameInput.addEventListener("keyup", (e: KeyboardEvent) => {
+      if (e.keyCode === 13) {
+        const inputElement = <HTMLInputElement>e.target;
+        console.log("Name submitted!");
+
+        const newName = inputElement.value;
+        this.handleRename(newName, cellNameElement);
+
+        // remove event listener implicitly by removing the element and all references
+        try {
+          nameInput.remove();
+        } catch (error) {
+          // nameInput was already removed by blur
+        }
+      }
+    });
+
+    const handleUnfocus = () => {
+      if (document.body.contains(nameInput)) {
+        this.desktopElement.appendChild(cellNameElement);
+
+        // remove event listener implicitly by removing the element and all references
+        nameInput.remove();
+      }
+    };
+
+    // blur is called when the name input is unfocused
+    nameInput.addEventListener("blur", handleUnfocus);
+  }
+
+  private handleRename(newName: string, cellNameElement: HTMLElement) {
+    cellNameElement.innerText = newName;
+    this.desktopElement.appendChild(cellNameElement);
+  }
+
+  private handleTaskbarClick() {
     this.toggleMinimize();
   }
 
-  handleWindowSingleClick(e: Event) {
+  private handleWindowSingleClick(e: Event) {
     const { isActive } = this.state;
 
     const didClickMinimizeOrClose =
@@ -97,9 +149,9 @@ class File {
     }
   }
 
-  handleDesktopSingleClick() {}
+  private handleDesktopSingleClick() {}
 
-  handleDesktopDoubleClick() {
+  private handleDesktopDoubleClick() {
     const { isOpen } = this.state;
     this.state.isOpen = !isOpen;
 
@@ -108,7 +160,7 @@ class File {
   }
 
   // Open the file's window
-  showWindow() {
+  private showWindow() {
     let windowElement = null;
 
     if (this.windowElement instanceof HTMLElement) {
@@ -152,7 +204,7 @@ class File {
     this.setActive(true);
   }
 
-  handleDrag(event: InteractEvent) {
+  private handleDrag(event: InteractEvent) {
     // Only drag when the window is not maximized because this can cause
     // the window to move outside of the viewport completely.
     if (this.state.isMaximized === false) {
@@ -171,7 +223,7 @@ class File {
     }
   }
 
-  handleResize(event: IInteractEvent) {
+  private handleResize(event: IInteractEvent) {
     if (this.state.isMaximized === false) {
       const target = event.target;
       let x = this.state.position.x || 0;
@@ -197,14 +249,14 @@ class File {
     }
   }
 
-  moveWindow(x: number, y: number) {
+  private moveWindow(x: number, y: number) {
     if (this.windowElement) {
       this.windowElement.style.transform = `translate(${x}px, ${y}px)`;
     }
   }
 
   // Put the file in the taskbar
-  showTaskbarCell() {
+  private showTaskbarCell() {
     let taskbarElement: IFileElement;
 
     if (this.taskbarElement instanceof HTMLElement) {
@@ -222,7 +274,7 @@ class File {
     }
   }
 
-  closeWindow() {
+  private closeWindow() {
     this.state.isOpen = false;
 
     if (this.windowElement && this.taskbarElement) {
@@ -231,7 +283,7 @@ class File {
     }
   }
 
-  toggleMaximize() {
+  private toggleMaximize() {
     const { isMaximized, position } = this.state;
 
     if (this.windowElement) {
@@ -257,7 +309,7 @@ class File {
     this.state.isMaximized = !isMaximized;
   }
 
-  toggleMinimize(forceMinimize?: boolean): void {
+  private toggleMinimize(forceMinimize?: boolean): void {
     if (this.windowElement && this.parentElement) {
       const isCurrentlyMinimized = !document.body.contains(this.windowElement);
       const { isActive } = this.state;
@@ -276,7 +328,7 @@ class File {
   }
 
   // http://javascript.info/dispatch-events#custom-events
-  dispatchActiveWindowChange(isActive = false) {
+  private dispatchActiveWindowChange(isActive = false) {
     if (this.windowElement) {
       this.windowElement.dispatchEvent(
         new CustomEvent("change-active-window", {
@@ -287,12 +339,12 @@ class File {
     }
   }
 
-  setActive(isActive = false) {
+  public setActive(isActive = false) {
     this.state.isActive = isActive;
     this.changeActiveAppearance(isActive);
   }
 
-  changeActiveAppearance(isActive = false) {
+  private changeActiveAppearance(isActive = false) {
     // check if the windowElement has been created
     // otherwise this will error
     if (this.windowElement && this.taskbarElement) {

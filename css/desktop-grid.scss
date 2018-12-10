@@ -31,6 +31,11 @@
       font-size: 15px;
       text-overflow: ellipsis;
     }
+
+    input.cell-name {
+      background: none;
+      border: 1px dashed rgb(104, 104, 104);
+    }
   }
 }
 
