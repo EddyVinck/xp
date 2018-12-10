@@ -6,14 +6,19 @@ $inactiveBlue: #0099ff;
 $activeBlue: blue;
 
 .folder-window {
-  min-width: 500px;
+  min-width: 318px;
   min-height: 200px;
   max-height: 100%;
+  max-width: 100vw;
   position: absolute;
   top: 250px;
   left: 50px;
   display: flex;
   flex-direction: column;
+
+  @media (min-width: 540px) {
+    min-width: 500px;
+  }
 
   &.active {
     z-index: 1;

@@ -1,4 +1,4 @@
-const clock: HTMLElement | null = document.querySelector(".taskbar__clock");
+const clock = document.querySelector(".taskbar__clock");
 
 if (clock && clock instanceof HTMLElement) {
   startClock();
