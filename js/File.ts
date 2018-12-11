@@ -6,7 +6,7 @@ import getIconUrl from "./utils/getIconUrl";
 import cloneCustomNode from "./utils/cloneCustomNode";
 import { IInteractEvent } from "./types/interactjs";
 
-const wallpaperGrid = document.querySelector(".wallpaper-grid");
+const wallpaperGrid = <HTMLElement>document.querySelector(".wallpaper-grid");
 const taskbar = document.querySelector("ul.taskbar");
 
 let taskbarHeight: string = "";
@@ -17,12 +17,13 @@ if (taskbar instanceof HTMLElement) {
 class File {
   private name: string;
   private type: string;
-  private parentElement?: HTMLElement;
+  private parentElement: HTMLElement;
   private desktopElement: IFileElement;
   private taskbarElement?: IFileElement;
-  private windowElement?: HTMLElement;
+  private windowElement: HTMLElement;
   private state: IFileState;
-  private innerFiles?: File[];
+  private _innerFiles: File[];
+  private _innerFilesContainer: HTMLElement;
 
   constructor({
     name = "Unnamed",
@@ -32,11 +33,8 @@ class File {
   } = {}) {
     this.name = name;
     this.type = type;
-    this.innerFiles = innerFiles;
-
-    if (parentElement instanceof HTMLElement) {
-      this.parentElement = parentElement;
-    }
+    this._innerFiles = innerFiles;
+    this.parentElement = parentElement;
 
     this.state = {
       isOpen: false,
@@ -51,6 +49,7 @@ class File {
     // Function binding
     this.delete = this.delete.bind(this);
     this.showWindow = this.showWindow.bind(this);
+    this.createInteractableWindowElement = this.createInteractableWindowElement.bind(this);
     this.setActive = this.setActive.bind(this);
     this.dispatchActiveWindowChange = this.dispatchActiveWindowChange.bind(this);
     this.changeActiveAppearance = this.changeActiveAppearance.bind(this);
@@ -62,17 +61,50 @@ class File {
     this.handleDesktopDoubleClick = this.handleDesktopDoubleClick.bind(this);
     this.handleWindowSingleClick = this.handleWindowSingleClick.bind(this);
     this.handleTaskbarClick = this.handleTaskbarClick.bind(this);
+    this.handleRename = this.handleRename.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     this.handleResize = this.handleResize.bind(this);
+
+    // Folder specific function binding
+    this.innerFiles.push = this.innerFiles.push.bind(this);
 
     // Add the File to the ParentElement in the DOM
     this.desktopElement = createDesktopElement(this.name, this.type);
     this.desktopElement.addEventListener("click", this.handleDesktopSingleClick);
     this.desktopElement.file = this;
     this.desktopElement.addEventListener("dblclick", this.handleDesktopDoubleClick);
-    if (this.parentElement instanceof HTMLElement) {
+
+    if (this.parentElement && this.parentElement instanceof HTMLElement) {
       this.parentElement.appendChild(this.desktopElement);
     }
+
+    this.windowElement = this.createInteractableWindowElement();
+    this.taskbarElement = this.createInteractableTaskbarElement();
+
+    // check if if (this.type === "folder") when seperating File and Folder classes
+    this._innerFilesContainer = <HTMLElement>this.windowElement.querySelector(".file-grid");
+  }
+
+  public innerFiles = {
+    _innerFiles: this._innerFiles,
+    _innerFilesContainer: this.getInnerFilesContainer(),
+
+    push(newFile: File) {
+      // push a new file and change the parentElement
+      newFile.parentElement = this._innerFilesContainer;
+      this._innerFiles.push(newFile);
+
+      // Append the file to a different DOM node
+      this._innerFilesContainer.appendChild(newFile.desktopElement);
+    }
+  };
+
+  public debug() {
+    console.log(this);
+  }
+
+  private getInnerFilesContainer() {
+    return this._innerFilesContainer;
   }
 
   public delete() {
@@ -87,8 +119,8 @@ class File {
   public rename() {
     const cellNameElement = <HTMLElement>this.desktopElement.querySelector(".cell-name");
     const previousName = cellNameElement.textContent;
-    // turn the cell-name span in an input
 
+    // turn the cell-name span in an input
     cellNameElement.remove();
     const nameInput = el("input.cell-name", {
       value: previousName
@@ -131,8 +163,18 @@ class File {
     cellNameElement.innerText = newName;
     this.desktopElement.appendChild(cellNameElement);
 
-    this.showWindow();
-    this.showTaskbarCell();
+    // Check if the filename needs to be updated
+    const windowElement = <HTMLElement>this.windowElement;
+    const currentFileNameSpan = <HTMLElement>windowElement.querySelector(".folder-label span");
+    const currentFileName = currentFileNameSpan.innerText;
+
+    if (currentFileName !== this.name) {
+      const taskbarElement = <HTMLElement>this.taskbarElement;
+      const currentTaskbarFileNameSpan = <HTMLElement>taskbarElement.querySelector(".cell-name");
+
+      currentFileNameSpan.innerText = this.name;
+      currentTaskbarFileNameSpan.innerText = this.name;
+    }
   }
 
   private handleTaskbarClick() {
@@ -164,56 +206,52 @@ class File {
 
   // Open the file's window
   private showWindow() {
-    let windowElement = null;
+    let windowElement = this.windowElement;
 
-    if (this.windowElement instanceof HTMLElement) {
-      // windowElement was already created
-      windowElement = this.windowElement;
-
-      const currentFileNameSpan = <HTMLElement>windowElement.querySelector(".folder-label span");
-      const currentFileName = currentFileNameSpan.innerText;
-
-      if (currentFileName !== this.name) {
-        currentFileNameSpan.innerText = this.name;
-      }
-    } else {
-      console.log("creating window element");
-
-      // windowElement did not exist yet
-      windowElement = createWindowElement(this.name, this.type);
-      this.windowElement = windowElement;
-      this.windowElement.addEventListener("click", this.handleWindowSingleClick);
-
-      const close = this.windowElement.querySelector(".close");
-      close && close.addEventListener("click", this.closeWindow);
-
-      const maximize = this.windowElement.querySelector(".maximize");
-      maximize && maximize.addEventListener("click", this.toggleMaximize);
-
-      const minimize = this.windowElement.querySelector(".minimize");
-      minimize && minimize.addEventListener("click", () => this.toggleMinimize(true));
-
-      const topBar = this.windowElement.querySelector(".top-bar");
-      interact(topBar).draggable(<any>{
-        ignoreFrom: ".minimize, .maximize, .close",
-        onmove: this.handleDrag
-      });
-
-      interact(this.windowElement)
-        .resizable(<any>{
-          // resize from all edges and corners
-          edges: { left: true, right: true, bottom: true, top: true },
-
-          // minimum size
-          restrictSize: {
-            min: { width: 300, height: 200 }
-          }
-        })
-        .on("resizemove", <Listener>this.handleResize);
-    }
     document.body.appendChild(windowElement);
     this.dispatchActiveWindowChange(true);
     this.setActive(true);
+  }
+
+  private createInteractableWindowElement() {
+    // windowElement did not exist yet
+    const windowElement = createWindowElement(this.name, this.type);
+    this.windowElement = windowElement;
+    this.windowElement.addEventListener("click", this.handleWindowSingleClick);
+
+    const close = this.windowElement.querySelector(".close");
+    close && close.addEventListener("click", this.closeWindow);
+
+    const maximize = this.windowElement.querySelector(".maximize");
+    maximize && maximize.addEventListener("click", this.toggleMaximize);
+
+    const minimize = this.windowElement.querySelector(".minimize");
+    minimize && minimize.addEventListener("click", () => this.toggleMinimize(true));
+
+    const topBar = this.windowElement.querySelector(".top-bar");
+    interact(topBar)
+      .draggable(<any>{
+        ignoreFrom: ".minimize, .maximize, .close",
+        onmove: this.handleDrag
+      })
+      .on("dragstart", () => {
+        this.dispatchActiveWindowChange(true);
+        this.setActive(true);
+      });
+
+    interact(this.windowElement)
+      .resizable(<any>{
+        // resize from all edges and corners
+        edges: { left: true, right: true, bottom: true, top: true },
+
+        // minimum size
+        restrictSize: {
+          min: { width: 300, height: 200 }
+        }
+      })
+      .on("resizemove", <Listener>this.handleResize);
+
+    return windowElement;
   }
 
   private handleDrag(event: InteractEvent) {
@@ -269,28 +307,21 @@ class File {
 
   // Put the file in the taskbar
   private showTaskbarCell() {
-    let taskbarElement: IFileElement;
-
-    if (this.taskbarElement instanceof HTMLElement) {
-      taskbarElement = this.taskbarElement;
-
-      const currentFileNameSpan = <HTMLElement>taskbarElement.querySelector(".cell-name");
-      const currentFileName = currentFileNameSpan.innerText;
-
-      if (currentFileName !== this.name) {
-        currentFileNameSpan.innerText = this.name;
-      }
-    } else {
-      // Create the taskbar element because it didnt exist
-      const desktopElement: IFileElement = cloneCustomNode(this.desktopElement);
-      taskbarElement = createTaskbarElement(desktopElement);
-      this.taskbarElement = taskbarElement;
-      this.taskbarElement.addEventListener("click", this.handleTaskbarClick);
-    }
+    const taskbar = document.querySelector("ul.taskbar");
+    const taskbarElement = <IFileElement>this.taskbarElement;
 
     if (taskbar instanceof HTMLElement) {
       taskbar.appendChild(taskbarElement);
     }
+  }
+
+  private createInteractableTaskbarElement() {
+    // Create the taskbar element because it didnt exist
+    const desktopElement: IFileElement = cloneCustomNode(this.desktopElement);
+    const taskbarElement = createTaskbarElement(desktopElement);
+    taskbarElement.addEventListener("click", this.handleTaskbarClick);
+
+    return taskbarElement;
   }
 
   private closeWindow() {
@@ -339,7 +370,7 @@ class File {
         this.windowElement.remove();
       } else {
         // unminimize
-        this.parentElement.appendChild(this.windowElement);
+        document.body.appendChild(this.windowElement);
         this.dispatchActiveWindowChange(true);
         this.setActive(true);
       }

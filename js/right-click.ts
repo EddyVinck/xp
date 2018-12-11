@@ -5,7 +5,7 @@ import { IFileElement } from "./types/app";
 import { el } from "redom";
 
 const rightClickMenu: IFileElement | null = document.querySelector(".right-click-menu");
-const rightClickFileActions = ["Delete", "Rename"];
+const rightClickFileActions = ["Debug", "Delete", "Rename"];
 
 document.addEventListener(
   "contextmenu",
@@ -35,6 +35,8 @@ document.addEventListener("click", (e: MouseEvent) => {
             case "rename":
               file.rename();
               break;
+            case "debug":
+              file.debug();
             default:
               break;
           }
