@@ -75,9 +75,10 @@ function handleRightClick(e: MouseEvent) {
       rightClickMenu.file = null;
     }
 
-    // Place the right click options
-    rightClickMenu.style.top = `${y}px`;
-    rightClickMenu.style.left = `${x}px`;
+    // Place the right click options with a slight adjustment
+    const rightClickMenuOffset = 2; // pixels
+    rightClickMenu.style.top = `${y - rightClickMenuOffset}px`;
+    rightClickMenu.style.left = `${x - rightClickMenuOffset}px`;
     rightClickMenu.style.display = "block";
   }
 }

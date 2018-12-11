@@ -127,8 +127,12 @@ class File {
   }
 
   private handleRename(newName: string, cellNameElement: HTMLElement) {
+    this.name = newName;
     cellNameElement.innerText = newName;
     this.desktopElement.appendChild(cellNameElement);
+
+    this.showWindow();
+    this.showTaskbarCell();
   }
 
   private handleTaskbarClick() {
@@ -165,7 +169,16 @@ class File {
     if (this.windowElement instanceof HTMLElement) {
       // windowElement was already created
       windowElement = this.windowElement;
+
+      const currentFileNameSpan = <HTMLElement>windowElement.querySelector(".folder-label span");
+      const currentFileName = currentFileNameSpan.innerText;
+
+      if (currentFileName !== this.name) {
+        currentFileNameSpan.innerText = this.name;
+      }
     } else {
+      console.log("creating window element");
+
       // windowElement did not exist yet
       windowElement = createWindowElement(this.name, this.type);
       this.windowElement = windowElement;
@@ -260,6 +273,13 @@ class File {
 
     if (this.taskbarElement instanceof HTMLElement) {
       taskbarElement = this.taskbarElement;
+
+      const currentFileNameSpan = <HTMLElement>taskbarElement.querySelector(".cell-name");
+      const currentFileName = currentFileNameSpan.innerText;
+
+      if (currentFileName !== this.name) {
+        currentFileNameSpan.innerText = this.name;
+      }
     } else {
       // Create the taskbar element because it didnt exist
       const desktopElement: IFileElement = cloneCustomNode(this.desktopElement);
