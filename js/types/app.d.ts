@@ -12,5 +12,5 @@ export interface IFileState {
 
 /** HTMLElement with an optional file: File property */
 export interface IFileElement extends HTMLElement {
-  file?: File;
+  file?: File | null;
 }

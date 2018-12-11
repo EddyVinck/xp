@@ -2,14 +2,17 @@ import isChildElement from "./utils/isChildElement";
 import getParentWithClass from "./utils/getParentWithClass";
 import coalesce from "./utils/coalesce";
 import { IFileElement } from "./types/app";
+import { el } from "redom";
 
 const rightClickMenu: IFileElement | null = document.querySelector(".right-click-menu");
+const rightClickFileActions = ["Delete", "Rename"];
 
 document.addEventListener(
   "contextmenu",
   (e: MouseEvent) => {
     e.preventDefault();
 
+    deleteRightClickOptions(rightClickFileActions);
     handleRightClick(e);
   },
   false
@@ -45,7 +48,8 @@ document.addEventListener("click", (e: MouseEvent) => {
 });
 
 function handleRightClick(e: MouseEvent) {
-  const rightClickMenu: IFileElement | null = document.querySelector(".right-click-menu");
+  const rightClickMenu = <IFileElement>document.querySelector(".right-click-menu");
+  const menuList = <HTMLElement>rightClickMenu.querySelector("ul");
   const { pageX: x, pageY: y } = e;
 
   // check which instance of File is associated with the element.
@@ -61,9 +65,14 @@ function handleRightClick(e: MouseEvent) {
     if (elementType !== null && elementType.file) {
       // Bind the file to the right-click options
       rightClickMenu.file = elementType.file;
+
+      rightClickFileActions.forEach(option => {
+        menuList.appendChild(el("li", option));
+      });
     } else {
       // element has no associated File
       // Remove the current file from the right click options if there is one
+      rightClickMenu.file = null;
     }
 
     // Place the right click options
@@ -71,4 +80,15 @@ function handleRightClick(e: MouseEvent) {
     rightClickMenu.style.left = `${x}px`;
     rightClickMenu.style.display = "block";
   }
+}
+
+function deleteRightClickOptions(optionsToDelete: string[]) {
+  const rightClickMenu = <IFileElement>document.querySelector(".right-click-menu");
+  const menuList = <HTMLElement>rightClickMenu.querySelector("ul");
+
+  Array.from(menuList.querySelectorAll("li")).forEach(li => {
+    if (optionsToDelete.includes(li.innerText)) {
+      li.remove();
+    }
+  });
 }

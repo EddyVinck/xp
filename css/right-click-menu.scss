@@ -17,6 +17,8 @@
     margin: 0;
   }
   li {
+    user-select: none;
+    cursor: pointer;
     &:hover {
       background-color: $menuHoverBlue;
       color: #fff;

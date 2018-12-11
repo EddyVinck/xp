@@ -100,7 +100,6 @@ class File {
     nameInput.addEventListener("keyup", (e: KeyboardEvent) => {
       if (e.keyCode === 13) {
         const inputElement = <HTMLInputElement>e.target;
-        console.log("Name submitted!");
 
         const newName = inputElement.value;
         this.handleRename(newName, cellNameElement);
