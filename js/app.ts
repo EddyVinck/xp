@@ -1,5 +1,5 @@
-import "./startup";
-import "./login-screen";
+// import "./startup";
+// import "./login-screen";
 import "./right-click";
 import "./clock";
 import File from "./File";
@@ -21,11 +21,11 @@ if (Array.from(document.querySelectorAll(".wallpaper-grid > .cell")).length === 
   }
 }
 
-console.log(allFiles);
-
 // Listener that sets all windows inactive
 document.addEventListener("change-active-window", function(event) {
   allFiles.forEach(file => {
     file.setActive(false);
   });
 });
+
+export default allFiles;

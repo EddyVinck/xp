@@ -3,15 +3,19 @@ import getParentWithClass from "./utils/getParentWithClass";
 import coalesce from "./utils/coalesce";
 import { IFileElement } from "./types/app";
 import { el } from "redom";
+import File from "./File";
+import allFiles from "./app";
 
 const rightClickMenu: IFileElement | null = document.querySelector(".right-click-menu");
-const rightClickFileActions = ["Debug", "Delete", "Rename"];
+const rightClickFileHoverActions = ["Debug", "Delete", "Rename"];
+const rightClickFileActions = ["Debug", "New folder"];
 
 document.addEventListener(
   "contextmenu",
   (e: MouseEvent) => {
     e.preventDefault();
 
+    deleteRightClickOptions(rightClickFileHoverActions);
     deleteRightClickOptions(rightClickFileActions);
     handleRightClick(e);
   },
@@ -27,8 +31,12 @@ document.addEventListener("click", (e: MouseEvent) => {
         // get the file from the parent
         const file = rightClickMenu.file;
 
+        const optionName = e.target.innerText.toLowerCase().replace(" ", "-");
+        console.log(optionName);
+
         if (file) {
-          switch (e.target.innerText.toLowerCase().replace(" ", "-")) {
+          // user has clicked on a file option
+          switch (optionName) {
             case "delete":
               file.delete();
               break;
@@ -37,6 +45,18 @@ document.addEventListener("click", (e: MouseEvent) => {
               break;
             case "debug":
               file.debug();
+            default:
+              break;
+          }
+        } else {
+          // User has right-clicked on something else
+          switch (optionName) {
+            case "new-folder":
+              handleFolderCreation();
+              break;
+            case "debug":
+              console.log(allFiles);
+              break;
             default:
               break;
           }
@@ -68,10 +88,13 @@ function handleRightClick(e: MouseEvent) {
       // Bind the file to the right-click options
       rightClickMenu.file = elementType.file;
 
-      rightClickFileActions.forEach(option => {
+      rightClickFileHoverActions.forEach(option => {
         menuList.appendChild(el("li", option));
       });
     } else {
+      rightClickFileActions.forEach(option => {
+        menuList.appendChild(el("li", option));
+      });
       // element has no associated File
       // Remove the current file from the right click options if there is one
       rightClickMenu.file = null;
@@ -94,4 +117,22 @@ function deleteRightClickOptions(optionsToDelete: string[]) {
       li.remove();
     }
   });
+}
+
+function handleFolderCreation() {
+  let fileName = "New folder";
+  const allFileNames = allFiles.map(file => file.name);
+
+  // debugger;
+  if (allFileNames.includes(fileName) === true) {
+    let fileIndex = 1;
+    while (allFileNames.includes(fileName) === true) {
+      fileName = `New folder (${fileIndex})`;
+      fileIndex++;
+    }
+  }
+
+  const newFile = new File({ name: fileName, type: "folder" });
+  newFile.rename();
+  allFiles.push(newFile);
 }

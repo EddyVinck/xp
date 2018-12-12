@@ -5,7 +5,9 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "strict": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "target": "ES2017",
+    "moduleResolution": "node"
   },
   "typeRoots": ["./node_modules/@types", "./js/types"],
   "include": ["./js"],

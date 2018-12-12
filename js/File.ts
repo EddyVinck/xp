@@ -15,7 +15,7 @@ if (taskbar instanceof HTMLElement) {
 }
 
 class File {
-  private name: string;
+  private _name: string;
   private type: string;
   private parentElement: HTMLElement;
   private desktopElement: IFileElement;
@@ -31,7 +31,7 @@ class File {
     parentElement = wallpaperGrid,
     innerFiles = []
   } = {}) {
-    this.name = name;
+    this._name = name;
     this.type = type;
     this._innerFiles = innerFiles;
     this.parentElement = parentElement;
@@ -69,7 +69,7 @@ class File {
     this.innerFiles.push = this.innerFiles.push.bind(this);
 
     // Add the File to the ParentElement in the DOM
-    this.desktopElement = createDesktopElement(this.name, this.type);
+    this.desktopElement = createDesktopElement(this._name, this.type);
     this.desktopElement.addEventListener("click", this.handleDesktopSingleClick);
     this.desktopElement.file = this;
     this.desktopElement.addEventListener("dblclick", this.handleDesktopDoubleClick);
@@ -83,6 +83,10 @@ class File {
 
     // check if if (this.type === "folder") when seperating File and Folder classes
     this._innerFilesContainer = <HTMLElement>this.windowElement.querySelector(".file-grid");
+  }
+
+  public get name(): string {
+    return this._name;
   }
 
   public innerFiles = {
@@ -159,7 +163,7 @@ class File {
   }
 
   private handleRename(newName: string, cellNameElement: HTMLElement) {
-    this.name = newName;
+    this._name = newName;
     cellNameElement.innerText = newName;
     this.desktopElement.appendChild(cellNameElement);
 
@@ -168,12 +172,12 @@ class File {
     const currentFileNameSpan = <HTMLElement>windowElement.querySelector(".folder-label span");
     const currentFileName = currentFileNameSpan.innerText;
 
-    if (currentFileName !== this.name) {
+    if (currentFileName !== this._name) {
       const taskbarElement = <HTMLElement>this.taskbarElement;
       const currentTaskbarFileNameSpan = <HTMLElement>taskbarElement.querySelector(".cell-name");
 
-      currentFileNameSpan.innerText = this.name;
-      currentTaskbarFileNameSpan.innerText = this.name;
+      currentFileNameSpan.innerText = this._name;
+      currentTaskbarFileNameSpan.innerText = this._name;
     }
   }
 
@@ -215,7 +219,7 @@ class File {
 
   private createInteractableWindowElement() {
     // windowElement did not exist yet
-    const windowElement = createWindowElement(this.name, this.type);
+    const windowElement = createWindowElement(this._name, this.type);
     this.windowElement = windowElement;
     this.windowElement.addEventListener("click", this.handleWindowSingleClick);
 
