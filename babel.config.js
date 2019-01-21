@@ -1,6 +1,14 @@
 const isProd = String(process.env.NODE_ENV) === "production";
 const isTest = String(process.env.NODE_ENV) === "test";
 
+/*
+
+              options: {
+                presets: ["@babel/env"],
+                plugins: ["@babel/syntax-dynamic-import"]
+              }
+*/
+
 module.exports = {
   presets: [
     ["@babel/preset-env", { modules: isTest ? "commonjs" : false }],
