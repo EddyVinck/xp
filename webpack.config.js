@@ -37,6 +37,14 @@ module.exports = (env, argv) => {
           use: [
             {
               loader: "babel-loader"
+              // options: {
+              //   presets: ["@babel/preset-env", "@babel/preset-typescript"],
+              //   plugins: [
+              //     "@babel/plugin-syntax-dynamic-import",
+              //     "@babel/plugin-proposal-class-properties",
+              //     "@babel/plugin-proposal-object-rest-spread"
+              //   ]
+              // }
             }
             // {
             //   loader: "eslint-loader"
@@ -132,7 +140,7 @@ module.exports = (env, argv) => {
       extensions: [".ts", ".js", ".json"],
       alias: {
         fontello: path.resolve(__dirname, "src/assets/fonts/icons/fontello-icons"),
-        img: path.resolve(__dirname, "src/assets/img")
+        img: path.resolve(__dirname, "src/img")
       }
     },
     devtool: "source-map",
