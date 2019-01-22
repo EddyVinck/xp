@@ -8,6 +8,4 @@ const getIconUrl = (iconName: string = "") => {
   return iconUrl;
 };
 
-// const getIconUrl = () => "";
-
 export default getIconUrl;

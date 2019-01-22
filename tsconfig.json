@@ -1,27 +1,27 @@
-// {
-//   "compilerOptions": {
-//     "lib": ["es2017", "dom"],
-//     "allowSyntheticDefaultImports": true,
-//     "forceConsistentCasingInFileNames": true,
-//     "noImplicitReturns": true,
-//     "strict": true,
-//     "noUnusedLocals": true,
-//     "target": "esNext",
-//     "moduleResolution": "node",
-//     "module": "esNext"
-//   },
-//   "typeRoots": ["./node_modules/@types", "./src/js/types"],
-//   "include": ["./src/js"],
-//   "exclude": ["./node_modules"]
-// }
-
 {
   "compilerOptions": {
-    "target": "es5",
-    "moduleResolution": "node",
-    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
     "strict": true,
-    "importHelpers": true,
-    "lib": ["dom", "es5", "es2015.promise"]
-  }
+    "noUnusedLocals": true,
+    "target": "esNext",
+    "moduleResolution": "node",
+    "module": "esNext"
+  },
+  "typeRoots": ["./node_modules/@types", "./src/js/types"],
+  "include": ["./src/js"],
+  "exclude": ["./node_modules"]
 }
+
+// {
+//   "compilerOptions": {
+//     "target": "es5",
+//     "moduleResolution": "node",
+//     "module": "esnext",
+//     "strict": true,
+//     "importHelpers": true,
+//     "lib": ["dom", "es5", "es2015.promise"]
+//   }
+// }
