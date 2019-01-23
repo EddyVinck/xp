@@ -37,14 +37,6 @@ module.exports = (env, argv) => {
           use: [
             {
               loader: "babel-loader"
-              // options: {
-              //   presets: ["@babel/preset-env", "@babel/preset-typescript"],
-              //   plugins: [
-              //     "@babel/plugin-syntax-dynamic-import",
-              //     "@babel/plugin-proposal-class-properties",
-              //     "@babel/plugin-proposal-object-rest-spread"
-              //   ]
-              // }
             }
             // {
             //   loader: "eslint-loader"
@@ -61,32 +53,32 @@ module.exports = (env, argv) => {
                 name: "[name].[ext]",
                 outputPath: "img/"
               }
+            },
+            {
+              loader: "image-webpack-loader",
+              options: {
+                disable: true, // webpack@2.x and newer
+                mozjpeg: {
+                  progressive: true,
+                  quality: 65
+                },
+                // optipng.enabled: false will disable optipng
+                optipng: {
+                  enabled: true
+                },
+                pngquant: {
+                  quality: "65-90",
+                  speed: 4
+                },
+                gifsicle: {
+                  interlaced: false
+                },
+                // the webp option will enable WEBP
+                webp: {
+                  quality: 75
+                }
+              }
             }
-            // {
-            //   loader: "image-webpack-loader",
-            //   options: {
-            //     disable: true, // webpack@2.x and newer
-            //     mozjpeg: {
-            //       progressive: true,
-            //       quality: 65
-            //     },
-            //     // optipng.enabled: false will disable optipng
-            //     optipng: {
-            //       enabled: true
-            //     },
-            //     pngquant: {
-            //       quality: "65-90",
-            //       speed: 4
-            //     },
-            //     gifsicle: {
-            //       interlaced: false
-            //     },
-            //     // the webp option will enable WEBP
-            //     webp: {
-            //       quality: 75
-            //     }
-            //   }
-            // }
           ]
         },
         {

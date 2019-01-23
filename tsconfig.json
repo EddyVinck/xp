@@ -8,20 +8,10 @@
     "noUnusedLocals": true,
     "target": "esNext",
     "moduleResolution": "node",
-    "module": "esNext"
+    "module": "esNext",
+    "baseUrl": "src"
   },
   "typeRoots": ["./node_modules/@types", "./src/js/types"],
   "include": ["./src/js"],
   "exclude": ["./node_modules"]
 }
-
-// {
-//   "compilerOptions": {
-//     "target": "es5",
-//     "moduleResolution": "node",
-//     "module": "esnext",
-//     "strict": true,
-//     "importHelpers": true,
-//     "lib": ["dom", "es5", "es2015.promise"]
-//   }
-// }
