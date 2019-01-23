@@ -10,6 +10,8 @@ export interface IFileState {
   };
 }
 
+declare module "*.png";
+
 /** HTMLElement with an optional file: File property */
 export interface IFileElement extends HTMLElement {
   file?: File | null;
