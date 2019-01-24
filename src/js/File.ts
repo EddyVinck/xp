@@ -1,15 +1,15 @@
-import { el } from "redom";
-import interact, { InteractEvent, Listener } from "interactjs";
+import { el } from 'redom';
+import interact, { InteractEvent, Listener } from 'interactjs';
 
-import { IFileState, IFileElement } from "./types/app";
-import getIconUrl from "./utils/getIconUrl";
-import cloneCustomNode from "./utils/cloneCustomNode";
-import { IInteractEvent } from "./types/interactjs";
+import { IFileState, IFileElement } from './types/app';
+import getIconUrl from './utils/getIconUrl';
+import cloneCustomNode from './utils/cloneCustomNode';
+import { IInteractEvent } from './types/interactjs';
 
-const wallpaperGrid = <HTMLElement>document.querySelector(".wallpaper-grid");
-const taskbar = document.querySelector("ul.taskbar");
+const wallpaperGrid = <HTMLElement>document.querySelector('.wallpaper-grid');
+const taskbar = document.querySelector('ul.taskbar');
 
-let taskbarHeight: string = "";
+let taskbarHeight: string = '';
 if (taskbar instanceof HTMLElement) {
   taskbarHeight = `${taskbar.clientHeight}px`;
 }
@@ -26,10 +26,10 @@ class File {
   private _innerFilesContainer: HTMLElement;
 
   constructor({
-    name = "Unnamed",
-    type = "folder",
+    name = 'Unnamed',
+    type = 'folder',
     parentElement = wallpaperGrid,
-    innerFiles = []
+    innerFiles = [],
   } = {}) {
     this._name = name;
     this.type = type;
@@ -42,8 +42,8 @@ class File {
       isActive: false,
       position: {
         x: 0,
-        y: 0
-      }
+        y: 0,
+      },
     };
 
     // Function binding
@@ -70,9 +70,9 @@ class File {
 
     // Add the File to the ParentElement in the DOM
     this.desktopElement = createDesktopElement(this._name, this.type);
-    this.desktopElement.addEventListener("click", this.handleDesktopSingleClick);
+    this.desktopElement.addEventListener('click', this.handleDesktopSingleClick);
     this.desktopElement.file = this;
-    this.desktopElement.addEventListener("dblclick", this.handleDesktopDoubleClick);
+    this.desktopElement.addEventListener('dblclick', this.handleDesktopDoubleClick);
 
     if (this.parentElement && this.parentElement instanceof HTMLElement) {
       this.parentElement.appendChild(this.desktopElement);
@@ -82,7 +82,7 @@ class File {
     this.taskbarElement = this.createInteractableTaskbarElement();
 
     // check if if (this.type === "folder") when seperating File and Folder classes
-    this._innerFilesContainer = <HTMLElement>this.windowElement.querySelector(".file-grid");
+    this._innerFilesContainer = <HTMLElement>this.windowElement.querySelector('.file-grid');
   }
 
   public get name(): string {
@@ -100,7 +100,7 @@ class File {
 
       // Append the file to a different DOM node
       this._innerFilesContainer.appendChild(newFile.desktopElement);
-    }
+    },
   };
 
   public debug() {
@@ -121,19 +121,19 @@ class File {
   }
 
   public rename() {
-    const cellNameElement = <HTMLElement>this.desktopElement.querySelector(".cell-name");
+    const cellNameElement = <HTMLElement>this.desktopElement.querySelector('.cell-name');
     const previousName = cellNameElement.textContent;
 
     // turn the cell-name span in an input
     cellNameElement.remove();
-    const nameInput = el("input.cell-name", {
-      value: previousName
+    const nameInput = el('input.cell-name', {
+      value: previousName,
     });
     this.desktopElement.appendChild(nameInput);
     nameInput.focus();
 
     // on submit change the name
-    nameInput.addEventListener("keyup", (e: KeyboardEvent) => {
+    nameInput.addEventListener('keyup', (e: KeyboardEvent) => {
       if (e.keyCode === 13) {
         const inputElement = <HTMLInputElement>e.target;
 
@@ -159,7 +159,7 @@ class File {
     };
 
     // blur is called when the name input is unfocused
-    nameInput.addEventListener("blur", handleUnfocus);
+    nameInput.addEventListener('blur', handleUnfocus);
   }
 
   private handleRename(newName: string, cellNameElement: HTMLElement) {
@@ -169,12 +169,12 @@ class File {
 
     // Check if the filename needs to be updated
     const windowElement = <HTMLElement>this.windowElement;
-    const currentFileNameSpan = <HTMLElement>windowElement.querySelector(".folder-label span");
+    const currentFileNameSpan = <HTMLElement>windowElement.querySelector('.folder-label span');
     const currentFileName = currentFileNameSpan.innerText;
 
     if (currentFileName !== this._name) {
       const taskbarElement = <HTMLElement>this.taskbarElement;
-      const currentTaskbarFileNameSpan = <HTMLElement>taskbarElement.querySelector(".cell-name");
+      const currentTaskbarFileNameSpan = <HTMLElement>taskbarElement.querySelector('.cell-name');
 
       currentFileNameSpan.innerText = this._name;
       currentTaskbarFileNameSpan.innerText = this._name;
@@ -189,8 +189,8 @@ class File {
     const { isActive } = this.state;
 
     const didClickMinimizeOrClose =
-      (<HTMLElement>e.target).classList.contains("minimize") ||
-      (<HTMLElement>e.target).classList.contains("close");
+      (<HTMLElement>e.target).classList.contains('minimize') ||
+      (<HTMLElement>e.target).classList.contains('close');
 
     if (isActive === false && didClickMinimizeOrClose === false) {
       this.dispatchActiveWindowChange(true);
@@ -221,24 +221,24 @@ class File {
     // windowElement did not exist yet
     const windowElement = createWindowElement(this._name, this.type);
     this.windowElement = windowElement;
-    this.windowElement.addEventListener("click", this.handleWindowSingleClick);
+    this.windowElement.addEventListener('click', this.handleWindowSingleClick);
 
-    const close = this.windowElement.querySelector(".close");
-    close && close.addEventListener("click", this.closeWindow);
+    const close = this.windowElement.querySelector('.close');
+    close && close.addEventListener('click', this.closeWindow);
 
-    const maximize = this.windowElement.querySelector(".maximize");
-    maximize && maximize.addEventListener("click", this.toggleMaximize);
+    const maximize = this.windowElement.querySelector('.maximize');
+    maximize && maximize.addEventListener('click', this.toggleMaximize);
 
-    const minimize = this.windowElement.querySelector(".minimize");
-    minimize && minimize.addEventListener("click", () => this.toggleMinimize(true));
+    const minimize = this.windowElement.querySelector('.minimize');
+    minimize && minimize.addEventListener('click', () => this.toggleMinimize(true));
 
-    const topBar = this.windowElement.querySelector(".top-bar");
+    const topBar = this.windowElement.querySelector('.top-bar');
     interact(topBar)
       .draggable(<any>{
-        ignoreFrom: ".minimize, .maximize, .close",
-        onmove: this.handleDrag
+        ignoreFrom: '.minimize, .maximize, .close',
+        onmove: this.handleDrag,
       })
-      .on("dragstart", () => {
+      .on('dragstart', () => {
         this.dispatchActiveWindowChange(true);
         this.setActive(true);
       });
@@ -250,10 +250,10 @@ class File {
 
         // minimum size
         restrictSize: {
-          min: { width: 300, height: 200 }
-        }
+          min: { width: 300, height: 200 },
+        },
       })
-      .on("resizemove", <Listener>this.handleResize);
+      .on('resizemove', <Listener>this.handleResize);
 
     return windowElement;
   }
@@ -272,7 +272,7 @@ class File {
       // update the posiion state
       this.state.position = {
         x,
-        y
+        y,
       };
     }
   }
@@ -285,8 +285,8 @@ class File {
 
       // update the element's style
       if (target) {
-        target.style.width = event.rect.width + "px";
-        target.style.height = event.rect.height + "px";
+        target.style.width = event.rect.width + 'px';
+        target.style.height = event.rect.height + 'px';
       }
 
       // translate when resizing from top or left edges
@@ -298,7 +298,7 @@ class File {
       // update the posiion state
       this.state.position = {
         x,
-        y
+        y,
       };
     }
   }
@@ -311,7 +311,7 @@ class File {
 
   // Put the file in the taskbar
   private showTaskbarCell() {
-    const taskbar = document.querySelector("ul.taskbar");
+    const taskbar = document.querySelector('ul.taskbar');
     const taskbarElement = <IFileElement>this.taskbarElement;
 
     if (taskbar instanceof HTMLElement) {
@@ -323,7 +323,7 @@ class File {
     // Create the taskbar element because it didnt exist
     const desktopElement: IFileElement = cloneCustomNode(this.desktopElement);
     const taskbarElement = createTaskbarElement(desktopElement);
-    taskbarElement.addEventListener("click", this.handleTaskbarClick);
+    taskbarElement.addEventListener('click', this.handleTaskbarClick);
 
     return taskbarElement;
   }
@@ -343,19 +343,19 @@ class File {
     if (this.windowElement) {
       if (isMaximized) {
         // unmaximize
-        this.windowElement.style.top = "";
-        this.windowElement.style.left = "";
-        this.windowElement.style.width = "";
-        this.windowElement.style.height = "";
+        this.windowElement.style.top = '';
+        this.windowElement.style.left = '';
+        this.windowElement.style.width = '';
+        this.windowElement.style.height = '';
         this.moveWindow(position.x, position.y);
       } else {
         // Remove the positioning
-        this.windowElement.style.transform = "";
-        this.windowElement.style.top = "0px";
-        this.windowElement.style.left = "0px";
+        this.windowElement.style.transform = '';
+        this.windowElement.style.top = '0px';
+        this.windowElement.style.left = '0px';
 
         // Maximize the window element
-        this.windowElement.style.width = "100%";
+        this.windowElement.style.width = '100%';
         this.windowElement.style.height = `calc(100vh - ${taskbarHeight})`;
       }
     }
@@ -385,9 +385,9 @@ class File {
   private dispatchActiveWindowChange(isActive = false) {
     if (this.windowElement) {
       this.windowElement.dispatchEvent(
-        new CustomEvent("change-active-window", {
+        new CustomEvent('change-active-window', {
           bubbles: true,
-          detail: { newActive: isActive ? this : null }
+          detail: { newActive: isActive ? this : null },
         })
       );
     }
@@ -403,18 +403,18 @@ class File {
     // otherwise this will error
     if (this.windowElement && this.taskbarElement) {
       if (isActive) {
-        this.windowElement.classList.add("active");
-        this.taskbarElement.classList.add("active");
+        this.windowElement.classList.add('active');
+        this.taskbarElement.classList.add('active');
       } else {
-        this.windowElement.classList.remove("active");
-        this.taskbarElement.classList.remove("active");
+        this.windowElement.classList.remove('active');
+        this.taskbarElement.classList.remove('active');
       }
     }
   }
 }
 
 function createTaskbarElement(desktopElement: IFileElement) {
-  const li: IFileElement = document.createElement("li");
+  const li: IFileElement = document.createElement('li');
   li.appendChild(desktopElement);
   return li;
 }
@@ -431,15 +431,15 @@ function createTaskbarElement(desktopElement: IFileElement) {
   </div>
 */
 function createDesktopElement(fileName: string, fileType: string): IFileElement {
-  const desktopElement: IFileElement = document.createElement("div");
-  desktopElement.classList.add("cell");
+  const desktopElement: IFileElement = document.createElement('div');
+  desktopElement.classList.add('cell');
 
-  const img = document.createElement("img");
+  const img = document.createElement('img');
   img.src = getIconUrl(fileType);
   img.alt = fileType;
 
-  const cellName = document.createElement("span");
-  cellName.classList.add("cell-name");
+  const cellName = document.createElement('span');
+  cellName.classList.add('cell-name');
   cellName.innerText = fileName;
 
   desktopElement.appendChild(img);
@@ -451,65 +451,65 @@ function createDesktopElement(fileName: string, fileType: string): IFileElement 
 // Creates and returns the window HTML element
 function createWindowElement(fileName: string, fileType: string): HTMLElement {
   const windowElement: HTMLElement = el(
-    ".folder-window",
+    '.folder-window',
     el(
-      ".folder-header",
+      '.folder-header',
       el(
-        ".top-bar",
+        '.top-bar',
         el(
-          ".folder-label",
-          el("img", { src: getIconUrl(fileType), alt: fileName }),
-          el("span", fileName)
+          '.folder-label',
+          el('img', { src: getIconUrl(fileType), alt: fileName }),
+          el('span', fileName)
         ),
         el(
-          ".top-bar-controls",
-          el(".top-bar-button.minimize"),
-          el(".top-bar-button.maximize"),
-          el(".top-bar-button.close")
+          '.top-bar-controls',
+          el('.top-bar-button.minimize'),
+          el('.top-bar-button.maximize'),
+          el('.top-bar-button.close')
         )
       ),
       el(
-        ".menu-bar",
-        el(".menu-top"),
+        '.menu-bar',
+        el('.menu-top'),
         el(
-          ".menu-bottom",
+          '.menu-bottom',
           el(
-            "ul",
+            'ul',
             el(
-              "li",
-              el("img", { src: getIconUrl("arrow-back"), alt: "back icon" }),
-              el("span", "Back")
+              'li',
+              el('img', { src: getIconUrl('arrow-back'), alt: 'back icon' }),
+              el('span', 'Back')
             ),
-            el("li", el("img", { src: getIconUrl("arrow-next"), alt: "next icon" }))
+            el('li', el('img', { src: getIconUrl('arrow-next'), alt: 'next icon' }))
           ),
           el(
-            "ul",
+            'ul',
             el(
-              "li",
-              el("img", { src: getIconUrl("search"), alt: "Search icon" }),
-              el("span", "Search")
+              'li',
+              el('img', { src: getIconUrl('search'), alt: 'Search icon' }),
+              el('span', 'Search')
             )
           )
         ),
         el(
-          ".address-bar",
-          el("span", "Address"),
+          '.address-bar',
+          el('span', 'Address'),
           el(
-            ".address-input-wrapper",
+            '.address-input-wrapper',
             el(
-              ".address-input-icon",
-              el("img", { src: getIconUrl(fileType), alt: fileType }),
-              el("input.address-input", {
-                type: "text",
-                value: "C:\\Desktop\\Folder Name",
-                placeholder: "C:\\Desktop\\Folder Name"
+              '.address-input-icon',
+              el('img', { src: getIconUrl(fileType), alt: fileType }),
+              el('input.address-input', {
+                type: 'text',
+                value: 'C:\\Desktop\\Folder Name',
+                placeholder: 'C:\\Desktop\\Folder Name',
               })
             )
           )
         )
       )
     ),
-    el(".folder-content", el(".file-grid"))
+    el('.folder-content', el('.file-grid'))
   );
 
   return windowElement;

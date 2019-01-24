@@ -11,7 +11,6 @@ const createPages = mode => [
     template: "src/index.html",
     hash: true,
     minify: false
-    // publicPath
   })
 ];
 
@@ -37,10 +36,10 @@ module.exports = (env, argv) => {
           use: [
             {
               loader: "babel-loader"
+            },
+            {
+              loader: "eslint-loader"
             }
-            // {
-            //   loader: "eslint-loader"
-            // }
           ]
         },
         {

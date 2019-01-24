@@ -1,4 +1,4 @@
-import { InteractEvent } from "interactjs";
+import { InteractEvent } from 'interactjs';
 
 export interface IInteractEvent extends InteractEvent {
   dx: number;

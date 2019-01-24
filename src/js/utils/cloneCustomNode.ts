@@ -10,12 +10,12 @@ function cloneCustomNode(element: IHTMLElement): IHTMLElement {
 
   // compare the objects properties
   const originalKeys: string[] = Object.keys(element);
-  const differentKeys = originalKeys.filter(key => {
+  const differentKeys = originalKeys.filter((key) => {
     return clone.hasOwnProperty(key) === false;
   });
 
-  differentKeys.forEach(key => {
-    if (key === "file") {
+  differentKeys.forEach((key) => {
+    if (key === 'file') {
       clone[key] = element[key];
     }
   });
