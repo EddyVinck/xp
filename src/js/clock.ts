@@ -1,15 +1,5 @@
 const clock = document.querySelector('.taskbar__clock');
 
-if (clock && clock instanceof HTMLElement) {
-  startClock();
-}
-
-function startClock(): void {
-  setInterval(() => {
-    insertTime(getCurrentTime());
-  }, 1000);
-}
-
 function getCurrentTime(): string {
   const currentDate = new Date();
   const currentTime = currentDate.toLocaleTimeString('en-US', {
@@ -21,9 +11,19 @@ function getCurrentTime(): string {
   return currentTime;
 }
 
-function insertTime(currentTime: string) {
+function insertTime(currentTime: string): void {
   const timeLabel = clock && clock.querySelector('span');
   if (timeLabel && timeLabel.innerText !== currentTime) {
     timeLabel.innerText = currentTime;
   }
+}
+
+function startClock(): void {
+  setInterval(() => {
+    insertTime(getCurrentTime());
+  }, 1000);
+}
+
+if (clock && clock instanceof HTMLElement) {
+  startClock();
 }

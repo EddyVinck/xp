@@ -1,5 +1,6 @@
 /** returns the first not-null value excluding NaN */
-const coalesce = (...args: any) => {
+// xeslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const coalesce = (...args: any): any => {
   for (let i = 0; i < args.length; i++) {
     // args[i] === args[i] is to avoid NaN, because NaN !== NaN
     if (args[i] != null && args[i] === args[i]) {

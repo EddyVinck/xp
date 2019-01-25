@@ -15,6 +15,7 @@
   "rules": {
     "no-unused-vars": "off",
     "no-console": "off",
-    "@typescript-eslint/indent": "off"
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/interface-name-prefix": "off"
   }
 }

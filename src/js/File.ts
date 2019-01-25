@@ -9,7 +9,7 @@ import { IInteractEvent } from './types/interactjs';
 const wallpaperGrid = <HTMLElement>document.querySelector('.wallpaper-grid');
 const taskbar = document.querySelector('ul.taskbar');
 
-let taskbarHeight: string = '';
+let taskbarHeight = '';
 if (taskbar instanceof HTMLElement) {
   taskbarHeight = `${taskbar.clientHeight}px`;
 }
@@ -103,15 +103,15 @@ class File {
     },
   };
 
-  public debug() {
+  public debug(): void {
     console.log(this);
   }
 
-  private getInnerFilesContainer() {
+  private getInnerFilesContainer(): HTMLElement {
     return this._innerFilesContainer;
   }
 
-  public delete() {
+  public delete(): void {
     // When a user deletes a file or folder
     // remove all eventlisteners and elements
     this.closeWindow();
@@ -120,7 +120,7 @@ class File {
     // TODO: Move to recycle bin
   }
 
-  public rename() {
+  public rename(): void {
     const cellNameElement = <HTMLElement>this.desktopElement.querySelector('.cell-name');
     const previousName = cellNameElement.textContent;
 
@@ -149,7 +149,7 @@ class File {
       }
     });
 
-    const handleUnfocus = () => {
+    const handleUnfocus = (): void => {
       if (document.body.contains(nameInput)) {
         this.desktopElement.appendChild(cellNameElement);
 
@@ -162,7 +162,7 @@ class File {
     nameInput.addEventListener('blur', handleUnfocus);
   }
 
-  private handleRename(newName: string, cellNameElement: HTMLElement) {
+  private handleRename(newName: string, cellNameElement: HTMLElement): void {
     this._name = newName;
     cellNameElement.innerText = newName;
     this.desktopElement.appendChild(cellNameElement);
@@ -181,11 +181,11 @@ class File {
     }
   }
 
-  private handleTaskbarClick() {
+  private handleTaskbarClick(): void {
     this.toggleMinimize();
   }
 
-  private handleWindowSingleClick(e: Event) {
+  private handleWindowSingleClick(e: Event): void {
     const { isActive } = this.state;
 
     const didClickMinimizeOrClose =
@@ -198,9 +198,9 @@ class File {
     }
   }
 
-  private handleDesktopSingleClick() {}
+  private handleDesktopSingleClick(): void {}
 
-  private handleDesktopDoubleClick() {
+  private handleDesktopDoubleClick(): void {
     const { isOpen } = this.state;
     this.state.isOpen = !isOpen;
 
@@ -209,7 +209,7 @@ class File {
   }
 
   // Open the file's window
-  private showWindow() {
+  private showWindow(): void {
     let windowElement = this.windowElement;
 
     document.body.appendChild(windowElement);
@@ -217,7 +217,7 @@ class File {
     this.setActive(true);
   }
 
-  private createInteractableWindowElement() {
+  private createInteractableWindowElement(): HTMLElement {
     // windowElement did not exist yet
     const windowElement = createWindowElement(this._name, this.type);
     this.windowElement = windowElement;
@@ -258,7 +258,7 @@ class File {
     return windowElement;
   }
 
-  private handleDrag(event: InteractEvent) {
+  private handleDrag(event: InteractEvent): void {
     // Only drag when the window is not maximized because this can cause
     // the window to move outside of the viewport completely.
     if (this.state.isMaximized === false) {
@@ -277,7 +277,7 @@ class File {
     }
   }
 
-  private handleResize(event: IInteractEvent) {
+  private handleResize(event: IInteractEvent): void {
     if (this.state.isMaximized === false) {
       const target = event.target;
       let x = this.state.position.x || 0;
@@ -303,14 +303,14 @@ class File {
     }
   }
 
-  private moveWindow(x: number, y: number) {
+  private moveWindow(x: number, y: number): void {
     if (this.windowElement) {
       this.windowElement.style.transform = `translate(${x}px, ${y}px)`;
     }
   }
 
   // Put the file in the taskbar
-  private showTaskbarCell() {
+  private showTaskbarCell(): void {
     const taskbar = document.querySelector('ul.taskbar');
     const taskbarElement = <IFileElement>this.taskbarElement;
 
@@ -319,7 +319,7 @@ class File {
     }
   }
 
-  private createInteractableTaskbarElement() {
+  private createInteractableTaskbarElement(): IFileElement {
     // Create the taskbar element because it didnt exist
     const desktopElement: IFileElement = cloneCustomNode(this.desktopElement);
     const taskbarElement = createTaskbarElement(desktopElement);
@@ -328,7 +328,7 @@ class File {
     return taskbarElement;
   }
 
-  private closeWindow() {
+  private closeWindow(): void {
     this.state.isOpen = false;
 
     if (this.windowElement && this.taskbarElement) {
@@ -337,7 +337,7 @@ class File {
     }
   }
 
-  private toggleMaximize() {
+  private toggleMaximize(): void {
     const { isMaximized, position } = this.state;
 
     if (this.windowElement) {
@@ -382,7 +382,7 @@ class File {
   }
 
   // http://javascript.info/dispatch-events#custom-events
-  private dispatchActiveWindowChange(isActive = false) {
+  private dispatchActiveWindowChange(isActive = false): void {
     if (this.windowElement) {
       this.windowElement.dispatchEvent(
         new CustomEvent('change-active-window', {
@@ -393,12 +393,12 @@ class File {
     }
   }
 
-  public setActive(isActive = false) {
+  public setActive(isActive = false): void {
     this.state.isActive = isActive;
     this.changeActiveAppearance(isActive);
   }
 
-  private changeActiveAppearance(isActive = false) {
+  private changeActiveAppearance(isActive = false): void {
     // check if the windowElement has been created
     // otherwise this will error
     if (this.windowElement && this.taskbarElement) {
@@ -413,7 +413,7 @@ class File {
   }
 }
 
-function createTaskbarElement(desktopElement: IFileElement) {
+function createTaskbarElement(desktopElement: IFileElement): IFileElement {
   const li: IFileElement = document.createElement('li');
   li.appendChild(desktopElement);
   return li;
