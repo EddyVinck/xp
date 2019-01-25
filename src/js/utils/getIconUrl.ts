@@ -1,8 +1,10 @@
-import computer from '../../img/computer.png';
-import folderEmpty from '../../img/folder-empty.png';
-import searchIcon from '../../img/search.png';
-import arrowNext from '../../img/xp-arrow-icon-next.png';
-import arrowPrevious from '../../img/xp-arrow-icon-previous.png';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const computer = require('../../img/computer.png');
+const folderEmpty = require('../../img/folder-empty.png');
+const searchIcon = require('../../img/search.png');
+const arrowNext = require('../../img/xp-arrow-icon-next.png');
+const arrowPrevious = require('../../img/xp-arrow-icon-previous.png');
+/* eslint-enable */
 
 const getIconUrl = (iconName: string = '') => {
   let iconUrl = '';

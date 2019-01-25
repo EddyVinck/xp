@@ -16,6 +16,7 @@
     "no-unused-vars": "off",
     "no-console": "off",
     "@typescript-eslint/indent": "off",
-    "@typescript-eslint/interface-name-prefix": "off"
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off"
   }
 }
