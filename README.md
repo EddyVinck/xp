@@ -2,11 +2,11 @@
 
 ## Screenshots
 
-![Startup screen](https://raw.githubusercontent.com/EddyVinck/xp/master/img/readme/startup.png "Startup screen")
+![Startup screen](https://raw.githubusercontent.com/EddyVinck/xp/master/src/img/readme/startup.png 'Startup screen')
 
-![Login screen](https://raw.githubusercontent.com/EddyVinck/xp/master/img/readme/login.png "Login screen")
+![Login screen](https://raw.githubusercontent.com/EddyVinck/xp/master/src/img/readme/login.png 'Login screen')
 
-![Desktop screen with some open folders](https://raw.githubusercontent.com/EddyVinck/xp/master/img/readme/desktop.png "Desktop")
+![Desktop screen with some open folders](https://raw.githubusercontent.com/EddyVinck/xp/master/src/img/readme/desktop.png 'Desktop')
 
 ## FAQ
 
