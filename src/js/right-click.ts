@@ -28,13 +28,14 @@ function handleRightClick(e: MouseEvent): void {
 
   // check which instance of File is associated with the element.
   if (e.target instanceof HTMLElement && rightClickMenu instanceof HTMLElement) {
-    const elementType: IFileElement = coalesce(
+    const elementType = coalesce(
       // Check for cell inside a taskbar
       getParentWithClass(e.target, 'taskbar') && getParentWithClass(e.target, 'cell'),
 
       // Check for a cell on the desktop
       getParentWithClass(e.target, 'cell')
-    );
+    ) as IFileElement;
+
     // Check if elementType has an associated file
     if (elementType !== null && elementType.file) {
       // Bind the file to the right-click options

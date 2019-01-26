@@ -6,7 +6,7 @@ const arrowNext = require('../../img/xp-arrow-icon-next.png');
 const arrowPrevious = require('../../img/xp-arrow-icon-previous.png');
 /* eslint-enable */
 
-const getIconUrl = (iconName: string = '') => {
+const getIconUrl = (iconName: string = ''): string => {
   let iconUrl = '';
 
   switch (iconName.toLowerCase()) {

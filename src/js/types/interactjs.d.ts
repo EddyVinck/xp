@@ -13,3 +13,16 @@ export interface IInteractEvent extends InteractEvent {
     top: number;
   };
 }
+
+export interface IDraggableOptions extends interact.DraggableOptions {
+  ignoreFrom: string;
+}
+
+export interface IResizableOptions extends interact.ResizableOptions {
+  restrictSize: {
+    min: {
+      width: number;
+      height: number;
+    };
+  };
+}

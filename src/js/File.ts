@@ -4,7 +4,8 @@ import interact, { InteractEvent, Listener } from 'interactjs';
 import { IFileState, IFileElement } from './types/app';
 import { createTaskbarElement, createDesktopElement, createWindowElement } from './createElement';
 import cloneCustomNode from './utils/cloneCustomNode';
-import { IInteractEvent } from './types/interactjs';
+import { IInteractEvent, IDraggableOptions } from './types/interactjs';
+import { IResizableOptions } from './types/interactjs.d';
 
 const wallpaperGrid = document.querySelector('.wallpaper-grid') as HTMLElement;
 const taskbar = document.querySelector('ul.taskbar');
@@ -233,26 +234,31 @@ class File {
     minimize && minimize.addEventListener('click', () => this.toggleMinimize(true));
 
     const topBar = this.windowElement.querySelector('.top-bar');
+
+    const draggableOptions: IDraggableOptions = {
+      ignoreFrom: '.minimize, .maximize, .close',
+      onmove: this.handleDrag,
+    };
+
+    const resizableOptions: IResizableOptions = {
+      // resize from all edges and corners
+      edges: { left: true, right: true, bottom: true, top: true },
+
+      // minimum size
+      restrictSize: {
+        min: { width: 300, height: 200 },
+      },
+    };
+
     interact(topBar)
-      .draggable({
-        ignoreFrom: '.minimize, .maximize, .close',
-        onmove: this.handleDrag,
-      } as any)
+      .draggable(draggableOptions)
       .on('dragstart', () => {
         this.dispatchActiveWindowChange(true);
         this.setActive(true);
       });
 
     interact(this.windowElement)
-      .resizable({
-        // resize from all edges and corners
-        edges: { left: true, right: true, bottom: true, top: true },
-
-        // minimum size
-        restrictSize: {
-          min: { width: 300, height: 200 },
-        },
-      } as any)
+      .resizable(resizableOptions)
       .on('resizemove', this.handleResize as Listener);
 
     return windowElement;
