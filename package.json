@@ -10,8 +10,12 @@
     "lint": "eslint --fix-dry-run ./src/**/*.ts",
     "type-check": "tsc --skipLibCheck",
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|mdx|graphql|vue)\"",
-    "validate": "npm run type-check && npm run lint && npm run format && npm run test",
-    "pre-commit": "npm run validate"
+    "validate": "npm run type-check && npm run lint && npm run format && npm run test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run validate"
+    }
   },
   "keywords": [],
   "author": "",
