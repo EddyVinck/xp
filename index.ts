@@ -1,5 +1,5 @@
-import "./css/style.scss";
-import "./js/app";
+import './css/style.scss';
+import './js/app';
 
 interface IModule {
   hot: {
@@ -14,6 +14,6 @@ if (module.hot) {
 
   module.hot.accept(function() {
     // module or one of its dependencies was just updated
-    console.log("HMR initialized!");
+    console.log('HMR initialized!');
   });
 }

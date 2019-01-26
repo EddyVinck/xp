@@ -9,9 +9,10 @@
     "target": "esNext",
     "moduleResolution": "node",
     "module": "esNext",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "noEmit": true
   },
   "typeRoots": ["./node_modules/@types", "./src/js/types"],
   "include": ["./src/js"],
-  "exclude": ["./node_modules"]
+  "exclude": ["./node_modules/"]
 }

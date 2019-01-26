@@ -6,7 +6,11 @@
   "scripts": {
     "test": "jest",
     "p": "parcel index.html",
-    "build": "webpack-dev-server --config webpack.config.js --mode development"
+    "build": "webpack-dev-server --config webpack.config.js --mode development",
+    "lint": "eslint --fix-dry-run ./src/**/*.ts",
+    "type-check": "tsc --skipLibCheck",
+    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|mdx|graphql|vue)\"",
+    "validate": "npm run type-check && npm run lint && npm run format && npm run test"
   },
   "keywords": [],
   "author": "",

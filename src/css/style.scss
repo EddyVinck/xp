@@ -1,14 +1,14 @@
 $menuHoverBlue: rgb(19, 19, 204);
 $barBlue: #0075e1;
 
-@import "./normalize.css";
-@import "./desktop-grid";
-@import "./right-click-menu";
-@import "./folder-window";
-@import "./taskbar";
-@import "./start-menu";
-@import "./startup-screen";
-@import "./login-screen";
+@import './normalize.css';
+@import './desktop-grid';
+@import './right-click-menu';
+@import './folder-window';
+@import './taskbar';
+@import './start-menu';
+@import './startup-screen';
+@import './login-screen';
 
 * {
   box-sizing: border-box;
