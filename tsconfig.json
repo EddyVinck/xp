@@ -6,11 +6,12 @@
     "noImplicitReturns": true,
     "strict": true,
     "noUnusedLocals": true,
-    "target": "ES2017",
+    "target": "esNext",
     "moduleResolution": "node",
-    "module": "commonjs"
+    "module": "esNext",
+    "baseUrl": "src"
   },
-  "typeRoots": ["./node_modules/@types", "./js/types"],
-  "include": ["./js"],
+  "typeRoots": ["./node_modules/@types", "./src/js/types"],
+  "include": ["./src/js"],
   "exclude": ["./node_modules"]
 }

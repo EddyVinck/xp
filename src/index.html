@@ -28,7 +28,7 @@
     <div class="startup-screen">
       <div class="startup-screen__logo-loader-wrapper">
         <div class="startup-screen__logo">
-          <img src="./img/windows-xp-logo-white-text.png" alt="Windows logo" />
+          <img src="<%=require('./img/windows-xp-logo-white-text.png')%>" alt="Windows logo" />
         </div>
         <div class="startup-screen__loader">
           <div class="bars"><span></span></div>
@@ -36,7 +36,7 @@
       </div>
       <div class="startup-screen__footer">
         <span class="copyright">Copyright &copy; Mircosoft Corporation</span>
-        <img src="./img/microsoft-logo.jpg" alt="Microsoft Logo" />
+        <img src="<%=require('./img/microsoft-logo.jpg')%>" alt="Microsoft Logo" />
       </div>
     </div>
 
@@ -45,7 +45,7 @@
       <div class="login-screen__center">
         <div class="login-screen__instructions">
           <img
-            src="./img/windows-xp-logo-white-text-transparent-bg-cropped.png"
+            src="<%=require('./img/windows-xp-logo-white-text-transparent-bg-cropped.png')%>"
             alt="Windows logo"
           />
           <span>To begin, click your user name</span>
@@ -53,7 +53,7 @@
         <div class="login-screen__accounts">
           <div tabindex="-1" class="login-screen__account">
             <div class="login-screen__account-icon">
-              <img src="./img/profile-picture-duck.jpg" alt="duck" />
+              <img src="<%=require('./img/profile-picture-duck.jpg')%>" alt="duck" />
             </div>
             <div class="login-screen__account-details">
               <span class="login-screen__account-name">Duck</span>
@@ -70,7 +70,7 @@
 
           <div tabindex="-1" class="login-screen__account">
             <div class="login-screen__account-icon">
-              <img src="./img/profile-picture-chess.png" alt="chess" />
+              <img src="<%=require('./img/profile-picture-chess.png')%>" alt="chess" />
             </div>
             <div class="login-screen__account-details">
               <span class="login-screen__account-name">Guest</span>
@@ -107,7 +107,9 @@
       <div class="bar">
         <ul class="start">
           <li class="xopen" tabindex="-1">
-            <a href="#" class="program-image" href="#"> <img src="img/windows.png" alt="" /> </a>
+            <a href="#" class="program-image" href="#">
+              <img src="<%=require('./img/windows.png')%>" alt="" />
+            </a>
             <a href="#"> start </a>
             <div class="slide-open">
               <div class="top"><h1>Eddy Vinck</h1></div>
@@ -116,25 +118,25 @@
                   <ul>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/ie.png" alt="" />
+                        <img src="<%=require('img/ie.png')%>" alt="" />
                       </a>
                       <a href="#">Internet Explorer</a>
                     </li>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/paint.png" alt="" />
+                        <img src="<%=require('img/paint.png')%>" alt="" />
                       </a>
                       <a href="#">Paint</a>
                     </li>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/media-player.png" alt="" />
+                        <img src="<%=require('img/media-player.png')%>" alt="" />
                       </a>
                       <a href="#">Windows Media Player</a>
                     </li>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/outlook-express.jpg" alt="" />
+                        <img src="<%=require('img/outlook-express.jpg')%>" alt="" />
                       </a>
                       <a href="#">E-mail</a>
                     </li>
@@ -144,49 +146,49 @@
                   <ul>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/documents.png" alt="" />
+                        <img src="<%=require('img/documents.png')%>" alt="" />
                       </a>
                       <a href="#">My Documents</a>
                     </li>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/pictures.png" alt="" />
+                        <img src="<%=require('img/pictures.png')%>" alt="" />
                       </a>
                       <a href="#">My Pictures</a>
                     </li>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/music.png" alt="" />
+                        <img src="<%=require('img/music.png')%>" alt="" />
                       </a>
                       <a href="#">My Music</a>
                     </li>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/computer.png" alt="" />
+                        <img src="<%=require('img/computer.png')%>" alt="" />
                       </a>
                       <a href="#">My Computer</a>
                     </li>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/control-panel.png" alt="" />
+                        <img src="<%=require('img/control-panel.png')%>" alt="" />
                       </a>
                       <a href="#">Control Panel</a>
                     </li>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/support-help.png" alt="" />
+                        <img src="<%=require('img/support-help.png')%>" alt="" />
                       </a>
                       <a href="#">Help and Support</a>
                     </li>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/search.png" alt="" />
+                        <img src="<%=require('img/search.png')%>" alt="" />
                       </a>
                       <a href="#">Search</a>
                     </li>
                     <li tabindex="-1">
                       <a href="#" class="program-image" href="#">
-                        <img src="img/run.png" alt="" />
+                        <img src="<%=require('img/run.png')%>" alt="" />
                       </a>
                       <a href="#">Run...</a>
                     </li>
@@ -201,7 +203,5 @@
         <div class="taskbar__clock"><span>7:02 AM</span></div>
       </div>
     </div>
-
-    <script src="./index.ts"></script>
   </body>
 </html>

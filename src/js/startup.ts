@@ -1,4 +1,4 @@
-const startupScreen = document.querySelector(".startup-screen");
+const startupScreen = document.querySelector('.startup-screen');
 
 setTimeout(() => {
   if (startupScreen) startupScreen.remove();
