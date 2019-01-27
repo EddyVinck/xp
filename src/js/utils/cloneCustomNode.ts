@@ -15,9 +15,7 @@ function cloneCustomNode(element: IHTMLElement): IHTMLElement {
   });
 
   differentKeys.forEach((key) => {
-    if (key === 'file') {
-      clone[key] = element[key];
-    }
+    clone[key] = element[key];
   });
 
   return clone;
