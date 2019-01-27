@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest",
-    "p": "parcel index.html",
+    "test:watch": "jest --watch",
+    "test:debug": "echo 'chrome://inspect' && node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
     "build": "webpack-dev-server --config webpack.config.js --mode development",
     "lint": "eslint --fix-dry-run ./src/**/*.ts",
     "type-check": "tsc --skipLibCheck",

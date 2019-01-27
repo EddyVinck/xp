@@ -1,6 +1,7 @@
 {
   "*.ts": [
-    "eslint"
+    "eslint",
+    "jest --findRelatedTests"
   ],
   "**/*.+(js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|mdx|graphql|vue)": [
     "prettier --write",

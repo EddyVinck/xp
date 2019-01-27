@@ -1,3 +1,4 @@
+// From Stack-Overflow
 type ExcludeNullIfAnyNotNullHelper<T> = {
   [P in keyof T]-?:
     | (null extends T[P] ? never : null)
