@@ -17,7 +17,7 @@ function coalesce<T extends unknown[]>(...args: T): T[number] {
       return args[i];
     }
   }
-  return ';';
+  return null;
 }
 
 export default coalesce;
