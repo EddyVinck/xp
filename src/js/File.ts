@@ -17,7 +17,7 @@ if (taskbar instanceof HTMLElement) {
 
 class File {
   private _name: string;
-  private type: string;
+  private type: string; // 'folder | '...'
   private parentElement: HTMLElement;
   private desktopElement: IFileElement;
   private taskbarElement?: IFileElement;
@@ -25,6 +25,7 @@ class File {
   private state: IFileState;
   private _innerFiles: File[];
   private _innerFilesContainer: HTMLElement;
+  private parentFile?: File;
 
   constructor({
     name = 'Unnamed',
@@ -66,9 +67,6 @@ class File {
     this.handleDrag = this.handleDrag.bind(this);
     this.handleResize = this.handleResize.bind(this);
 
-    // Folder specific function binding
-    this.innerFiles.push = this.innerFiles.push.bind(this);
-
     // Add the File to the ParentElement in the DOM
     this.desktopElement = createDesktopElement(this._name, this.type);
     this.desktopElement.addEventListener('click', this.handleDesktopSingleClick);
@@ -84,6 +82,7 @@ class File {
 
     // check if if (this.type === "folder") when seperating File and Folder classes
     this._innerFilesContainer = this.windowElement.querySelector('.file-grid') as HTMLElement;
+    this.getInnerFilesContainer = this.getInnerFilesContainer.bind(this);
   }
 
   public get name(): string {
@@ -91,16 +90,17 @@ class File {
   }
 
   public innerFiles = {
-    _innerFiles: this._innerFiles,
+    _self: this,
     _innerFilesContainer: this.getInnerFilesContainer(),
 
-    push(newFile: File) {
-      // push a new file and change the parentElement
-      newFile.parentElement = this._innerFilesContainer;
-      this._innerFiles.push(newFile);
+    push(childFile: File) {
+      // push a child file and change the parentElement
+      childFile.parentFile = this._self;
+      childFile.parentElement = this._self._innerFilesContainer;
+      this._self._innerFiles.push(childFile);
 
       // Append the file to a different DOM node
-      this._innerFilesContainer.appendChild(newFile.desktopElement);
+      this._self._innerFilesContainer.appendChild(childFile.desktopElement);
     },
   };
 
@@ -145,7 +145,7 @@ class File {
         try {
           nameInput.remove();
         } catch (error) {
-          // nameInput was already removed by blur
+          // nameInput was already removed by blur event
         }
       }
     });
@@ -210,11 +210,29 @@ class File {
   }
 
   // Open the file's window
+  // dispatch a active-window-change event to set all other files inactive
   private showWindow(): void {
     let windowElement = this.windowElement;
 
     document.body.appendChild(windowElement);
     this.dispatchActiveWindowChange(true);
+
+    // Handle window element replacement e.g. when opening a folder in a folder
+    // Check if the File has a parent File object.
+    if (this.parentFile !== undefined) {
+      console.log(`${this.name} was opened from ${this.parentFile.name}`);
+
+      if (this.type === this.parentFile.type) {
+        console.log(`They have the same type, too`);
+        // check the size etc. of the parent file
+        // apply the size etc. to the child file
+        // close the parent file
+      } else {
+        console.log(`They were not the same type.`);
+        // open new window
+      }
+    }
+
     this.setActive(true);
   }
 
