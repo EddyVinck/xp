@@ -222,11 +222,20 @@ class File {
     if (this.parentFile !== undefined) {
       console.log(`${this.name} was opened from ${this.parentFile.name}`);
 
+      // Files of the same type (like nested folders) should not open a new window
       if (this.type === this.parentFile.type) {
-        console.log(`They have the same type, too`);
         // check the size etc. of the parent file
+        const { height, width, transform } = this.parentFile.windowElement.style;
+
+        // Copy the parent's position state for InteractJS
+        const { x, y } = this.parentFile.state.position;
+        this.state.position = { x, y };
+
         // apply the size etc. to the child file
+        Object.assign(this.windowElement.style, { height, width, transform });
+
         // close the parent file
+        this.parentFile.closeWindow();
       } else {
         console.log(`They were not the same type.`);
         // open new window
@@ -293,7 +302,7 @@ class File {
       // translate the element
       this.moveWindow(x, y);
 
-      // update the posiion state
+      // update the dragged posiion state
       this.state.position = {
         x,
         y,
@@ -319,7 +328,7 @@ class File {
 
       this.moveWindow(x, y);
 
-      // update the posiion state
+      // update the dragged posiion state
       this.state.position = {
         x,
         y,
