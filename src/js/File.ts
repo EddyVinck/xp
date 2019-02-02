@@ -17,11 +17,11 @@ if (taskbar instanceof HTMLElement) {
 
 class File {
   private _name: string;
-  private type: string; // 'folder | '...'
+  private _type: string; // 'folder' | '...'
   private parentElement: HTMLElement;
   private desktopElement: IFileElement;
   private taskbarElement?: IFileElement;
-  private windowElement: HTMLElement;
+  private windowElement: IFileElement;
   private state: IFileState;
   private _innerFiles: File[];
   private _innerFilesContainer: HTMLElement;
@@ -34,7 +34,7 @@ class File {
     innerFiles = [],
   } = {}) {
     this._name = name;
-    this.type = type;
+    this._type = type;
     this._innerFiles = innerFiles;
     this.parentElement = parentElement;
 
@@ -68,7 +68,7 @@ class File {
     this.handleResize = this.handleResize.bind(this);
 
     // Add the File to the ParentElement in the DOM
-    this.desktopElement = createDesktopElement(this._name, this.type);
+    this.desktopElement = createDesktopElement(this._name, this._type);
     this.desktopElement.addEventListener('click', this.handleDesktopSingleClick);
     this.desktopElement.file = this;
     this.desktopElement.addEventListener('dblclick', this.handleDesktopDoubleClick);
@@ -78,15 +78,19 @@ class File {
     }
 
     this.windowElement = this.createInteractableWindowElement();
+    this.windowElement.file = this;
     this.taskbarElement = this.createInteractableTaskbarElement();
 
-    // check if if (this.type === "folder") when seperating File and Folder classes
+    // check if if (this._type === "folder") when seperating File and Folder classes
     this._innerFilesContainer = this.windowElement.querySelector('.file-grid') as HTMLElement;
     this.getInnerFilesContainer = this.getInnerFilesContainer.bind(this);
   }
 
   public get name(): string {
     return this._name;
+  }
+  public get type(): string {
+    return this._type;
   }
 
   public innerFiles = {
@@ -112,13 +116,14 @@ class File {
     return this._innerFilesContainer;
   }
 
+  /**
+   * @todo Move to recycle bin on deletion
+   */
   public delete(): void {
     // When a user deletes a file or folder
     // remove all eventlisteners and elements
     this.closeWindow();
     this.desktopElement.remove();
-
-    // TODO: Move to recycle bin
   }
 
   public rename(): void {
@@ -223,12 +228,12 @@ class File {
       console.log(`${this.name} was opened from ${this.parentFile.name}`);
 
       // Files of the same type (like nested folders) should not open a new window
-      if (this.type === this.parentFile.type) {
+      if (this._type === this.parentFile._type) {
         // check the size etc. of the parent file
         const { height, width, transform } = this.parentFile.windowElement.style;
+        const { x, y } = this.parentFile.state.position;
 
         // Copy the parent's position state for InteractJS
-        const { x, y } = this.parentFile.state.position;
         this.state.position = { x, y };
 
         // apply the size etc. to the child file
@@ -247,7 +252,7 @@ class File {
 
   private createInteractableWindowElement(): HTMLElement {
     // windowElement did not exist yet
-    const windowElement = createWindowElement(this._name, this.type);
+    const windowElement = createWindowElement(this._name, this._type);
     this.windowElement = windowElement;
     this.windowElement.addEventListener('click', this.handleWindowSingleClick);
 

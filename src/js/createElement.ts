@@ -40,7 +40,7 @@ function createDesktopElement(fileName: string, fileType: string): IFileElement 
 // Creates and returns the window HTML element
 function createWindowElement(fileName: string, fileType: string): HTMLElement {
   const windowElement: HTMLElement = el(
-    '.folder-window',
+    '.window.folder-window',
     el(
       '.folder-header',
       el(
