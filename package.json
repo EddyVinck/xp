@@ -8,6 +8,7 @@
     "test:watch": "jest --watch",
     "test:debug": "echo 'chrome://inspect' && node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
     "build": "webpack-dev-server --config webpack.config.js --mode development",
+    "build:prod": "webpack --config webpack.config.js --mode production",
     "lint": "eslint --fix-dry-run ./src/**/*.ts",
     "type-check": "tsc --skipLibCheck",
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|mdx|graphql|vue)\"",
