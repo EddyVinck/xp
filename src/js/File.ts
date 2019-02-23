@@ -1,7 +1,7 @@
 import { el } from 'redom';
 import interact, { InteractEvent, Listener } from 'interactjs';
 
-import { IFileState, IFileElement } from './types/app';
+import { IFileState, IFileElement, FileOptions } from './types/app';
 import { createTaskbarElement, createDesktopElement, createWindowElement } from './createElement';
 import cloneCustomNode from './utils/cloneCustomNode';
 import { IInteractEvent, IDraggableOptions } from './types/interactjs';
@@ -30,13 +30,19 @@ class File {
   constructor({
     name = 'Unnamed',
     type = 'folder',
-    parentElement = wallpaperGrid,
+    parentFile = undefined,
     innerFiles = [],
-  } = {}) {
+  }: FileOptions = {}) {
     this._name = name;
     this._type = type;
     this._innerFiles = innerFiles;
-    this.parentElement = parentElement;
+    this.parentFile = parentFile;
+
+    if (this.parentFile !== undefined) {
+      this.parentElement = (this.parentFile as File).innerFileGrid || wallpaperGrid;
+    } else {
+      this.parentElement = wallpaperGrid;
+    }
 
     this.state = {
       isOpen: false,
@@ -91,6 +97,9 @@ class File {
   }
   public get type(): string {
     return this._type;
+  }
+  public get innerFileGrid(): HTMLElement | null {
+    return this.windowElement.querySelector('.file-grid');
   }
 
   public innerFiles = {

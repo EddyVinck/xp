@@ -1,6 +1,6 @@
 import isChildElement from './utils/isChildElement';
 import getParentWithClass from './utils/getParentWithClass';
-import { IFileElement } from './types/app';
+import { IFileElement, FileOptions } from './types/app';
 import { el } from 'redom';
 import File from './File';
 import allFiles from './app';
@@ -87,7 +87,7 @@ function handleRightClick(e: MouseEvent): void {
 /**
  * @todo update this to support folders inside folders
  */
-function handleFolderCreation(): void {
+function handleFolderCreation(parentFile?: File): void {
   let fileName = 'New folder';
   const allFileNames = allFiles.map((file) => file.name);
 
@@ -99,7 +99,12 @@ function handleFolderCreation(): void {
     }
   }
 
-  const newFile = new File({ name: fileName, type: 'folder' });
+  let fileOptions: FileOptions = { name: fileName, type: 'folder', parentFile: undefined };
+  if (parentFile !== undefined) {
+    fileOptions.parentFile = parentFile;
+  }
+
+  const newFile = new File(fileOptions);
   newFile.rename();
   allFiles.push(newFile);
 }
@@ -149,6 +154,9 @@ document.addEventListener('click', (e: MouseEvent) => {
             break;
           case 'debug':
             file.debug();
+            break;
+          case 'new-folder':
+            handleFolderCreation(file);
             break;
           default:
             break;

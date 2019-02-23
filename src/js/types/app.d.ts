@@ -10,6 +10,13 @@ export interface IFileState {
   };
 }
 
+export interface FileOptions {
+  name?: string;
+  type?: string;
+  parentFile?: File;
+  innerFiles?: File[];
+}
+
 /** HTMLElement with an optional file: File property */
 export interface IFileElement extends HTMLElement {
   file?: File;
