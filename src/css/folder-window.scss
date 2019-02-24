@@ -15,9 +15,38 @@ $activeBlue: blue;
   left: 50px;
   display: flex;
   flex-direction: column;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  overflow: hidden;
 
   @media (min-width: 540px) {
     min-width: 500px;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 5px;
+    height: 100%;
+  }
+
+  &::before {
+    left: 0;
+    background-image: linear-gradient(
+      to right,
+      rgba(0, 66, 156, 0.4) 0%,
+      rgba(0, 102, 250, 0.4) 100%
+    );
+  }
+  &::after {
+    right: 0;
+    background-image: linear-gradient(
+      to left,
+      rgba(0, 66, 156, 0.4) 0%,
+      rgba(0, 102, 250, 0.4) 100%
+    );
   }
 
   &.active {
@@ -28,6 +57,18 @@ $activeBlue: blue;
     }
     .top-bar {
       background-color: $activeBlue;
+
+      background-image: linear-gradient(
+        to top,
+        #0063b9 5%,
+        transparent 5.1%,
+        transparent 85%,
+        #49b2fb 100%
+      );
+      // background-size: calc(100% - 10px) 100%;
+      background-size: 100%;
+      background-position: center center;
+      background-repeat: no-repeat;
     }
   }
 
