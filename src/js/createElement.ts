@@ -104,4 +104,84 @@ function createWindowElement(fileName: string, fileType: string): HTMLElement {
   return windowElement;
 }
 
-export { createTaskbarElement, createDesktopElement, createWindowElement };
+// Creates and returns the window HTML element
+function createBrowserWindowElement(fileName: string, fileType: string): HTMLElement {
+  const windowElement: HTMLElement = el(
+    '.window.folder-window',
+    el(
+      '.folder-header',
+      el(
+        '.top-bar',
+        el(
+          '.folder-label',
+          el('img', { src: getIconUrl(fileType), alt: fileName }),
+          el('span', fileName)
+        ),
+        el(
+          '.top-bar-controls',
+          el('.top-bar-button.minimize'),
+          el('.top-bar-button.maximize'),
+          el('.top-bar-button.close')
+        )
+      ),
+      el(
+        '.menu-bar',
+        el('.menu-top'),
+        el(
+          '.menu-bottom',
+          el(
+            'ul',
+            el(
+              'li',
+              el('img', { src: getIconUrl('arrow-back'), alt: 'back icon' }),
+              el('span', 'Back')
+            ),
+            el('li', el('img', { src: getIconUrl('arrow-next'), alt: 'next icon' }))
+          ),
+          el(
+            'ul',
+            el(
+              'li',
+              el('img', { src: getIconUrl('search'), alt: 'Search icon' }),
+              el('span', 'Search')
+            )
+          )
+        ),
+        el(
+          '.address-bar',
+          el('span', 'Address'),
+          el(
+            '.address-input-wrapper',
+            el(
+              '.address-input-icon',
+              el('img', { src: getIconUrl(fileType), alt: fileType }),
+              el('input.address-input', {
+                type: 'text',
+                value: 'C:\\Desktop\\Folder Name',
+                placeholder: 'C:\\Desktop\\Folder Name',
+              })
+            )
+          )
+        )
+      )
+    ),
+    el(
+      '.folder-content',
+      el('iframe', {
+        width: '100%',
+        height: '100%',
+        src: 'http://www.eddyvinck.com',
+        target: '_self',
+      })
+    )
+  );
+
+  return windowElement;
+}
+
+export {
+  createTaskbarElement,
+  createDesktopElement,
+  createWindowElement,
+  createBrowserWindowElement,
+};

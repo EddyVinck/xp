@@ -85,7 +85,7 @@ function handleRightClick(e: MouseEvent): void {
 }
 
 /**
- * @todo update this to support folders inside folders
+ * @todo update filename availability checking for nested folders
  */
 function handleFolderCreation(parentFile?: File): void {
   let fileName = 'New folder';

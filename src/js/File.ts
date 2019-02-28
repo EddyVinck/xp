@@ -17,12 +17,12 @@ if (taskbar instanceof HTMLElement) {
 
 class File {
   private _name: string;
-  private _type: string; // 'folder' | '...'
+  public _type: string; // 'folder' | '...'
   private parentElement: HTMLElement;
   private desktopElement: IFileElement;
   private taskbarElement?: IFileElement;
-  private windowElement: IFileElement;
-  private state: IFileState;
+  public windowElement: IFileElement;
+  public state: IFileState;
   private _innerFiles: File[];
   private _innerFilesContainer: HTMLElement;
   private parentFile?: File;
@@ -375,7 +375,7 @@ class File {
     return taskbarElement;
   }
 
-  private closeWindow(): void {
+  public closeWindow(): void {
     this.state.isOpen = false;
 
     if (this.windowElement && this.taskbarElement) {

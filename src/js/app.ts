@@ -3,8 +3,9 @@ import './login-screen';
 import './right-click';
 import './clock';
 import File from './File';
+import WebBrowser from './WebBrowser';
 
-const allFiles: File[] = [];
+const allFiles: (File | WebBrowser)[] = [];
 
 // Add a few folders or files
 allFiles.push(new File({ name: 'My test file', type: 'folder' }));
@@ -19,6 +20,8 @@ for (let index = 0; index <= 3; index++) {
     allFiles.push(innerFile);
   }
 }
+
+allFiles.push(new WebBrowser({ name: 'www.eddyvinck.com' }));
 
 // Listener that sets all windows inactive
 document.addEventListener('change-active-window', function() {
