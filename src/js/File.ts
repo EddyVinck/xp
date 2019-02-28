@@ -83,7 +83,7 @@ class File {
       this.parentElement.appendChild(this.desktopElement);
     }
 
-    this.windowElement = this.createInteractableWindowElement();
+    this.windowElement = this.createInteractableWindowElement(createWindowElement);
     this.windowElement.file = this;
     this.taskbarElement = this.createInteractableTaskbarElement();
 
@@ -259,9 +259,11 @@ class File {
     this.setActive(true);
   }
 
-  private createInteractableWindowElement(): HTMLElement {
+  public createInteractableWindowElement(
+    windowElementCreator: (name: string, type: string) => HTMLElement
+  ): HTMLElement {
     // windowElement did not exist yet
-    const windowElement = createWindowElement(this._name, this._type);
+    const windowElement = windowElementCreator(this._name, this._type);
     this.windowElement = windowElement;
     this.windowElement.addEventListener('click', this.handleWindowSingleClick);
 

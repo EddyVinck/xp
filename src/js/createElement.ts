@@ -155,11 +155,14 @@ function createBrowserWindowElement(fileName: string, fileType: string): HTMLEle
             el(
               '.address-input-icon',
               el('img', { src: getIconUrl(fileType), alt: fileType }),
-              el('input.address-input', {
-                type: 'text',
-                value: 'C:\\Desktop\\Folder Name',
-                placeholder: 'C:\\Desktop\\Folder Name',
-              })
+              el(
+                'form',
+                el('input.address-input', {
+                  type: 'text',
+                  value: 'C:\\Desktop\\Folder Name',
+                  placeholder: 'C:\\Desktop\\Folder Name',
+                })
+              )
             )
           )
         )
@@ -170,7 +173,6 @@ function createBrowserWindowElement(fileName: string, fileType: string): HTMLEle
       el('iframe', {
         width: '100%',
         height: '100%',
-        src: 'http://www.eddyvinck.com',
         target: '_self',
       })
     )

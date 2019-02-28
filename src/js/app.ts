@@ -5,7 +5,12 @@ import './clock';
 import File from './File';
 import WebBrowser from './WebBrowser';
 
-const allFiles: (File | WebBrowser)[] = [];
+const allFiles: File[] = [];
+
+const website = document.createElement('div');
+website.innerHTML = '<h1>Welcome to www.eddyvinck.com</h1>';
+
+WebBrowser.Sites.addSite('eddyvinck.com', { css: '', html: website });
 
 // Add a few folders or files
 allFiles.push(new File({ name: 'My test file', type: 'folder' }));
