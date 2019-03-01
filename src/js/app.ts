@@ -8,9 +8,21 @@ import WebBrowser from './WebBrowser';
 const allFiles: File[] = [];
 
 const website = document.createElement('div');
-website.innerHTML = '<h1>Welcome to www.eddyvinck.com</h1>';
+const css = `
+  body {
+    background: #f0edff;
+  }
+  h1 {
+    font-family: sans-serif;
+    color: #0d083a;
+  }
+`;
+website.innerHTML = `
+<h1>Welcome to www.eddyvinck.com</h1>
+<p>This website is super cool.</p>
+<img src="https://i.imgur.com/g3D5jNzg.jpg" alt="cat photo" style="height: 140px;" />`;
 
-WebBrowser.Sites.addSite('eddyvinck.com', { css: '', html: website });
+WebBrowser.Sites.addSite('eddyvinck.com', { css, html: website });
 
 // Add a few folders or files
 allFiles.push(new File({ name: 'My test file', type: 'folder' }));

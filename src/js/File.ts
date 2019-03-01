@@ -225,7 +225,7 @@ class File {
 
   // Open the file's window
   // dispatch a active-window-change event to set all other files inactive
-  private showWindow(): void {
+  public showWindow(callback = () => {}): void {
     let windowElement = this.windowElement;
 
     document.body.appendChild(windowElement);
@@ -257,6 +257,7 @@ class File {
     }
 
     this.setActive(true);
+    callback();
   }
 
   public createInteractableWindowElement(
