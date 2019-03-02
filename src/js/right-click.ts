@@ -39,7 +39,7 @@ function getTargetTypeForRightClick(
     elementType = 'wallpaper';
   } else {
     // default to wallpaper
-    elementType = 'wallpaper?';
+    elementType = 'wallpaper';
   }
 
   return { elementType, fileType };
