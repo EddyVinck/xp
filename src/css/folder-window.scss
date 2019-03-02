@@ -28,6 +28,7 @@ $activeBlue: blue;
     img,
     span {
       pointer-events: none;
+      user-select: none;
     }
 
     &.active {

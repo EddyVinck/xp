@@ -143,17 +143,21 @@ class File {
 
   public goPrevious(event: Event): void {
     if (event.target instanceof HTMLElement && event.target.classList.contains('active')) {
-      // close the current window and open the new one from the previousButton
+      // close the current window and open the new one from the previousButtonTarget
       if (this.state.previousButtonTarget) {
         this.closeWindow();
+        this.state.previousButtonTarget.state.nextButtonTarget = this;
         this.state.previousButtonTarget.handleDesktopDoubleClick();
       }
     }
   }
   public goNext(event: Event): void {
     if (event.target instanceof HTMLElement && event.target.classList.contains('active')) {
-      // go next
-      console.log('go next');
+      // close the current window and open the new one from the nextButtonTarget
+      if (this.state.nextButtonTarget) {
+        this.closeWindow();
+        this.state.nextButtonTarget.handleDesktopDoubleClick();
+      }
     }
   }
 
