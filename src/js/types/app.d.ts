@@ -8,6 +8,8 @@ export interface IFileState {
     x: number;
     y: number;
   };
+  previousButtonTarget: File | null;
+  nextButtonTarget: File | null;
 }
 
 export interface FileOptions {

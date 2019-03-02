@@ -65,11 +65,11 @@ function createWindowElement(fileName: string, fileType: string): HTMLElement {
           el(
             'ul',
             el(
-              'li',
+              'li.arrow-previous',
               el('img', { src: getIconUrl('arrow-back'), alt: 'back icon' }),
               el('span', 'Back')
             ),
-            el('li', el('img', { src: getIconUrl('arrow-next'), alt: 'next icon' }))
+            el('li.arrow-next', el('img', { src: getIconUrl('arrow-next'), alt: 'next icon' }))
           ),
           el(
             'ul',
@@ -132,11 +132,11 @@ function createBrowserWindowElement(fileName: string, fileType: string): HTMLEle
           el(
             'ul',
             el(
-              'li',
+              'li.arrow-previous',
               el('img', { src: getIconUrl('arrow-back'), alt: 'back icon' }),
               el('span', 'Back')
             ),
-            el('li', el('img', { src: getIconUrl('arrow-next'), alt: 'next icon' }))
+            el('li.arrow-next', el('img', { src: getIconUrl('arrow-next'), alt: 'next icon' }))
           ),
           el(
             'ul',

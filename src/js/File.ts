@@ -26,6 +26,8 @@ class File {
   private _innerFiles: File[];
   private _innerFilesContainer: HTMLElement;
   private parentFile?: File;
+  private previousButton?: HTMLElement;
+  private nextButton?: HTMLElement;
 
   constructor({
     name = 'Unnamed',
@@ -52,6 +54,8 @@ class File {
         x: 0,
         y: 0,
       },
+      previousButtonTarget: null,
+      nextButtonTarget: null,
     };
 
     // Function binding
@@ -72,6 +76,8 @@ class File {
     this.handleRename = this.handleRename.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     this.handleResize = this.handleResize.bind(this);
+    this.goNext = this.goNext.bind(this);
+    this.goPrevious = this.goPrevious.bind(this);
 
     // Add the File to the ParentElement in the DOM
     this.desktopElement = createDesktopElement(this._name, this._type);
@@ -133,6 +139,22 @@ class File {
     // remove all eventlisteners and elements
     this.closeWindow();
     this.desktopElement.remove();
+  }
+
+  public goPrevious(event: Event): void {
+    if (event.target instanceof HTMLElement && event.target.classList.contains('active')) {
+      // close the current window and open the new one from the previousButton
+      if (this.state.previousButtonTarget) {
+        this.closeWindow();
+        this.state.previousButtonTarget.handleDesktopDoubleClick();
+      }
+    }
+  }
+  public goNext(event: Event): void {
+    if (event.target instanceof HTMLElement && event.target.classList.contains('active')) {
+      // go next
+      console.log('go next');
+    }
   }
 
   public rename(): void {
@@ -232,10 +254,8 @@ class File {
     this.dispatchActiveWindowChange(true);
 
     // Handle window element replacement e.g. when opening a folder in a folder
-    // Check if the File has a parent File object.
+    // Check if the File was opened from a parent File.
     if (this.parentFile !== undefined) {
-      console.log(`${this.name} was opened from ${this.parentFile.name}`);
-
       // Files of the same type (like nested folders) should not open a new window
       if (this._type === this.parentFile._type) {
         // check the size etc. of the parent file
@@ -248,12 +268,25 @@ class File {
         // apply the size etc. to the child file
         Object.assign(this.windowElement.style, { height, width, transform });
 
+        this.state.previousButtonTarget = this.parentFile;
+
         // close the parent file
         this.parentFile.closeWindow();
       } else {
-        console.log(`They were not the same type.`);
-        // open new window
+        this.state.previousButtonTarget = null;
+        // They were not the same type, open new window
       }
+    }
+
+    if (this.state.previousButtonTarget instanceof File && this.previousButton) {
+      this.previousButton.classList.add('active');
+    } else if (this.previousButton) {
+      this.previousButton.classList.remove('active');
+    }
+    if (this.state.nextButtonTarget instanceof File && this.nextButton) {
+      this.nextButton.classList.add('active');
+    } else if (this.nextButton) {
+      this.nextButton.classList.remove('active');
     }
 
     this.setActive(true);
@@ -276,6 +309,18 @@ class File {
 
     const minimize = this.windowElement.querySelector('.minimize');
     minimize && minimize.addEventListener('click', () => this.toggleMinimize(true));
+
+    const previousButton = this.windowElement.querySelector('.arrow-previous');
+    if (previousButton instanceof HTMLElement) {
+      previousButton.addEventListener('click', (e) => this.goPrevious(e));
+      this.previousButton = previousButton;
+    }
+
+    const nextButton = this.windowElement.querySelector('.arrow-next');
+    if (nextButton instanceof HTMLElement) {
+      nextButton.addEventListener('click', (e) => this.goNext(e));
+      this.nextButton = nextButton;
+    }
 
     const topBar = this.windowElement.querySelector('.top-bar');
 

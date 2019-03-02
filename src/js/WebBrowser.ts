@@ -19,11 +19,14 @@ class WebBrowser extends File {
     _sites: {
       '404': WebBrowser.fourOhFour,
     },
+    /**
+     * @todo validate markup
+     * @todo add link functionaility for real URLs and WebBrowser links
+     */
     addSite(viewName: string, viewDetails: Website) {
       // Add a site to Sites._sites
       console.log(viewName, viewDetails);
 
-      // TODO: validate markup
       (this._sites as WebsiteKeyValueStore)[viewName.replace('www.', '')] = viewDetails;
     },
     getSite(viewName: string) {
@@ -46,7 +49,7 @@ class WebBrowser extends File {
 
   private addBrowsingFunctionalityToWindow(): void {
     const form = this.windowElement.querySelector('.address-input-wrapper form') as HTMLFormElement;
-    (form.querySelector('input.address-input') as HTMLInputElement).value = 'eddyvinck.com';
+    (form.querySelector('input.address-input') as HTMLInputElement).value = this.name;
     form.addEventListener('submit', (e: Event) => {
       e.preventDefault();
       const url = ((e.target as HTMLFormElement).elements.item(
@@ -56,7 +59,7 @@ class WebBrowser extends File {
     });
   }
 
-  //
+  /** @todo: change the URL in the window object when browsing */
   public go = (viewName: string) => {
     console.log(`Trying to visit ${viewName}`);
     const iframe = this.iframe;

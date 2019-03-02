@@ -19,6 +19,29 @@ $activeBlue: blue;
   border-top-right-radius: 5px;
   overflow: hidden;
 
+  li.arrow-previous,
+  li.arrow-next {
+    cursor: not-allowed;
+    img {
+      filter: grayscale(100%);
+    }
+    img,
+    span {
+      pointer-events: none;
+    }
+
+    &.active {
+      cursor: pointer;
+
+      img {
+        filter: grayscale(0%);
+      }
+      &:hover {
+        background: #e1dfd3;
+      }
+    }
+  }
+
   @media (min-width: 540px) {
     min-width: 500px;
   }

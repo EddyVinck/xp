@@ -22,7 +22,27 @@ website.innerHTML = `
 <p>This website is super cool.</p>
 <img src="https://i.imgur.com/g3D5jNzg.jpg" alt="cat photo" style="height: 140px;" />`;
 
+const aboutDotCom = {
+  css: `
+  body {
+    background: #fafafa;
+    font-family: serif;
+  }
+`,
+  html: document.createElement('div'),
+};
+aboutDotCom.html.innerHTML = `
+<h1>About this project</h1>
+<p>
+  This is a side project created by Eddy Vinck.
+</p>
+<p>
+  You can find the repository <a href="https://github.com/eddyvinck/xp" target="_blank">here.</a>
+</p>
+`;
+
 WebBrowser.Sites.addSite('eddyvinck.com', { css, html: website });
+WebBrowser.Sites.addSite('about.com', aboutDotCom);
 
 // Add a few folders or files
 allFiles.push(new File({ name: 'My test file', type: 'folder' }));
@@ -39,6 +59,7 @@ for (let index = 0; index <= 3; index++) {
 }
 
 allFiles.push(new WebBrowser({ name: 'www.eddyvinck.com' }));
+allFiles.push(new WebBrowser({ name: 'about.com' }));
 
 // Listener that sets all windows inactive
 document.addEventListener('change-active-window', function() {
