@@ -28,6 +28,13 @@ const aboutDotCom = {
     background: #fafafa;
     font-family: serif;
   }
+  h2 {
+    background-color: yellow;
+  }
+  a {
+    color: #0000ff;
+    font-weight: bold;
+  }
 `,
   html: document.createElement('div'),
 };
@@ -39,6 +46,9 @@ aboutDotCom.html.innerHTML = `
 <p>
   You can find the repository <a href="https://github.com/eddyvinck/xp" target="_blank">here.</a>
 </p>
+<marquee>Marquee tags need to come back!</marquee>
+<h2>Work in progress</h2>
+<p>This project is still far from being finished.</p>
 `;
 
 WebBrowser.Sites.addSite('eddyvinck.com', { css, html: website });

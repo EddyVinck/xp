@@ -41,7 +41,7 @@ class WebBrowser extends File {
     this.iframe = this.windowElement.querySelector('iframe') as HTMLIFrameElement;
   }
 
-  public showWindow() {
+  public showWindow(): void {
     super.showWindow(() => {
       this.go(this.name);
     });
