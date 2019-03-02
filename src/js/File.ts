@@ -387,7 +387,7 @@ class File {
     }
   }
 
-  private toggleMaximize(): void {
+  public toggleMaximize(): void {
     const { isMaximized, position } = this.state;
 
     if (this.windowElement) {

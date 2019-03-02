@@ -171,8 +171,6 @@ function createBrowserWindowElement(fileName: string, fileType: string): HTMLEle
     el(
       '.folder-content',
       el('iframe', {
-        width: '100%',
-        height: '100%',
         target: '_self',
       })
     )
