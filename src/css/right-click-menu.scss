@@ -19,6 +19,8 @@
     margin: 0;
   }
   li {
+    padding: 1px 16px 1px 20px;
+    margin: 4px 0px 2px;
     user-select: none;
     cursor: pointer;
     &:hover {
